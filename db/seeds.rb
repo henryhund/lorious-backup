@@ -8,27 +8,27 @@
 # Environment variables (ENV['...']) are set in the file config/application.yml.
 # See http://railsapps.github.io/rails-environment-variables.html
 
-# puts 'ROLES'
-# YAML.load(ENV['ROLES']).each do |role|
-#   Role.find_or_create_by_name({ :name => role }, :without_protection => true)
-#   puts 'role: ' << role
-# end
-# puts 'DEFAULT USERS'
-# user = User.find_or_create_by_email :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'].dup, :password => ENV['ADMIN_PASSWORD'].dup, :password_confirmation => ENV['ADMIN_PASSWORD'].dup
-# puts 'user: ' << user.name
-# user.add_role :admin
-
-
-puts 'CREATING ROLES'
-Role.create([
-  { :name => 'admin' }, 
-  { :name => 'user' }, 
-  { :name => 'VIP' }
-], :without_protection => true)
-puts 'SETTING UP DEFAULT USER LOGIN'
-user = User.create! :name => 'First User', :email => 'user@example.com', :password => 'please', :password_confirmation => 'please'
-puts 'New user created: ' << user.name
-user2 = User.create! :name => 'Second User', :email => 'user2@example.com', :password => 'please', :password_confirmation => 'please'
-puts 'New user created: ' << user2.name
+puts 'ROLES'
+YAML.load(ENV['ROLES']).each do |role|
+  Role.find_or_create_by_name({ :name => role }, :without_protection => true)
+  puts 'role: ' << role
+end
+puts 'DEFAULT USERS'
+user = User.find_or_create_by_email :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'].dup, :password => ENV['ADMIN_PASSWORD'].dup, :password_confirmation => ENV['ADMIN_PASSWORD'].dup
+puts 'user: ' << user.name
 user.add_role :admin
-user2.add_role :VIP
+
+
+# puts 'CREATING ROLES'
+# Role.create([
+#   { :name => 'admin' }, 
+#   { :name => 'user' }, 
+#   { :name => 'VIP' }
+# ], :without_protection => true)
+# puts 'SETTING UP DEFAULT USER LOGIN'
+# user = User.create! :name => 'First User', :email => 'user@example.com', :password => 'please', :password_confirmation => 'please'
+# puts 'New user created: ' << user.name
+# user2 = User.create! :name => 'Second User', :email => 'user2@example.com', :password => 'please', :password_confirmation => 'please'
+# puts 'New user created: ' << user2.name
+# user.add_role :admin
+# user2.add_role :VIP
