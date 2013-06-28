@@ -17,6 +17,7 @@ gem 'haml-rails'
 gem 'rolify'
 gem 'simple_form'
 gem 'jquery-validation-rails'
+gem 'google-tag-manager-rails'
 
 group :development do
   gem 'better_errors'

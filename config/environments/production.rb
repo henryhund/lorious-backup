@@ -61,6 +61,9 @@ Lorious::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  GoogleTagManager.gtm_id = "GTM-39XV" # Where GTM-XXXX is your container ID from Google Tag Manager
+
+
   config.action_mailer.default_url_options = { :host => 'lorious.com' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
@@ -68,8 +71,6 @@ Lorious::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
-
-
 
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",

@@ -9,6 +9,7 @@
         = csrf_meta_tags
         = yield(:head)
   %body{:class => "#{controller_name} #{action_name}"}
+    = google_tag_manager
     /.navbar.navbar-fixed-top
     /  %nav.navbar-inner
     /    .container
