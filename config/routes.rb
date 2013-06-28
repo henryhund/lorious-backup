@@ -1,9 +1,9 @@
 Lorious::Application.routes.draw do
   resources :requests
 
-  authenticated :user do
-    root :to => 'requests#index'
-  end
+  # authenticated :user do
+  #  root :to => 'requests#index'
+  # end
 
   root :to => "home#landing_page"
   get 'welcome' => "requests#new"
@@ -17,5 +17,5 @@ Lorious::Application.routes.draw do
   end
 
   get 'thanks' => "home#thanks"
-  get 'confirmed' => "confirmed"
+  get 'confirmed' => "home#confirmed"
 end
