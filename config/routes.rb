@@ -6,7 +6,7 @@ Lorious::Application.routes.draw do
   # end
 
   root :to => "home#landing_page"
-  get 'welcome' => "requests#new"
+  # get 'welcome' => "requests#new"
   post 'welcome' => "requests#new"
 
   devise_for :users
