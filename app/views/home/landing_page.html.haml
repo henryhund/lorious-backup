@@ -1,0 +1,43 @@
+/javascript for validation
+:javascript
+  $(document).ready(function(){
+  $('#signup').validate({
+      rules: {
+          name: "required",
+          email: "email",
+      
+      },
+      messages: {
+          name: "Your name is required",
+          email: "Your email is required",
+      },
+      errorContainer: $('#errorContainer'),
+      errorLabelContainer: $('#errorContainer ul'),
+      wrapper: 'li'
+  });
+    });
+
+%h3
+  [Lorious Logo]
+  .pull-right Need advice? Talk to an expert today.
+%br 
+%br 
+%br 
+.row
+  .span6
+    How it works
+    %p 1
+    %p 2
+    %p 3
+  .span6
+    .well
+      %form#signup.signup-form{:action => "https://app.getresponse.com/add_contact_webform.html", :method => "POST", :name => "signup"}
+        %input.required.name-entry{:name => "name", :placeholder => "First name", :style => "color: rgb(192, 192, 192);", :type => "text"}/
+        %input.required.email.email-entry{:name => "email", :placeholder => "Email address", :style => "color: rgb(192, 192, 192);", :type => "text"}/
+        %input.expertise.email-entry{:name => "custom_Expertise", :placeholder => "Your expertise", :style => "color: rgb(192, 192, 192);", :type => "text"}/
+        %br
+        %button#send.call-to-action.send{:type => "submit"} Send
+        %input{:name => "webform_id", :type => "hidden", :value => "465766"}/
+      %script{:src => "https://app.getresponse.com/view_webform.js?wid=465766&mg_param1=1", :type => "text/javascript"}
+      %script{:src => "https://app.getresponse.com/view_webform.js?wid=465766&mg_param1=1", :type => "text/javascript"}
+

@@ -1,4 +1,21 @@
-%h3 Home
-- @users.each do |user|
-  %p
-    User: #{link_to user.name, user}
+
+%h3
+  [Lorious Logo] <Main index> - not shown to users
+  .pull-right Need advice? Talk to an expert today.
+%br 
+%br 
+%br 
+.row
+  .span8
+    How it works
+    %p 1
+    %p 2
+    %p 3
+  .span4
+    .well
+      = simple_form_for(@users, :html => { :class => 'form-horizontal' }) do |f|
+        = f.error_notification
+
+        .form-inputs.row
+          = f.input :name, wrapper_html: { }
+          = f.input :email, wrapper_html: { }

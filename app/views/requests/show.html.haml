@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @request.name
+%p
+  %b Email:
+  = @request.email
+%p
+  %b Expertise:
+  = @request.expertise
+%p
+  %b Help needed:
+  = @request.help_needed
+%p
+  %b Time needed:
+  = @request.time_needed
+%p
+  %b Max rate:
+  = @request.max_rate
+
+= link_to 'Edit', edit_request_path(@request)
+\|
+= link_to 'Back', requests_path

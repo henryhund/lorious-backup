@@ -1,0 +1,14 @@
+= simple_form_for(@request) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :email
+    = f.input :expertise
+    = f.input :help_needed
+    = f.input :time_needed
+    = f.input :max_rate
+    = f.input :status
+
+  .form-actions
+    = f.button :submit

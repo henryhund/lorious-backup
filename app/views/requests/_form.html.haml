@@ -1,0 +1,13 @@
+= simple_form_for(@request) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name, input_html: { value: @name }
+    = f.input :email, input_html: { value: @email }
+    = f.input :expertise, input_html: { value: @expertise }
+    = f.input :help_needed
+    = f.input :time_needed, collection: ["< 15 minutes", "15-30 minutes", "30-60 minutes", "1 hour+"]
+    = f.input :max_rate
+
+  .form-actions
+    = f.button :submit

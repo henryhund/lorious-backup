@@ -1,0 +1,36 @@
+%h1 Listing requests
+
+%table.table
+  %tr
+    %th Name
+    %th Email
+    %th Expertise
+    %th Help needed
+    %th Time needed
+    %th Max rate
+    %th Created At
+    %th Status
+    %th Options
+    %th
+    %th
+
+  - @requests.each do |request|
+    %tr
+      %td= request.name
+      %td= request.email
+      %td= request.expertise
+      %td= request.help_needed
+      %td= request.time_needed
+      %td= request.max_rate
+      %td= request.created_at
+      %td= request.status
+      %td= link_to 'Show', request
+      %td= link_to 'Edit', edit_request_path(request)
+      %td= link_to 'Destroy', request, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Request', new_request_path
+%br
+%br
+= link_to 'Logout', destroy_user_session_path, :method=>'delete'
