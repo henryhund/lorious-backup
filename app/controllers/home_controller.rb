@@ -40,7 +40,7 @@ class HomeController < ApplicationController
   def confirmed
     if session[:new_profile] == true
       @profile = Profile.find_by_email(session[:email])
-      send_mail("Henry @ Lorious", "henry@lorious.com", @profile.name, session[:email], "Lorious | Welcome to Lorious!", "Hi #{@profile.fname}, thanks for signing up. We can't wait to begin helping to connect you with interesting people. We will get back to you as soon as possible. In the meantime, we will keep you up to date with what is going on at Lorious form time to time. -Henry")
+      send_mail("Henry @ Lorious", "henry@lorious.com", @profile.name, session[:email], "Lorious | Welcome to Lorious!", "Hi #{@profile.fname},\r\n\r\nThanks for signing up to learn more about Lorious! We can't wait to begin helping to connect you with interesting people. We will get back to you as soon as possible.\r\n\r\nIn the meantime, we will keep you up to date with what is going on at Lorious form time to time.\r\n\r\n-Henry")
     end
 
   end

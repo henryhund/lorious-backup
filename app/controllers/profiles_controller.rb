@@ -70,6 +70,7 @@ class ProfilesController < ApplicationController
   def update
     # @profile = Profile.find(params[:id])
     @profile.update_attributes(params[:profile])
+    @count = 0
     if session[:email] == @profile.email
       unless params[:request_exp].try(:[],:expertise) == ""
         @request_exp = @profile.requests.new
@@ -77,6 +78,7 @@ class ProfilesController < ApplicationController
         @request_exp.expertise = params[:request_exp][:expertise]
         @request_exp.max_rate = params[:request_exp][:max_rate].to_s.gsub(/[^\d\.]/, '').to_d
         @request_exp.save
+        @count += 1
       end
 
       unless params[:request_int].try(:[],:expertise) == ""
@@ -87,7 +89,14 @@ class ProfilesController < ApplicationController
         @request_int.time_needed = params[:request_int][:time_needed]
         @request_int.max_rate = params[:request_int][:max_rate].to_s.gsub(/[^\d\.]/, '').to_d
         @request_int.save
+        @count += 1
       end
+
+      if @count > 0
+        @count_pluralized = "request".pluralize(@count)
+        send_mail("Admin @ Lorious", "notifications@lorious.com", "Admin Notifications", "henry@lorious.com", "Lorious ADMIN | #{@count} new #{@count_pluralized}!", "Login here: http://lorious-mvp.herokuapp.com/login\r\nView requests here: http://lorious-mvp.herokuapp.com/requests")
+      end
+
     end
 
     redirect_to confirmed_path, notice: 'Profile was successfully updated.'
