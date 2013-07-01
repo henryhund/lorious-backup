@@ -1,4 +1,10 @@
 Lorious::Application.routes.draw do
+  get 'chat' => "chat#new"
+
+  get "chat/test"
+
+  get "chat/index"
+
   resources :profiles
 
 
@@ -25,4 +31,7 @@ Lorious::Application.routes.draw do
 
   get 'message' => "home#message"
   get '/:niche' => "home#landing_page"
+
+  get 'chat/:session_id' => "chat#chat"
+
 end

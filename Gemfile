@@ -20,6 +20,7 @@ gem 'jquery-validation-rails'
 gem 'google-tag-manager-rails'
 gem 'mandrill-api'
 gem 'gibbon'
+gem 'opentok'
 
 group :development do
   gem 'better_errors'

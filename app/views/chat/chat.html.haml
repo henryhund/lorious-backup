@@ -1,0 +1,100 @@
+%h3= @session_id
+
+:css
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  #myPublisherDiv{
+      z-index: 10001;
+      position: absolute;
+        left: 10px;
+        top: 10px;
+      
+  
+  }
+  .remoteView{
+      z-index: 50;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100% !important;
+      height: 100% !important;
+      background-color: #000;
+  }
+  
+  
+%script{:src => "https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js", :type => "text/javascript"}
+
+:javascript
+  var api_key = #{ENV["OPENTOK_APIKEY"]};
+  var session_id = "#{@session_id}";
+  var token = "#{@token}";
+  
+  
+  // Enable console logs for debugging
+  TB.setLogLevel(TB.DEBUG);
+  
+  // Initialize session, set up event listeners, and connect
+  var session = TB.initSession(session_id);
+  session.addEventListener('sessionConnected', sessionConnectedHandler);
+  session.addEventListener('streamCreated', streamCreatedHandler);
+  session.connect(api_key, token);
+  function sessionConnectedHandler(event) {
+      var publisher = TB.initPublisher(api_key, 'myPublisherDiv');
+      session.publish(publisher);
+      
+      // Subscribe to streams that were in the session when we connected
+      subscribeToStreams(event.streams);
+  }
+  
+  function streamCreatedHandler(event) {
+    // Subscribe to any new streams that are created
+    subscribeToStreams(event.streams);
+  }
+  
+  //var theStreams = {};
+  var theStreams;
+  
+  function subscribeToStreams(streams) {
+      
+      theStreams = streams;
+      
+      for (var i = 0; i < streams.length; i++) {
+          // Make sure we don't subscribe to ourself
+          
+          
+          console.log(streams[i].connection.connectionId);
+          
+          if (streams[i].connection.connectionId == session.connection.connectionId) {
+              return;
+          }
+          
+          // Create the div to put the subscriber element in to
+          var div = document.createElement('div');
+          div.setAttribute('id', 'stream' + streams[i].streamId);
+          div.className = 'remoteView';
+          document.body.appendChild(div);
+          
+          // Subscribe to the stream
+          session.subscribe(streams[i], div.id);
+          
+          
+      }
+  }
+  
+  
+  //$(window).on('load resize', function(){
+  
+     // if($('.remoteView').count() == 1){
+          //$('.remoteView').width($(this).width());
+     // }
+      
+      
+  //});
