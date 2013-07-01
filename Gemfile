@@ -18,6 +18,8 @@ gem 'rolify'
 gem 'simple_form'
 gem 'jquery-validation-rails'
 gem 'google-tag-manager-rails'
+gem 'mandrill-api'
+gem 'gibbon'
 
 group :development do
   gem 'better_errors'

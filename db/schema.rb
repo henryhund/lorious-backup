@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627205523) do
+ActiveRecord::Schema.define(:version => 20130701035616) do
+
+  create_table "profiles", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "fname"
+    t.string   "lname"
+    t.string   "email"
+    t.string   "expertise"
+    t.string   "interest"
+    t.decimal  "expertise_hourly", :precision => 8, :scale => 2
+    t.decimal  "interest_hourly",  :precision => 8, :scale => 2
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.string   "niche"
+  end
 
   create_table "requests", :force => true do |t|
     t.string   "name"
@@ -19,10 +33,14 @@ ActiveRecord::Schema.define(:version => 20130627205523) do
     t.string   "expertise"
     t.string   "help_needed"
     t.string   "time_needed"
-    t.string   "max_rate"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.decimal  "max_rate",     :precision => 8, :scale => 2
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
     t.text     "status"
+    t.string   "horizon"
+    t.integer  "profile_id"
+    t.string   "request_type"
+    t.boolean  "finished",                                   :default => false
   end
 
   create_table "roles", :force => true do |t|

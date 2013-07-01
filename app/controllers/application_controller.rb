@@ -5,4 +5,98 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, :alert => exception.message
   end
 
+  def add_to_list(fname, email, list_id=ENV["MAILCHIMP_LISTID"])
+    #set up Mailchimp API
+    gb = Gibbon.new(ENV["MAILCHIMP_APIKEY"])
+    gb.throws_exceptions  = false
+
+    #Add subscriber, do not send double opt-in message (already sending a message from Mandrill)
+    gb.list_subscribe(
+                      {
+                        id: list_id,
+                        email_address: email,
+                        double_optin: false,
+                        merge_vars: {
+                          FNAME: fname
+                        }
+                      }
+                      )
+  end
+
+  def add_to_list_niche(fname, email, niche, list_id=ENV["MAILCHIMP_LISTID"])
+    #set up Mailchimp API
+    gb = Gibbon.new(ENV["MAILCHIMP_APIKEY"])
+    gb.throws_exceptions  = false
+
+    #Add subscriber, do not send double opt-in message (already sending a message from Mandrill)
+    gb.list_subscribe(
+                      {
+                        id: list_id,
+                        email_address: email,
+                        double_optin: false,
+                        merge_vars: {
+                          FNAME: fname,
+                          NICHE: niche
+                        }
+                      }
+                      )
+
+
+  end
+
+  def update_list_subscription(email, lname, niche, list_id=ENV["MAILCHIMP_LISTID"])
+    #set up Mailchimp API
+    gb = Gibbon.new(ENV["MAILCHIMP_APIKEY"])
+    # gb.throws_exceptions  = false
+
+    #Add subscriber, do not send double opt-in message (already sending a message from Mandrill)
+    gb.list_subscribe(
+                      {
+                        id: list_id,
+                        email_address: email,
+                        double_optin: false,
+                        merge_vars: {
+                          LNAME: lname,
+                          NICHE: niche
+
+                        }
+                      }
+                      )
+
+
+  end
+
+  def get_subscriber_details(profiles, field, list_id=ENV["MAILCHIMP_LISTID"])
+    gb = Gibbon.new(ENV["MAILCHIMP_APIKEY"])
+    gb.throws_exceptions  = false
+    result = {}
+    profiles.each do |profile|
+      email = profile.email
+      info = gb.listMemberInfo({:id => list_id, :email_address => profile.email})
+      result[email] = info[field]
+    end
+    result
+  end
+
+  def send_mail(from_name, from_email, to_name, to_email, subject, *content)
+    # The gem assumes your API key is stored as an environment variable called MANDRILL_APIKEY
+    require 'mandrill'
+    m = Mandrill::API.new
+    message = {
+      from_name: from_name,
+      from_email: from_email,
+      to: [
+        {
+          email: to_email,
+          name: to_name
+        }
+      ],
+      subject: subject,
+      text: content[0],
+      html: content[1]
+      }
+      sending = m.messages.send message
+      # puts sending
+  end
+
 end

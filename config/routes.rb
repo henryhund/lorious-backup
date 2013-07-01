@@ -1,4 +1,7 @@
 Lorious::Application.routes.draw do
+  resources :profiles
+
+
   resources :requests
 
   # authenticated :user do
@@ -6,10 +9,10 @@ Lorious::Application.routes.draw do
   # end
 
   root :to => "home#landing_page"
-  get 'welcome' => "home#landing_page"
-  post 'welcome' => "requests#new"
+  get 'welcome' => "home#more"
+  # post 'welcome' => "requests#new"
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" } 
   resources :users
 
   devise_scope :user do
@@ -19,4 +22,7 @@ Lorious::Application.routes.draw do
 
   get 'thanks' => "home#thanks"
   get 'confirmed' => "home#confirmed"
+
+  get 'message' => "home#message"
+  get '/:niche' => "home#landing_page"
 end

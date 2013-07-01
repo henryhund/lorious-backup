@@ -5,9 +5,14 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.has_role? :admin
       can :manage, :all
-
     else
-      can :create, Request
+        if Rails.env.production?
+          can :create, Request
+          can :create, Profile
+          can :update, Profile
+        else
+          can :manage, :all
+        end
     end
     # Define abilities for the passed in user here. For example:
     #
