@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701035616) do
+ActiveRecord::Schema.define(:version => 20130701173837) do
 
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(:version => 20130701035616) do
     t.string   "expertise"
     t.string   "help_needed"
     t.string   "time_needed"
-    t.decimal  "max_rate",     :precision => 8, :scale => 2
     t.datetime "created_at",                                                    :null => false
     t.datetime "updated_at",                                                    :null => false
     t.text     "status"
@@ -41,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20130701035616) do
     t.integer  "profile_id"
     t.string   "request_type"
     t.boolean  "finished",                                   :default => false
+    t.decimal  "max_rate",     :precision => 8, :scale => 2
   end
 
   create_table "roles", :force => true do |t|
