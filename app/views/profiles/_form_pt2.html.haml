@@ -1,0 +1,34 @@
+%h3 
+  Hi 
+  = @profile.fname+","
+  we aren't quite ready yet! But we'll help anyway! Tell us more about you
+
+= simple_form_for(@profile) do |f|
+  = f.error_notification
+  .form-inputs
+    %p 
+      My last name is 
+      = f.input :lname, label: false, input_html: { placeholder: "Robinson, Smith, Ferguson" }
+    %p 
+      I am an expert in (optional)
+      = simple_fields_for(:request_exp) do |fexp|
+        = fexp.input :expertise, label: false, input_html: { placeholder: @sample_expertise }
+        and I'd be willing to help people for
+        = fexp.input :max_rate, as: :string, label: false, input_html: { placeholder: "$10, $60, $200"}
+        per hour.    
+    %p 
+      And I'd be interested in learning more about
+      = simple_fields_for(:request_int) do |fint|
+        = fint.input :expertise, label: false, input_html: { placeholder: @sample_interest }
+        for which I'd pay
+        = fint.input :max_rate, as: :string, label: false, input_html: { placeholder: "$20, $30, $100"}
+        per hour.
+        %p
+          I want help with this for
+        
+          = fint.input :time_needed, label: false, input_html: { placeholder: "1, 2, 3"}
+          hours within 
+          = fint.input :horizon, label: false, input_html: { placeholder: "a few days, a week"} 
+
+  .form-actions
+    = f.button :submit, "Let us help you!"
