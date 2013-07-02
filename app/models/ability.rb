@@ -9,9 +9,14 @@ class Ability
         if Rails.env.production?
           can :create, Request
           can :create, Profile
-          can :update, Profile
+          # can :update, Profile
+          can :create, User
         else
           can :manage, :all
+          #can :create, Request
+          #can :create, Profile
+          ##can :update, Profile
+          #can :create, User
         end
     end
     # Define abilities for the passed in user here. For example:

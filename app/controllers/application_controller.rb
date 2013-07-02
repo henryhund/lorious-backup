@@ -44,20 +44,18 @@ class ApplicationController < ActionController::Base
 
   end
 
-  def update_list_subscription(email, lname, niche, list_id=ENV["MAILCHIMP_LISTID"])
+ def update_list_subscription(email, field, data, list_id=ENV["MAILCHIMP_LISTID"])
     #set up Mailchimp API
     gb = Gibbon.new(ENV["MAILCHIMP_APIKEY"])
-    # gb.throws_exceptions  = false
+    gb.throws_exceptions  = false
 
     #Add subscriber, do not send double opt-in message (already sending a message from Mandrill)
-    gb.list_subscribe(
+    gb.listUpdateMember(
                       {
                         id: list_id,
                         email_address: email,
-                        double_optin: false,
                         merge_vars: {
-                          LNAME: lname,
-                          NICHE: niche
+                          field.to_sym => data,
 
                         }
                       }
@@ -65,6 +63,27 @@ class ApplicationController < ActionController::Base
 
 
   end
+
+  # def update_list_subscription(email, lname, niche, list_id=ENV["MAILCHIMP_LISTID"])
+  #   #set up Mailchimp API
+  #   gb = Gibbon.new(ENV["MAILCHIMP_APIKEY"])
+  #   #gb.throws_exceptions  = false
+
+  #   #Add subscriber, do not send double opt-in message (already sending a message from Mandrill)
+  #   gb.listUpdateMember(
+  #                     {
+  #                       id: list_id,
+  #                       email_address: email,
+  #                       merge_vars: {
+  #                         LNAME: lname,
+  #                         NICHE: niche
+
+  #                       }
+  #                     }
+  #                     )
+
+
+  # end
 
   def get_subscriber_details(profiles, field, list_id=ENV["MAILCHIMP_LISTID"])
     gb = Gibbon.new(ENV["MAILCHIMP_APIKEY"])

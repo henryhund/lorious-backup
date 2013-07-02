@@ -3,7 +3,7 @@
   = @profile.fname+","
   we aren't quite ready yet! But we'll help anyway! Tell us more about you
 
-= simple_form_for(@profile) do |f|
+= simple_form_for @profile, url: profiles_preup_path, method: :post do |f|
   = f.error_notification
   .form-inputs
     %p 

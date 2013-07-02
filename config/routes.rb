@@ -5,6 +5,8 @@ Lorious::Application.routes.draw do
 
   get "chat/index"
 
+  post "profiles/pre" => "profiles#create_before_signup"
+  post "profiles/preup" => "profiles#update_before_signup"
   resources :profiles
 
 

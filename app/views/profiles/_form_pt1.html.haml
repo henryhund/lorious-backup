@@ -1,4 +1,4 @@
-= simple_form_for @profile, html: {id: "signup"} do |f|
+= simple_form_for @profile, url: profiles_pre_path, method: :post, html: {id: "signup"} do |f|
   = f.error_notification
 
   .form-inputs
