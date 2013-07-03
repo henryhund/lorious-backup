@@ -5,6 +5,7 @@
   var session_id = "#{@session_id}";
   var token = "#{@token}";
   
+  var session;
   var publisher;
   
   $(document).ready(function() {
@@ -16,26 +17,35 @@
   });
   
   function sessionConnectedHandler(event) {
-    $("#publisher").append("<div id='publisher_div'></div>");
-    publisher = TB.initPublisher(api_key, "publisher_div");
-    publisher.addEventListener('accessAllowed', accessAllowedHandler);
-  }
-  
-  function accessAllowedHandler(event) {
-    $("#publisher_div").css("width", "100%").css("height", "100%"); 
+    publisher = TB.initPublisher(api_key, 'publisher');
     session.publish(publisher);
+    //$("#publisher").append("<div id='publisher_div'></div>");
+
+     //session.publish();
+     subscribeToStreams(event.streams);
+  }
+  function streamCreatedHandler(event) {
+    // Subscribe to any new streams that are created
+    subscribeToStreams(event.streams);
   }
   
-  function streamCreatedHandler(event) {
-    for (var i = 0; i < event.streams.length; i++) {
-      var stream = event.streams[i];
-      if (stream.connection.connectionId == session.connection.connectionId) {
-        $("#subscriber").append("<div id='subscriber_div'></div>");
-        session.subscribe(event.streams[0], "subscriber_div");
-        $("#subscriber_div").css("width", "100%").css("height", "100%");
-      }
+  function subscribeToStreams(streams) {
+    for (var i = 0; i < streams.length; i++) {
+        var stream = streams[i];
+        if (streams[i].connection.connectionId == session.connection.connectionId) {
+              return;
+        }
+        
+        var div = document.createElement('div');
+        div.setAttribute('id', 'subscriber_div');
+        document.body.subscriber.appendChild(div);
+
+
+        session.subscribe(streams[i], div.id);
     }
   }
+
+
 
 :css
   body {

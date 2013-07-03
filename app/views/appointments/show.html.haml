@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Host:
+  = @appointment.host.profile.name + " " + @appointment.host.profile.email
+%p
+  %b Attendee:
+  = @appointment.attendee.profile.name + " " + @appointment.attendee.profile.email
+%p
+  %b Time (EST):
+  = @appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
+%p
+  %b Completed?:
+  = @appointment.completed
+%p
+  %b Length:
+  = @appointment.length
+
+= link_to 'Edit', edit_appointment_path(@appointment)
+\|
+= link_to 'Back', appointments_path

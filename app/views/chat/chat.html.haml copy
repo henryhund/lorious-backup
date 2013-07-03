@@ -1,7 +1,5 @@
 %h3= @session_id
 
-#wrapper
-
 :css
   * {
     margin: 0;
@@ -9,44 +7,33 @@
   }
   
   html, body {
-    height: 100% !important;
+    height: 100%;
     /overflow: hidden;
   }
   
   #myPublisherDiv{
-      z-index: 10;
+      z-index: 10001;
       position: absolute;
-      left: 15px !important;
-      bottom: 10px !important;
-      width: 20% !important;
-      height: 20% !important;
-      border: 1px solid white;
+        left: 10px;
+        top: 10px;
       
   
   }
   .remoteView{
-      z-index: 1;
+      z-index: 50;
       /position: absolute;
 
-      width: 100% !important;
-      height: 100% !important;
-      background-color: gray;
-      margin: auto;
-
-      border:8px solid #333333;
-      -moz-border-radius: 4px;
-      -webkit-border-radius: 4px;
-      border-radius: 4px; /* future proofing */
-      -khtml-border-radius: 4px; /* for old Konqueror browsers */
-  }
-
-  #wrapper {
-      margin: 0 auto;
-      position: relative;
       width: 800px !important;
       height: 600px !important;
-    }
-    
+      background-color: #000;
+      margin: auto;
+
+      border:5px solid red;
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px; /* future proofing */
+      -khtml-border-radius: 10px; /* for old Konqueror browsers */
+  }
   
   
 %script{:src => "https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js", :type => "text/javascript"}
@@ -68,10 +55,7 @@
   
 
   function sessionConnectedHandler(event) {
-      //var publisher = TB.initPublisher(api_key, 'myPublisherDiv');
-      $("#wrapper").append("<div id='myPublisherDiv'></div>");
-      publisher = TB.initPublisher(api_key, "myPublisherDiv");
-
+      var publisher = TB.initPublisher(api_key, 'myPublisherDiv');
       session.publish(publisher);
       
       // Subscribe to streams that were in the session when we connected
@@ -101,11 +85,10 @@
           }
           
           // Create the div to put the subscriber element in to
-          var objTo = document.getElementById('wrapper');
           var div = document.createElement('div');
-          div.setAttribute('id', 'subscriber_div');
+          div.setAttribute('id', 'stream' + streams[i].streamId);
           div.className = 'remoteView';
-          objTo.appendChild(div);
+          document.body.appendChild(div);
           
           // Subscribe to the stream
           session.subscribe(streams[i], div.id);
@@ -113,3 +96,13 @@
           
       }
   }
+  
+  
+  //$(window).on('load resize', function(){
+  
+     // if($('.remoteView').count() == 1){
+          //$('.remoteView').width($(this).width());
+     // }
+      
+      
+  //});

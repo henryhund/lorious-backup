@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
 
   has_one :profile
+  has_many :appointments, foreign_key: "host_id"
+  has_many :appointments, foreign_key: "attendee_id"
 
   protected
   

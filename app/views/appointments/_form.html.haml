@@ -1,0 +1,12 @@
+= simple_form_for(@appointment) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.collection_select :host_id, Profile.all, :user_id, :name
+    = f.collection_select :attendee_id, Profile.all, :user_id, :name
+    = f.input :time, :ampm => true, label: "Time (EST)"
+    = f.input :completed
+    = f.input :length, label: "Length (mins)"
+
+  .form-actions
+    = f.button :submit

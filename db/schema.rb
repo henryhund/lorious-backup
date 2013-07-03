@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130702180919) do
+ActiveRecord::Schema.define(:version => 20130702211354) do
+
+  create_table "appointments", :force => true do |t|
+    t.integer  "host_id"
+    t.integer  "attendee_id"
+    t.datetime "time"
+    t.boolean  "completed"
+    t.integer  "length"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
@@ -26,6 +36,8 @@ ActiveRecord::Schema.define(:version => 20130702180919) do
     t.datetime "updated_at",                                     :null => false
     t.string   "niche"
   end
+
+  add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id"
 
   create_table "requests", :force => true do |t|
     t.string   "name"

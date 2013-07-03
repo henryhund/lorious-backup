@@ -12,7 +12,7 @@ class Ability
           # can :update, Profile
           can :create, User
         else
-          can :manage, :all
+          #can :manage, :all
           #can :create, Request
           #can :create, Profile
           ##can :update, Profile
