@@ -1,0 +1,126 @@
+%h3= @session_id
+%h1= @user_type
+
+#wrapper
+
+:css
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    height: 100% !important;
+    /overflow: hidden;
+  }
+  
+  #myPublisherDiv{
+      z-index: 10;
+      position: absolute;
+      left: 15px !important;
+      bottom: 10px !important;
+      width: 20% !important;
+      height: 20% !important;
+      border: 1px solid white;
+      
+  
+  }
+  .remoteView{
+      z-index: 1;
+      /position: absolute;
+
+      width: 100% !important;
+      height: 100% !important;
+      background-color: gray;
+      margin: auto;
+
+      border:8px solid #333333;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      border-radius: 4px; /* future proofing */
+      -khtml-border-radius: 4px; /* for old Konqueror browsers */
+  }
+
+  #wrapper {
+      margin: 0 auto;
+      position: relative;
+      width: 800px !important;
+      height: 600px !important;
+    }
+
+  #controls {
+      width: 100%;
+      text-align: center;
+  }
+    
+  
+  
+%script{:src => "https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js", :type => "text/javascript"}
+
+:javascript
+  var api_key = #{ENV["OPENTOK_APIKEY"]};
+  var session_id = "#{@session_id}";
+  var token = "#{@token}";
+  
+  
+  // Enable console logs for debugging
+  TB.setLogLevel(TB.DEBUG);
+  
+  // Initialize session, set up event listeners, and connect
+  var session = TB.initSession(session_id);
+  session.addEventListener('sessionConnected', sessionConnectedHandler);
+  session.addEventListener('streamCreated', streamCreatedHandler);
+  session.connect(api_key, token);
+  
+
+  function sessionConnectedHandler(event) {
+      //var publisher = TB.initPublisher(api_key, 'myPublisherDiv');
+      $("#wrapper").append("<div id='myPublisherDiv'></div>");
+      publisher = TB.initPublisher(api_key, "myPublisherDiv");
+
+      session.publish(publisher);
+      
+      // Subscribe to streams that were in the session when we connected
+      subscribeToStreams(event.streams);
+  }
+  
+  function streamCreatedHandler(event) {
+    // Subscribe to any new streams that are created
+    subscribeToStreams(event.streams);
+  }
+  
+  //var theStreams = {};
+  var theStreams;
+  
+  function subscribeToStreams(streams) {
+      
+      theStreams = streams;
+      
+      for (var i = 0; i < streams.length; i++) {
+          // Make sure we don't subscribe to ourself
+          
+          
+          console.log(streams[i].connection.connectionId);
+          
+          if (streams[i].connection.connectionId == session.connection.connectionId) {
+              return;
+          }
+          
+          // Create the div to put the subscriber element in to
+          var objTo = document.getElementById('wrapper');
+          var div = document.createElement('div');
+          div.setAttribute('id', 'subscriber_div');
+          div.className = 'remoteView';
+          objTo.appendChild(div);
+          
+          // Subscribe to the stream
+          session.subscribe(streams[i], div.id);
+          
+          
+      }
+  }
+%br
+%br
+#controls
+  =link_to "Fullscreen", "#", class: "fullscreen-button"
+  =link_to "Hangup, review and pay", @after_route, class: "hangup-button"

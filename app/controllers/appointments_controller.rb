@@ -28,6 +28,16 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new.json
   def new
     #@appointment = Appointment.new
+    
+    #generate random string to identify appointment
+    o =  [('a'..'z'),('A'..'Z'),(0..9)].map{|i| i.to_a}.flatten
+    @hash  =  (0...10).map{ o[rand(o.length)] }.join
+
+    #generate OpenTok Session ID
+    @opentok = OpenTok::OpenTokSDK.new ENV["OPENTOK_APIKEY"], ENV["OPENTOK_APISECRET"], :api_url => ENV["OPENTOK_URL"]
+    session_properties = {OpenTok::SessionPropertyConstants::P2P_PREFERENCE => "enabled"}    # or disabled
+    @location = "lorious.com"
+    @session_id = @opentok.create_session( @location, session_properties )
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,6 +48,8 @@ class AppointmentsController < ApplicationController
   # GET /appointments/1/edit
   def edit
     #@appointment = Appointment.find(params[:id])
+    @hash = @appointment.chat_key
+    @session_id = @appointment.chat_session_id
   end
 
   # POST /appointments

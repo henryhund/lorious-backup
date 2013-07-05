@@ -1,0 +1,29 @@
+:javascript
+  $(document).ready(function(){
+  $('#signup').validate({
+      rules: {
+          "user[password]": {
+            required: true, minlength: 8
+          },
+          "user[password_confirmation]": {
+            required: true, minlength: 8, equalTo: "#password"
+          }
+      
+      },
+      messages: {
+        "user[password]": {
+            required: "Please provide a password",
+            minlength: "Your password must be at least 8 characters long"
+        },
+        "user[password_confirmation]": {
+            required: "Please provide a password",
+            minlength: "Your password must be at least 8 characters long",
+            equalTo: "Please enter the same password as above"
+        }
+    }
+  });
+     });
+
+%h3 Finish Registration
+%well
+  =render "addpassword"

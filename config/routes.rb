@@ -4,7 +4,15 @@ Lorious::Application.routes.draw do
 
   get 'chat' => "chat#new"
 
-  get "chat/test"
+  get "chat/test" => "chat#test"
+
+  get 'chat/go/:user_id/:chat_key' => "chat#chat_prep"
+  get 'chat/go/:user_id/:chat_key/start' => "chat#scheduled_chat"
+  get 'chat/go/:user_id/:chat_key/register' => "users#finish_registration"
+  get 'chat/go/:user_id/:chat_key/error' => "home#error"
+  put 'finish_pre_registration' => "users#edit_incomplete_registration"
+
+  get 'chat/go/:user_id/:chat_key/end' => "chat#chat_end"
 
   get "chat/index"
 

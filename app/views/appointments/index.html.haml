@@ -5,7 +5,7 @@
     %th Host
     %th Attendee
     %th Time (EST)
-    %th
+    %th Chat Key
     %th
     %th
 
@@ -14,6 +14,7 @@
       %td= appointment.host.profile.name
       %td= appointment.attendee.profile.name
       %td= appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
+      %td= appointment.chat_key
       %td= link_to 'Show', appointment
       %td= link_to 'Edit', edit_appointment_path(appointment)
       %td= link_to 'Destroy', appointment, :method => :delete, :data => { :confirm => 'Are you sure?' }

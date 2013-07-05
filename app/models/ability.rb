@@ -11,12 +11,22 @@ class Ability
           can :create, Profile
           # can :update, Profile
           can :create, User
+          can :finish_registration, :users
+          can :edit_incomplete_registration, :users
+          can :chat_prep, :chat
+          can :scheduled_chat, :chat
+          can :chat_end, :chat
         else
           #can :manage, :all
           #can :create, Request
           #can :create, Profile
           ##can :update, Profile
           #can :create, User
+          can :finish_registration, :users
+          can :edit_incomplete_registration, :users
+          can :chat_prep, :chat
+          can :scheduled_chat, :chat
+          can :chat_end, :chat
         end
     end
     # Define abilities for the passed in user here. For example:

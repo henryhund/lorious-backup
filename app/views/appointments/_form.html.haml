@@ -7,6 +7,8 @@
     = f.input :time, :ampm => true, label: "Time (EST)"
     = f.input :completed
     = f.input :length, label: "Length (mins)"
+    = f.input :chat_key, as: :hidden, input_html: { value: @hash }
+    = f.input :chat_session_id, as: :hidden, input_html: { value: @session_id }
 
   .form-actions
     = f.button :submit

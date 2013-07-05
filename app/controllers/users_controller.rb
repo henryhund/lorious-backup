@@ -1,5 +1,31 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:finish_registration, :edit_incomplete_registration]
+
+  def finish_registration
+    authorize! :finish_registration, :users
+    @user_id = params[:user_id]
+    @chat_key = params[:chat_key]
+
+    @user = User.find(@user_id)
+    end
+
+
+  def edit_incomplete_registration
+    authorize! :edit_incomplete_registration, :users
+    @user_id = params[:user][:id]
+    @chat_key = params[:user][:chat_key]
+    @user = User.find(@user_id)
+    
+    @user.password = params[:user][:password]
+    @user.password_confirmation = params[:user][:password_confirmation]
+    @user.fully_registered = true
+    @user.save
+
+    @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key
+
+    redirect_to @destination
+
+  end
 
   def index
     authorize! :index, @user, :message => 'Not authorized as an administrator.'
@@ -31,4 +57,7 @@ class UsersController < ApplicationController
       redirect_to users_path, :notice => "Can't delete yourself."
     end
   end
+
+  private
+
 end
