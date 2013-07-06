@@ -6,15 +6,24 @@ class UsersController < ApplicationController
     @user_id = params[:user_id]
     @chat_key = params[:chat_key]
 
-    @user = User.find(@user_id)
+    @user = User.find_by_id(@user_id)
+
+    @appointment = Appointment.find_by_chat_key(@chat_key)
+
+    if @user != @appointment.try(:host) && @user != @appointment.try(:attendee)
+      
+      @destination = "/chat/go/" + @user_id.to_s + @chat_key + "/error"
+
+      redirect_to @destination
     end
+  end
 
 
   def edit_incomplete_registration
     authorize! :edit_incomplete_registration, :users
     @user_id = params[:user][:id]
     @chat_key = params[:user][:chat_key]
-    @user = User.find(@user_id)
+    @user = User.find_by_id(@user_id)
     
     @user.password = params[:user][:password]
     @user.password_confirmation = params[:user][:password_confirmation]

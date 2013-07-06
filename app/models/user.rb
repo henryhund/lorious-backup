@@ -16,6 +16,13 @@ class User < ActiveRecord::Base
   has_many :appointments, foreign_key: "host_id"
   has_many :appointments, foreign_key: "attendee_id"
 
+  has_many :reviews, foreign_key: "reviewee_id"
+  has_many :reviewed_users, foreign_key: "reviewer_id", class_name: "Review"
+
+  def get_review_score
+    reviews.average('rating').to_f
+  end
+
   protected
   
   # def confirmation_required?

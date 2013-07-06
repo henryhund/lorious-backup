@@ -9,6 +9,14 @@ class Appointment < ActiveRecord::Base
 
   validates :chat_key, uniqueness: true
 
+  has_one :review, foreign_key: "appointment_id", class_name: "Review"
+
+  def review_host(rating, content)
+    review = self.build_review(reviewer_id: attendee.id, reviewee_id: host.id, rating: rating, content: content)
+    review.save
+  end
+
+
 
 
 end

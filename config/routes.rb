@@ -1,4 +1,7 @@
 Lorious::Application.routes.draw do
+  resources :reviews
+
+
   resources :appointments
 
 
@@ -10,6 +13,7 @@ Lorious::Application.routes.draw do
   get 'chat/go/:user_id/:chat_key/start' => "chat#scheduled_chat"
   get 'chat/go/:user_id/:chat_key/register' => "users#finish_registration"
   get 'chat/go/:user_id/:chat_key/error' => "home#error"
+  
   put 'finish_pre_registration' => "users#edit_incomplete_registration"
 
   get 'chat/go/:user_id/:chat_key/end' => "chat#chat_end"
@@ -39,12 +43,12 @@ Lorious::Application.routes.draw do
     get 'logout' => "devise/sessions#destroy"
   end
 
-  get 'thanks' => "home#thanks"
+  # get 'thanks' => "home#thanks"
   get 'confirmed' => "home#confirmed"
 
   get 'message' => "home#message"
   get '/:niche' => "home#landing_page"
 
-  get 'chat/:session_id' => "chat#chat"
+  # get 'chat/:session_id' => "chat#chat"
 
 end

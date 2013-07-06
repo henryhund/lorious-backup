@@ -46,8 +46,9 @@ class HomeController < ApplicationController
   end
 
   def error
-
-    #send_mail("Henry @ Lorious", "henry@lorious.com", @profile.name, session[:email], "Lorious | Welcome to Lorious!", "Hi #
+    @referer = request.env['HTTP_REFERER']
+    @uri = request.env['REQUEST_URI']
+    send_mail("Errors @ Lorious", "admin@lorious.com", "Team", "admin@lorious.com", "Lorious ADMIN | Error Reported", "Error reported\r\n\r\nPage: #{@uri}\r\n\r\nPage: #{@referer}")
     redirect_to "/"
   end
 

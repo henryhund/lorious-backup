@@ -3,7 +3,7 @@ class ChatController < ApplicationController
   def test
     @opentok = OpenTok::OpenTokSDK.new ENV["OPENTOK_APIKEY"], ENV["OPENTOK_APISECRET"], :api_url => ENV["OPENTOK_URL"]
     session_properties = {OpenTok::SessionPropertyConstants::P2P_PREFERENCE => "enabled"}    # or disabled
-    @location = "localhost"
+    @location = ENV["LOCATION"]
     @session_id = @opentok.create_session( @location, session_properties )
     @token = @opentok.generate_token :session_id => @session_id, :role => OpenTok::RoleConstants::PUBLISHER
   end
@@ -14,7 +14,7 @@ class ChatController < ApplicationController
   def new
     @opentok = OpenTok::OpenTokSDK.new ENV["OPENTOK_APIKEY"], ENV["OPENTOK_APISECRET"], :api_url => ENV["OPENTOK_URL"]
     session_properties = {OpenTok::SessionPropertyConstants::P2P_PREFERENCE => "enabled"}    # or disabled
-    @location = "localhost"
+    @location = ENV["LOCATION"]
     @session_id = @opentok.create_session( @location, session_properties )
     redirect_to "/chat/#{@session_id}"
   end
@@ -90,9 +90,22 @@ class ChatController < ApplicationController
 
     @appointment = Appointment.find_by_chat_key(@chat_key)
 
-    @user == @appointment.host ? @user_type = "host" : @user_type = "attendee"
+    if @user == @appointment.host
+      @user_type = "host"
+    elsif @user == @appointment.attendee
+       @user_type = "attendee"
+    else
+      @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/error"
+      redirect_to @destination
+    end
 
+    send_mail("Appointments @ Lorious", "admin@lorious.com", "Team Lorious", "admin@lorious.com", "Lorious ADMIN | Appointment completed", "Appointment completed!\r\n\r\nHost: #{@appointment.host.profile.name}\r\n\r\n Attendee: #{@appointment.attendee.profile.name}\r\n\r\nLogin here: #{ENV["LOCATION"]}/login\r\nView requests here: #{ENV["LOCATION"]}/appointments")    
 
+    @appointment.completed = true
+
+    @appointment.save
+
+    #@review = @appointment.review.new
 
   end
 end

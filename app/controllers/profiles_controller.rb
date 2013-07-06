@@ -167,7 +167,7 @@ class ProfilesController < ApplicationController
 
       if @count > 0
         @count_pluralized = "request".pluralize(@count)
-        send_mail("Admin @ Lorious", "notifications@lorious.com", "Admin Notifications", "henry@lorious.com", "Lorious ADMIN | #{@count} new #{@count_pluralized}!", "Login here: http://lorious-mvp.herokuapp.com/login\r\nView requests here: http://lorious-mvp.herokuapp.com/requests")
+        send_mail("Admin @ Lorious", "notifications@lorious.com", "Admin Notifications", "henry@lorious.com", "Lorious ADMIN | #{@count} new #{@count_pluralized}!", "Login here: #{ENV["LOCATION"]}/login\r\nView requests here: #{ENV["LOCATION"]}/requests")
       end
 
         update_list_subscription(session[:email], "USER_TYPE", @user_type)

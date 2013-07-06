@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703194932) do
+ActiveRecord::Schema.define(:version => 20130706043835) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -56,6 +56,21 @@ ActiveRecord::Schema.define(:version => 20130703194932) do
     t.boolean  "finished",                                   :default => false
     t.decimal  "max_rate",     :precision => 8, :scale => 2
   end
+
+  create_table "reviews", :force => true do |t|
+    t.integer  "appointment_id"
+    t.integer  "reviewer_id"
+    t.integer  "reviewee_id"
+    t.decimal  "rating",         :precision => 2, :scale => 1
+    t.text     "content"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+  end
+
+  add_index "reviews", ["appointment_id"], :name => "index_reviews_on_appointment_id"
+  add_index "reviews", ["reviewee_id"], :name => "index_reviews_on_reviewee_id"
+  add_index "reviews", ["reviewer_id", "reviewee_id"], :name => "index_reviews_on_reviewer_id_and_reviewee_id", :unique => true
+  add_index "reviews", ["reviewer_id"], :name => "index_reviews_on_reviewer_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
