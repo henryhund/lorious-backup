@@ -1,7 +1,7 @@
 /*global Element */
 (function (window, document) {
     'use strict';
-    alert("yes it is working");
+    console.log("yes it is working");
 
   var keyboardAllowed = typeof Element !== 'undefined' && 'ALLOW_KEYBOARD_INPUT' in Element, // IE6 throws without typeof check
 
@@ -64,6 +64,7 @@
     screenfull = {
       request: function (elem) {
         var request = fn.requestFullscreen;
+        console.log('request function was accessed');
 
         elem = elem || document.documentElement;
 

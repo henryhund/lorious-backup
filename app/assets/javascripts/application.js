@@ -16,4 +16,5 @@
 //= require bootstrap
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+//= require screenfull.js
 //= require_tree .
