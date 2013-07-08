@@ -63,6 +63,7 @@ class ProfilesController < ApplicationController
   end
 
   def create_before_signup
+    # find_or_create
     @user = User.find_by_email(params[:profile][:email])
     if @user.blank?
       session[:new_profile] = true

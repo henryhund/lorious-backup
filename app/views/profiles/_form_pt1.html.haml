@@ -5,6 +5,5 @@
     = f.input :fname, label: false, input_html: {placeholder: "Your first name", id: "fname"}
     = f.input :email, label: false, input_html: {placeholder: "Your email", id: "email"}
     = f.input :niche, input_html: {value: @niche}, as: :hidden
-
-  .form-actions
-    = f.button :submit, "Get started!"
+    
+  = f.button :submit, "Get Started!"

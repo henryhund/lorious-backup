@@ -17,29 +17,41 @@
   });
     });
 
-%h3
-  [Lorious Logo]
-  .pull-right 
-    =@headline
-%br 
-%br 
-%br 
-.row
-  .span6
-    How it works
-    %p 1
-    %p 2
-    %p 3
-  .span6
-    .well
-      =render "profiles/form_pt1"
-      / %form#signup.signup-form{:action => "https://app.getresponse.com/add_contact_webform.html", :method => "POST", :name => "signup"}
-      /   %input.required.name-entry{:name => "name", :placeholder => "First name", :style => "color: rgb(192, 192, 192);", :type => "text"}/
-      /   %input.required.email.email-entry{:name => "email", :placeholder => "Email address", :style => "color: rgb(192, 192, 192);", :type => "text"}/
-      /   %input.expertise.email-entry{:name => "custom_Expertise", :placeholder => "Your expertise", :style => "color: rgb(192, 192, 192);", :type => "text"}/
-      /   %br
-      /   %button#send.call-to-action.send{:type => "submit"} Send
-      /   %input{:name => "webform_id", :type => "hidden", :value => "465766"}/
-      / %script{:src => "https://app.getresponse.com/view_webform.js?wid=465766&mg_param1=1", :type => "text/javascript"}
-      / %script{:src => "https://app.getresponse.com/view_webform.js?wid=465766&mg_param1=1", :type => "text/javascript"}
+
+%section.row-fluid.hero
+  =image_tag "rails.png"
+  %h2 Need Advice? Talk to An Expert Today.
+  %p Struggling with a problem? Get solutions that are tailored for you. Lorious helps connect people with questions to the best experts possible, so you don't have to waste time combing the internet for answers.
+%section.row-fluid.how-it-works
+  .span6.landing-left
+    %h1 How it works...
+    %p Loriou sis a simple 3 step process for online learing.
+  .span6.landing-right
+    %ul
+      %li
+        .number
+          1
+        .copy
+          %h3 Find an expert
+          %p Get the expert best equipped to help you. Fees vary by expert.
+      %li
+        .number
+          2
+        .copy
+          %h3 Schedule an appointment
+          %p Choose a time that owrks for both you and your expert
+      %li
+        .number
+          3
+        .copy
+          %h3 Videochat
+          %p Talk for 5 minutes for 5 hours, until you've gotten the help you need.
+%section.row-fluid.help-us-out
+  .span6.landing-left
+    %h1 Help us out!
+    %p Sing up to help us with beta testing. We're in need of experts as well as people who need advice.
+  .span6.landing-right
+    =render "profiles/form_pt1"
+
+= render 'nav_footer'
 
