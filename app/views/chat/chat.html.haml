@@ -12,12 +12,13 @@
 
 %h3= @session_id
 
+#video_controls
+  =button_to "View Fullscreen", "#", {id: "go_fullscreen"}
+  =button_to "Disconnect", "#", {id: "disconnect_button"}
+
 #wrapper
   #remoteView
-  #video_controls
-    =button_to "View Fullscreen", "#", {id: "go_fullscreen"}
-    =button_to "Disconnect", "#", {id: "disconnect_button"}
-
+  
 / :css
 /   * {
 /     margin: 0;

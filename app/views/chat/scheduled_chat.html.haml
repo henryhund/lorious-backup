@@ -1,13 +1,11 @@
 %h3= @session_id
 %h1= @user_type
 
-%br
-%br
 #wrapper
   #remoteView
-  #video_controls
-    %button#go_fullscreen View Fullscreen
-    %button#disconnect_button Disconnect
+#video_controls
+  %button#go_fullscreen View Fullscreen
+  %button#disconnect_button Disconnect
 
 
 %script{:src => "https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js", :type => "text/javascript"}
