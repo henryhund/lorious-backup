@@ -1,6 +1,7 @@
 /*global Element */
 (function (window, document) {
     'use strict';
+    alert("yes it is working");
 
   var keyboardAllowed = typeof Element !== 'undefined' && 'ALLOW_KEYBOARD_INPUT' in Element, // IE6 throws without typeof check
 
