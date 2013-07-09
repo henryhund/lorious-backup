@@ -1,0 +1,16 @@
+%section.row-fluid.nav-footer
+  .span2.offset1
+    =image_tag "rails.png"
+  .span3
+    %ul
+      %li= link_to "Home", landing_page_url
+      %li= link_to "FAQ", "#"
+      %li= mail_to "questions@lorious.com", "Contact Us"
+  .span3.social
+    %a{href: "https://www.facebook.com/pages/Lorious/357664217669583", target: "_blank"}
+      .facebook-btn
+      Facebook
+  .span3.social
+    %a{href: "http://www.twitter.com/lorioustweets", target:"_blank"}
+      .twitter-btn
+      twitter

@@ -17,15 +17,25 @@
   });
     });
 
+%section.row-fluid.landing-upper-nav
+  .span6.logo
+    =image_tag "rails.png"
+  .span6.nav
+    %ul
+      %li Contact Us
+      %li FAQ
 
 %section.row-fluid.hero
-  =image_tag "rails.png"
-  %h2 Need Advice? Talk to An Expert Today.
-  %p Struggling with a problem? Get solutions that are tailored for you. Lorious helps connect people with questions to the best experts possible, so you don't have to waste time combing the internet for answers.
+  .span8.offset2
+    %h2 Need Advice? Talk to An Expert Today.
+    %p Struggling with a problem? Get solutions that are tailored for you. Lorious helps connect people with questions to the best experts possible, so you don't have to waste time combing the internet for answers.
+    %a(href="#help-us-out")
+      %span.button Sign up
+
 %section.row-fluid.how-it-works
-  .span6.landing-left
+  .span5.offset1.landing-left
     %h1 How it works...
-    %p Loriou sis a simple 3 step process for online learing.
+    %p Lorious is a simple 3 step process for online learing.
   .span6.landing-right
     %ul
       %li
@@ -46,12 +56,22 @@
         .copy
           %h3 Videochat
           %p Talk for 5 minutes for 5 hours, until you've gotten the help you need.
-%section.row-fluid.help-us-out
-  .span6.landing-left
+%section.row-fluid.help-us-out#help-us-out
+  .span5.offset1.landing-left
     %h1 Help us out!
-    %p Sing up to help us with beta testing. We're in need of experts as well as people who need advice.
+    %p Sign up to help us with beta testing. We're in need of experts as well as people who need advice.
   .span6.landing-right
-    =render "profiles/form_pt1"
+    = simple_form_for @profile, url: profiles_pre_path, method: :post, html: {id: "signup"} do |f|
+      = f.error_notification
 
-= render 'nav_footer'
+      .form-inputs
+        = f.input :fname, label: false, input_html: {placeholder: "Your first name", id: "fname"}
+        = f.input :email, label: false, input_html: {placeholder: "Your email", id: "email"}
+        = f.input :niche, input_html: {value: @niche}, as: :hidden
+        
+      = f.button :submit, "Find an Expert", class: "button"
+      %span.eitheror -or-
+      = f.button :submit, "Be an Expert", class: "button"
+
+= render 'layouts/nav_footer'
 

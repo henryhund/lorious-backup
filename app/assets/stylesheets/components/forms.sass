@@ -1,0 +1,42 @@
+=landing-placeholder-style
+  font-family: 'Avenir'
+  color: #77bea7
+  font-size: 16px
+  text-transform: uppercase
+
+  // add your defaults here.
+  // if you need more than one style-group you can either create several mixins,
+  // or just name the style-groups and take a single style-group-name argument.
+ 
+=landing-apply-placeholders
+  &::-webkit-input-placeholder
+    +landing-placeholder-style
+  &:-moz-placeholder
+    +landing-placeholder-style
+  &.placeholder 
+    +landing-placeholder-style
+ 
+// Template --------------------------------------------------------------
+// you can create as many templates as you need for your site
+
+// Placeholders --------------------------------------------------------------
+// call the template with @extend when you can
+// or, when fighting the cascade you can call the mixin
+ 
+.help-us-out
+  .landing-right
+    form
+      padding-top: 50px
+      margin: 0
+      input
+        +landing-apply-placeholders
+        width: 75%
+        height: 40px
+        text-indent: 10px
+        font-family: 'Avenir'
+        color: #77bea7
+        font-size: 16px
+      .button
+        width: 30%
+        background-color: #77bda7 !important
+        -webkit-appearance: none

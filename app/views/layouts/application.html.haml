@@ -20,10 +20,10 @@
             .container
               = render 'layouts/navigation'
     #main{:role => "main"}
-      .container
-        .span12
-          = # render 'layouts/messages'
-          = yield
-          = # render 'home/footer'
+      .container-fluid
+        
+        = render 'layouts/messages'
+        = yield
+        = render 'layouts/footer'
       / ! end of .container
     / ! end of #main
