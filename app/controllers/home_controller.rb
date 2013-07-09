@@ -4,8 +4,9 @@ class HomeController < ApplicationController
   end
 
   def landing_page
+    @disable_header = true
     @profile = Profile.new
-    @niche = params[:niche] || "Lorious.com"
+    @niche = params[:niche] || "crafting"
 
 
     case @niche
