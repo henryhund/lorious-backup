@@ -5,6 +5,8 @@ var vid_obj = {};
 vid_obj.connected = false;
 vid_obj.waiting_to_connect = false;
 
+vid_obj.timerNumb = 0;
+
 function sessionConnectedHandler(event) {
 
     $("#wrapper").append("<div id='myPublisherDiv'></div>");
@@ -62,6 +64,10 @@ vid_obj.timerCount = function(){
 
     
     if(Object.keys(vid_obj.session.connections).length > 1){
+    
+        vid_obj.timerNumb++;
+        
+        $('#video_timer_seconds').html(vid_obj.timerNumb);
     
         if(vid_obj.connected == false){
             vid_obj.reportAction('connect');
