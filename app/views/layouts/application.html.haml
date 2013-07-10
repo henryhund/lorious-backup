@@ -7,8 +7,8 @@
       %meta{:content => content_for?(:description) ? yield(:description) : "Lorious", :name => "description"}
         /= javascript_include_tag params[:controller]
         = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Archivo+Narrow:400,400italic,700|Roboto+Condensed:300|Oswald:400,700"
-        - if params[:controller] == "chat"
-          stylesheet_link_tag params[:controller]
+        /- if params[:controller] == "chat"
+        /  stylesheet_link_tag params[:controller]
         = stylesheet_link_tag "application", :media => "all"
         = javascript_include_tag "application"
         = csrf_meta_tags

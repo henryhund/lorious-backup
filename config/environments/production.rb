@@ -64,7 +64,7 @@ Lorious::Application.configure do
   GoogleTagManager.gtm_id = "GTM-39XV" # Where GTM-XXXX is your container ID from Google Tag Manager
 
 
-  config.action_mailer.default_url_options = { :host => 'lorious.com' }
+  config.action_mailer.default_url_options = { :host => 'www.lorious.com' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
   config.action_mailer.delivery_method = :smtp
