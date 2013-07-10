@@ -2,9 +2,9 @@
 %section.row-fluid.hero-more-page
   .span8.offset2
     %h2 Thanks for signing up!
-    %p We're still putting the final touches on Lorious, but in the meantime, we want to make sure everyone has access to the help they need.
+    %p We're still working on making our website perfect for you, but in the meantime, we want to make sure everyone has access to the help they need.
     %p We'd love for you to tell us what brings you to Lorious! We'll do our best to help you ASAP.
-    %p.small (Your feedback will help us get started, too!)
+    %p.small (Don't worry, it is all optional. But, if you want, you can sign up as someone who needs help as well as someone who can give it.)
 
 = simple_form_for @profile, url: profiles_preup_path, method: :post, html: { class: "more-form"} do |f|
 
@@ -40,6 +40,7 @@
           %span.label-text 
             I am an expert on:
             = fexp.input_field :expertise, label: false, class:"more-text", placeholder: @sample_expertise, style: "width: 300px"
+
         / .bottom-border
         / .span12
         /   %span.label-text 
@@ -49,7 +50,7 @@
 
   %section.row-fluid.profile-submit
     .span10.offset1
-      = f.button :submit, "Let us help you!"
+      = f.button :submit, "Sign up", class: "button"
 
 
 / %h3 

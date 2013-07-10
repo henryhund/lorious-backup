@@ -1,16 +1,17 @@
 %section.row-fluid.nav-footer
   .span2.offset1
-    =image_tag "https://s3.amazonaws.com/lorious/layout/logo-transparent-green-dot.png", width: "120px"
+    %a{href: "/"}
+      =image_tag 'https://s3.amazonaws.com/lorious/layout/lorious_2color.svg', width: '120px', class: "logo"
   .span3
     %ul
       %li= link_to "Home", root_path
-      %li= link_to "FAQ", "#"
+      %li= link_to "FAQ", faq_path
       %li= mail_to "questions@lorious.com", "Contact Us"
   .span3.social
     %a{href: "https://www.facebook.com/pages/Lorious/357664217669583", target: "_blank"}
-      .facebook-btn
+      =image_tag "https://s3.amazonaws.com/lorious/layout/elements/social/facebook_green_icon.svg", width: "110px"
       Facebook
   .span3.social
     %a{href: "http://www.twitter.com/lorioustweets", target:"_blank"}
-      .twitter-btn
-      twitter
+      =image_tag "https://s3.amazonaws.com/lorious/layout/elements/social/twitter_green_icon.svg", width: "110px"
+      Twitter

@@ -19,47 +19,52 @@
 
 %section.row-fluid.landing-upper-nav
   .span6.logo
-    =image_tag "https://s3.amazonaws.com/lorious/layout/logo-transparent-green-dot.png", width: "100px"
+    %a{href: "/"}
+      =image_tag "https://s3.amazonaws.com/lorious/layout/lorious_2color.svg", width: "100px"
   .span6.nav
     %ul
-      %li Contact Us
-      %li FAQ
+      %li= link_to "FAQ", faq_path
+      %li= mail_to "questions@lorious.com", "Contact Us"
 
 %section.row-fluid.hero.hero-landing-page
   .span8.offset2
-    %h2 Need Advice? Talk to An Expert Today.
-    %p Struggling with a problem? Get solutions that are tailored for you. Lorious helps connect people with questions to the best experts possible, so you don't have to waste time combing the internet for answers.
+    %h2 Take your craft to the next level
+    %p Stuck on a DIY project? Trying to master a new technique? Lorious connects you with experienced makers so you can find someone to guide you through challenges and help you find solutions - anywhere, anytime
     %a(href="#help-us-out")
       %span.button Sign up
+    %br
+    %br
+    %br
 
 %section.row-fluid.how-it-works
   .span5.offset1.landing-left
     %h1 How it works...
-    %p Lorious is a simple 3 step process for online learing.
-  .span6.landing-right
+    %p Lorious puts you in touch with expert crafters so you can get face-to-face instruction online, tailored to your quests
+  .span5.landing-right
     %ul
       %li
         .number
-          1
+          =image_tag "https://s3.amazonaws.com/lorious/layout/elements/landing_page/1.svg", width: "80px"
         .copy
-          %h3 Find an expert
-          %p Get the expert best equipped to help you. Fees vary by expert.
+          %h3 Find the perfect expert
+          %p Access our community and find someone to help you with anything from knitting stiches to woodworking techniques to cake decorating
       %li
         .number
-          2
+          =image_tag "https://s3.amazonaws.com/lorious/layout/elements/landing_page/2.svg", width: "80px"
         .copy
-          %h3 Schedule an appointment
-          %p Choose a time that owrks for both you and your expert
+          %h3 Get in touch
+          %p Work with someone instantly or schedule a conversation at a convenient time
       %li
         .number
-          3
+          =image_tag "https://s3.amazonaws.com/lorious/layout/elements/landing_page/3.svg", width: "80px"
         .copy
-          %h3 Videochat
-          %p Talk for 5 minutes for 5 hours, until you've gotten the help you need.
+          %h3 Connect and videochat
+          %p Talk for 5 minutes or 5 hours, until you've gotten the help you need
 %section.row-fluid.help-us-out#help-us-out
   .span5.offset1.landing-left
     %h1 Help us out!
-    %p Sign up to help us with beta testing. We're in need of experts as well as people who need advice.
+    %p Sign up to help us with beta testing. Whether you need advice or can give advice, we want you.
+    %p (Not a crafter? We'll be adding more topics soon. Sign up to be notified when we do, or to tell us what your interests are.)
   .span6.landing-right
     = simple_form_for @profile, url: profiles_pre_path, method: :post, html: {id: "signup"} do |f|
       = f.error_notification

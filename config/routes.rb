@@ -4,6 +4,7 @@ Lorious::Application.routes.draw do
 
   resources :appointments
 
+  get 'faq' => 'home#faq'
 
   get 'chat' => "chat#new"
 

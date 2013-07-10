@@ -18,6 +18,10 @@ class HomeController < ApplicationController
 
   end
 
+  def faq
+
+  end
+
   def more
     @email = session[:email]
     @profile = Profile.find_by_email(@email)
@@ -41,7 +45,17 @@ class HomeController < ApplicationController
   def confirmed
     if session[:new_profile] == true
       @profile = Profile.find_by_email(session[:email])
-      send_mail("Henry @ Lorious", "henry@lorious.com", @profile.name, session[:email], "Lorious | Welcome to Lorious!", "Hi #{@profile.fname},\r\n\r\nThanks for signing up to learn more about Lorious! We can't wait to begin helping to connect you with interesting people. We will get back to you as soon as possible.\r\n\r\nIn the meantime, we will keep you up to date with what is going on at Lorious form time to time.\r\n\r\n-Henry")
+      # send_mail("Henry from Lorious", "henry@lorious.com", 
+      #   @profile.name, 
+      #   session[:email], 
+      #   "Lorious | #{@profile.fname} - Welcome to Lorious!", 
+      #   "Hi #{@profile.fname},
+      #   \r\nThank you for signing up for Lorious! We can't wait to start connecting you to our community.
+      #   \r\nLorious is an online marketplace for knowledge and expertise. People like you turn to Lorious in search of experts for advice, to solve a problem or to learn a new skill. We hope to help you and all of our users grow and succeed by giving you convenient access via to the experts you need.
+      #   \r\nWe hope you will be one of the first members of our community, which will start as an exclusive group of people committed to learning and helping others to learn. Your feedback will be incredibly valuable in shaping our ability to help our community succeed.
+      #   \r\nWe'll get back to you as soon as we possibly can so we can get started with helping you tackle your challenges.
+      #   \r\nSincerely,
+      #   \r\nHenry, co-founder, http://www.lorious.com")
     end
 
   end

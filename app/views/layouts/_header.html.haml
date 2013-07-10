@@ -1,7 +1,8 @@
 %section.row-fluid.nav-header
   .span6.logo
-    =image_tag "https://s3.amazonaws.com/lorious/layout/logo-transparent-green-dot.png", width: "110px"
+    %a{href: "/"}
+      =image_tag "https://s3.amazonaws.com/lorious/layout/lorious_2color.svg", width: "110px"
   .span6.nav
     %ul
-      %li Contact Us
-      %li FAQ
+      %li= link_to "FAQ", faq_path
+      %li= mail_to "questions@lorious.com", "Contact Us"
