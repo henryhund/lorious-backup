@@ -1,11 +1,9 @@
-
 //(function(){
 
 var vid_obj = {};
 
 vid_obj.connected = false;
 vid_obj.waiting_to_connect = false;
-vid_obj.is_fullscreen = false;
 
 function sessionConnectedHandler(event) {
 
@@ -36,9 +34,7 @@ function exceptionHandler(event){
 
 vid_obj.subscribeToStreams = function(streams) {
     
-    console.log('new stream')
-    
-    //vid_obj.theStreams = streams;
+    //console.log('new stream')
     
     for (var i = 0; i < streams.length; i++) {
     
@@ -64,28 +60,6 @@ vid_obj.subscribeToStreams = function(streams) {
 
 vid_obj.timerCount = function(){
 
-    
-        //if(vid_obj.waiting_to_connect == true && vid_obj.session.connected == false){
-    //}
-    if(vid_obj.waiting_to_connect == true && vid_obj.subscriber.stream == null){
-        console.log('waiting_to_connect hit');
-        
-        vid_obj.waiting_to_connect = false;
-    
-        //vid_obj.session.connect(vid_obj.api_key, vid_obj.token);
-        
-        //vid_obj.subscribeToStreams(vid_obj.theStreams[0], 'remoteView');
-        if($("#remoteView").length == 0){
-            var div = $('<div id="remoteView"></div>');
-            $('#wrapper').append($(div));
-            
-        }
-    
-        //vid_obj.subscriber.subscribe(vid_obj.remoteStream);
-    
-        //vid_obj.session.subscribe(vid_obj.remoteStream, 'remoteView', {width: "100%", height: "100%"});
-    
-    }
     
     if(Object.keys(vid_obj.session.connections).length > 1){
     
@@ -137,7 +111,6 @@ vid_obj.activate = function(){
         
         $('#go_fullscreen').click(function(){
         
-            //screenfull.toggle($('#wrapper'));
             screenfull.request(document.getElementById('wrapper'));
             
         });
@@ -145,29 +118,12 @@ vid_obj.activate = function(){
         $(document).on(screenfull.raw.fullscreenchange, function () {
             if (screenfull.isFullscreen && !$('#wrapper').hasClass('wrapper_fullscreen')) {
                 
-                //vid_obj.session.unsubscribe(vid_obj.subscriber);
-                
-                vid_obj.do_unsubscribe();
-                
-                //vid_obj.session.disconnect();
-                
-                //vid_obj.waiting_to_connect = true;
-                
-                vid_obj.is_fullscreen = true;
-                
+                console.log('adding class "wrapper_fullscreen" to #wrapper');
                 $('#wrapper').addClass('wrapper_fullscreen');
             
             }else if(!screenfull.isFullscreen && $('#wrapper').hasClass('wrapper_fullscreen')){
             
-                //vid_obj.session.unsubscribe(vid_obj.subscriber);
-                
-                vid_obj.do_unsubscribe();
-                
-                //vid_obj.session.disconnect();
-                
-                //vid_obj.waiting_to_connect = true;
-                
-                vid_obj.is_fullscreen = false;
+                console.log('removing class "wrapper_fullscreen" to #wrapper');
                 
                 $('#wrapper').removeClass('wrapper_fullscreen');
             
@@ -194,13 +150,6 @@ vid_obj.activate = function(){
     vid_obj.sessionTimer = window.setInterval(vid_obj.timerCount, 1000);
     
 };
-
-vid_obj.do_unsubscribe = function(){
-    //vid_obj.session.unsubscribe(vid_obj.subscriber);
-    
-    //vid_obj.waiting_to_connect = true;
-    
-}
 
 
 //});
