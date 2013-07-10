@@ -31,7 +31,7 @@ Lorious::Application.routes.draw do
   #  root :to => 'requests#index'
   # end
 
-  root :to => "home#landing_page", :as => 'landing_page'
+  root :to => "home#landing_page"
   get 'welcome' => "home#more"
   # post 'welcome' => "requests#new"
 

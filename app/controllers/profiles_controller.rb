@@ -133,6 +133,17 @@ class ProfilesController < ApplicationController
     @count = 0
     @user_type = "none"
 
+    @fname = params[:profile][:fname]
+    @lname = params[:profile][:lname]
+
+    @name = @fname + " " + @lname
+
+    @user = User.find_by_email(session[:email])
+
+    @user.name = @name
+
+    @user.save
+
       unless params[:request_exp].try(:[],:expertise) == ""
         @request_exp = @profile.requests.new
         @request_exp.request_type = "expert"

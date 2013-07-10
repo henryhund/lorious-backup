@@ -19,7 +19,7 @@
 
 %section.row-fluid.landing-upper-nav
   .span6.logo
-    =image_tag "rails.png"
+    =image_tag "https://s3.amazonaws.com/lorious/layout/logo-transparent-green-dot.png", width: "100px"
   .span6.nav
     %ul
       %li Contact Us
@@ -72,6 +72,4 @@
       = f.button :submit, "Find an Expert", class: "button"
       %span.eitheror -or-
       = f.button :submit, "Be an Expert", class: "button"
-
-= render 'layouts/nav_footer'
 
