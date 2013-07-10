@@ -5,7 +5,10 @@ class RequestsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @requests = Request.all
+    @requests_user = Request.where(request_type:"user", finished: false).order("created_at ASC")
+    @requests_expert = Request.where(request_type:"expert", finished: false).order("created_at ASC")
+
+    @requests_history = Request.where(finished: true).order("created_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb

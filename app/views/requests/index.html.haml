@@ -1,34 +1,83 @@
-%h1 Listing requests
-
+%h1 Listing Requests
+%h3 Requests FOR Experts
 %table.table
   %tr
     %th Name
     %th Email
-    %th Expertise
-    %th Help needed
+    %th Interest
     %th Time needed
-    %th Max rate
+    %th Hourly Rate
     %th Created At
-    %th Status
+    %th Horizon
     %th Options
     %th
     %th
 
-  - @requests.each do |request|
+  - @requests_user.each do |request|
     %tr
-      %td= request.name
-      %td= request.email
+      %td= request.profile.try(:name)
+      %td= request.profile.try(:email)
       %td= request.expertise
-      %td= request.help_needed
       %td= request.time_needed
       %td= request.max_rate
-      %td= request.created_at
-      %td= request.status
+      %td= request.created_at.strftime("%-m/%-d/%Y %l:%M %p")
+      %td= request.horizon
       %td= link_to 'Show', request
       %td= link_to 'Edit', edit_request_path(request)
       %td= link_to 'Destroy', request, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
+%br
+%br
+
+%h3 Requests FROM Experts
+%table.table
+  %tr
+    %th Name
+    %th Email
+    %th Expertise
+    %th Hourly Rate
+    %th Created At
+    %th Options
+    %th
+    %th
+
+  - @requests_expert.each do |request|
+    %tr
+      %td= request.profile.try(:name)
+      %td= request.profile.try(:email)
+      %td= request.expertise
+      %td= request.max_rate
+      %td= request.created_at.strftime("%-m/%-d/%Y %l:%M %p")
+      %td= link_to 'Show', request
+      %td= link_to 'Edit', edit_request_path(request)
+      %td= link_to 'Destroy', request, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+%br
+%br
+
+%h3 Request History
+%table.table
+  %tr
+    %th Name
+    %th Email
+    %th Interest
+    %th Created At
+    %th Options
+    %th
+    %th
+
+  - @requests_history.each do |request|
+    %tr
+      %td= request.profile.try(:name)
+      %td= request.profile.try(:email)
+      %td= request.expertise
+      %td= request.created_at.strftime("%-m/%-d/%Y %l:%M %p")
+      %td= link_to 'Show', request
+      %td= link_to 'Edit', edit_request_path(request)
+      %td= link_to 'Destroy', request, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
 
 = link_to 'New Request', new_request_path
 %br

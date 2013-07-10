@@ -1,0 +1,35 @@
+%h1 Listing profiles
+
+%table.table
+  %tr
+
+    %th Name
+    %th Email
+    %th Latest Niche
+    /%th Original Niche
+    %th Expertise
+    %th Interest
+    %th Expertise hourly
+    %th Interest hourly
+    %th
+    %th
+    %th
+
+  - @profiles.each do |profile|
+    -email = profile.email
+    %tr
+      %td= profile.name
+      %td= email
+      %td= profile.niche
+      /%td= @original_niche[email]
+      %td= profile.expertise
+      %td= profile.interest
+      %td= profile.expertise_hourly
+      %td= profile.interest_hourly
+      %td= link_to 'Show', profile
+      %td= link_to 'Edit', edit_profile_path(profile)
+      %td= link_to 'Destroy', profile, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Profile', new_profile_path

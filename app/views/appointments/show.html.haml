@@ -1,0 +1,31 @@
+%p#notice= notice
+
+%p
+  %b Host:
+  = @appointment.host.profile.name + " " + @appointment.host.email
+  Link: 
+  = ENV["LOCATION"] + "/chat/go/" + @appointment.host.id.to_s + "/" + @appointment.chat_key
+%p
+  %b Attendee:
+  = @appointment.attendee.profile.name + " " + @appointment.attendee.email
+  Link: 
+  = ENV["LOCATION"] + "/chat/go/" + @appointment.attendee.id.to_s + "/" + @appointment.chat_key
+%p
+  %b Time (EST):
+  = @appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
+%p
+  %b Key:
+  = @appointment.chat_key
+%p
+  %b Session ID:
+  = @appointment.chat_session_id
+%p
+  %b Completed?:
+  = @appointment.completed
+%p
+  %b Length:
+  = @appointment.length
+
+= link_to 'Edit', edit_appointment_path(@appointment)
+|
+= link_to 'Back', appointments_path

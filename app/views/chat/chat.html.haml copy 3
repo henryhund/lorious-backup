@@ -1,0 +1,100 @@
+%script{:src => "https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js", :type => "text/javascript"}
+
+:javascript
+  var api_key = #{ENV["OPENTOK_APIKEY"]};
+  var session_id = "#{@session_id}";
+  var token = "#{@token}";
+  
+  var session;
+  var publisher;
+  
+  $(document).ready(function() {
+    TB.setLogLevel(5);
+    session = TB.initSession(session_id);
+    session.addEventListener("sessionConnected", sessionConnectedHandler);
+    session.addEventListener("streamCreated", streamCreatedHandler);
+    session.connect(api_key, token);
+  });
+  
+  function sessionConnectedHandler(event) {
+    publisher = TB.initPublisher(api_key, 'publisher');
+    session.publish(publisher);
+    //$("#publisher").append("<div id='publisher_div'></div>");
+
+     //session.publish();
+     subscribeToStreams(event.streams);
+  }
+  function streamCreatedHandler(event) {
+    // Subscribe to any new streams that are created
+    subscribeToStreams(event.streams);
+  }
+  
+  function subscribeToStreams(streams) {
+    for (var i = 0; i < streams.length; i++) {
+        var stream = streams[i];
+        if (streams[i].connection.connectionId == session.connection.connectionId) {
+              return;
+        }
+        
+        var div = document.createElement('div');
+        div.setAttribute('id', 'subscriber_div');
+        document.body.subscriber.appendChild(div);
+
+
+        session.subscribe(streams[i], div.id);
+    }
+  }
+
+
+
+:css
+  body {
+    text-align: center;
+  }
+  
+  #wrapper {
+    margin: 0 auto;
+    position: relative;
+    width: 640px;
+    height: 480px;
+  }
+  
+  #subscriber {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    
+  }
+  
+  #publisher {
+    position: absolute;
+    width: 160px;
+    height: 120px;
+    z-index: 10;
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  #publisher_div {
+    border: 1px solid white;
+  }
+  
+  #subscriber_div, #publisher_div {
+    width: 100%;
+    height: 100%;
+
+  }
+  .overlay {  
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:1000;
+  }
+    
+#wrapper
+  #subscriber
+  #publisher
+

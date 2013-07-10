@@ -11,7 +11,35 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627205523) do
+ActiveRecord::Schema.define(:version => 20130706043835) do
+
+  create_table "appointments", :force => true do |t|
+    t.integer  "host_id"
+    t.integer  "attendee_id"
+    t.datetime "time"
+    t.boolean  "completed"
+    t.integer  "length"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "chat_key"
+    t.string   "chat_session_id"
+  end
+
+  create_table "profiles", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "fname"
+    t.string   "lname"
+    t.string   "email"
+    t.string   "expertise"
+    t.string   "interest"
+    t.decimal  "expertise_hourly", :precision => 8, :scale => 2
+    t.decimal  "interest_hourly",  :precision => 8, :scale => 2
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.string   "niche"
+  end
+
+  add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id"
 
   create_table "requests", :force => true do |t|
     t.string   "name"
@@ -19,11 +47,30 @@ ActiveRecord::Schema.define(:version => 20130627205523) do
     t.string   "expertise"
     t.string   "help_needed"
     t.string   "time_needed"
-    t.string   "max_rate"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
     t.text     "status"
+    t.string   "horizon"
+    t.integer  "profile_id"
+    t.string   "request_type"
+    t.boolean  "finished",                                   :default => false
+    t.decimal  "max_rate",     :precision => 8, :scale => 2
   end
+
+  create_table "reviews", :force => true do |t|
+    t.integer  "appointment_id"
+    t.integer  "reviewer_id"
+    t.integer  "reviewee_id"
+    t.decimal  "rating",         :precision => 2, :scale => 1
+    t.text     "content"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+  end
+
+  add_index "reviews", ["appointment_id"], :name => "index_reviews_on_appointment_id"
+  add_index "reviews", ["reviewee_id"], :name => "index_reviews_on_reviewee_id"
+  add_index "reviews", ["reviewer_id", "reviewee_id"], :name => "index_reviews_on_reviewer_id_and_reviewee_id", :unique => true
+  add_index "reviews", ["reviewer_id"], :name => "index_reviews_on_reviewer_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -37,8 +84,8 @@ ActiveRecord::Schema.define(:version => 20130627205523) do
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -47,11 +94,17 @@ ActiveRecord::Schema.define(:version => 20130627205523) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.string   "name"
+    t.string   "unconfirmed_email"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.boolean  "fully_registered",       :default => false
   end
 
+  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 

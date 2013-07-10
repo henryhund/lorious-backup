@@ -46,7 +46,7 @@ Lorious::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  # config.assets.precompile += %w( search.js )
+  config.assets.precompile += %w( search.js chat.css )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -64,7 +64,7 @@ Lorious::Application.configure do
   GoogleTagManager.gtm_id = "GTM-39XV" # Where GTM-XXXX is your container ID from Google Tag Manager
 
 
-  config.action_mailer.default_url_options = { :host => 'lorious.com' }
+  config.action_mailer.default_url_options = { :host => 'www.lorious.com' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
   config.action_mailer.delivery_method = :smtp
@@ -73,14 +73,12 @@ Lorious::Application.configure do
   config.action_mailer.default :charset => "utf-8"
 
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "example.com",
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
+    :address   => "smtp.mandrillapp.com",
+    :port      => 587,
+    :user_name => ENV["MANDRILL_USERNAME"],
+    :password  => ENV["MANDRILL_APIKEY"]
   }
+
 
 
 

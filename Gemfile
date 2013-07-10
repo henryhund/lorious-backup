@@ -4,11 +4,13 @@ gem 'rails', '3.2.13'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
+  gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
+  gem 'jquery-rails'
+  gem 'jquery-ui-rails'
 end
 
-gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'cancan'
 gem 'devise'
@@ -18,6 +20,9 @@ gem 'rolify'
 gem 'simple_form'
 gem 'jquery-validation-rails'
 gem 'google-tag-manager-rails'
+gem 'mandrill-api'
+gem 'gibbon'
+gem 'opentok'
 
 group :development do
   gem 'better_errors'

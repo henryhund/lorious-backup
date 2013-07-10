@@ -1,0 +1,22 @@
+%h3= @session_id
+%h1= @user_type
+
+#wrapper
+  #remoteView
+#video_controls
+  %button#go_fullscreen View Fullscreen
+  %button#disconnect_button Disconnect
+
+
+%script{:src => "https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js", :type => "text/javascript"}
+
+:javascript
+  $(document).ready(function() {
+    vid_obj.api_key = #{ENV["OPENTOK_APIKEY"]};
+    vid_obj.session_id = "#{@session_id}";
+    vid_obj.token = "#{@token}";
+
+    vid_obj.activate();
+
+  });
+

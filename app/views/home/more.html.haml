@@ -1,0 +1,89 @@
+
+%section.row-fluid.hero-more-page
+  .span8.offset2
+    %h2 Thanks for signing up!
+    %p We're still working on making our website perfect for you, but in the meantime, we want to make sure everyone has access to the help they need.
+    %p We'd love for you to tell us what brings you to Lorious! We'll do our best to help you ASAP.
+    %p.small (Don't worry, it is all optional. But, if you want, you can sign up as someone who needs help as well as someone who can give it.)
+
+= simple_form_for @profile, url: profiles_preup_path, method: :post, html: { class: "more-form"} do |f|
+
+  %section.row-fluid.profile-name-entry
+    .span5.offset1
+      = f.input :fname, label: false, input_html: { placeholder: "Your first name" }
+    .span5
+      = f.input :lname, label: false, input_html: { placeholder: "Your last name" }
+
+  %section.row-fluid.main-form
+    = simple_fields_for(:request_int) do |fint|
+      .span5.offset1.user-info
+        %h2 I need help
+        .span12
+          %span.label-text 
+            I need help with:
+            = fint.input_field :expertise, label: false, class:"more-text", placeholder: @sample_interest, style: "width: 300px"
+          .bottom-border
+        .span12
+          %span.label-text 
+            I want to talk with someone for:
+            = fint.input_field :time_needed, collection: ["< 30 minutes", "30-60 minutes", "60 minutes +"], label: false, class:"more-dropdown", style: "width: 205px"
+          .bottom-border
+        .span12
+          %span.label-text 
+            I need help by:
+            = fint.input_field :horizon, collection: ["a few days from now", "next week", "this month", "anytime", "all the time!"], label: false, class:"more-dropdown", style: "width: 330px"
+    = simple_fields_for(:request_exp) do |fexp|
+      .span5.expert-info
+        %h2 I want to help someone
+        %p.small (& maybe make some money)
+        .span12
+          %span.label-text 
+            I am an expert on:
+            = fexp.input_field :expertise, label: false, class:"more-text", placeholder: @sample_expertise, style: "width: 300px"
+
+        / .bottom-border
+        / .span12
+        /   %span.label-text 
+        /     I want to charge at least (per hour):
+        /     = fint.input_field :max_rate, as: :string, label: false, collection: ["$20", "next week", "this month", "anytime", "all the time!"]
+
+
+  %section.row-fluid.profile-submit
+    .span10.offset1
+      = f.button :submit, "Sign up", class: "button"
+
+
+/ %h3 
+/   Hi 
+/   = @profile.fname+","
+/   we aren't quite ready yet! But we'll help anyway! Tell us more about you
+
+/ = simple_form_for @profile, url: profiles_preup_path, method: :post do |f|
+/   = f.error_notification
+/   .form-inputs
+/     %p 
+/       My last name is 
+/       = f.input :lname, label: false, input_html: { placeholder: "Robinson, Smith, Ferguson" }
+/     %p 
+/       I am an expert in (optional)
+/       = simple_fields_for(:request_exp) do |fexp|
+/         = fexp.input :expertise, label: false, input_html: { placeholder: @sample_expertise }
+/         and I'd be willing to help people for
+/         = fexp.input :max_rate, as: :string, label: false, input_html: { placeholder: "$10, $60, $200"}
+/         per hour.    
+/     %p 
+/       And I'd be interested in learning more about
+/       = simple_fields_for(:request_int) do |fint|
+/         = fint.input :expertise, label: false, input_html: { placeholder: @sample_interest }
+/         for which I'd pay
+/         = fint.input :max_rate, as: :string, label: false, input_html: { placeholder: "$20, $30, $100"}
+/         per hour.
+/         %p
+/           I want help with this for
+        
+/           = fint.input :time_needed, label: false, input_html: { placeholder: "1, 2, 3"}
+/           hours within 
+/           = fint.input :horizon, label: false, input_html: { placeholder: "a few days, a week"} 
+
+/   .form-actions
+/     = f.button :submit, "Submit"

@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @profile.user_id
+%p
+  %b Fname:
+  = @profile.fname
+%p
+  %b Lname:
+  = @profile.lname
+%p
+  %b Email:
+  = @profile.email
+%p
+  %b Expertise:
+  = @profile.expertise
+%p
+  %b Interest:
+  = @profile.interest
+%p
+  %b Expertise hourly:
+  = @profile.expertise_hourly
+%p
+  %b Interest hourly:
+  = @profile.interest_hourly
+
+= link_to 'Edit', edit_profile_path(@profile)
+\|
+= link_to 'Back', profiles_path

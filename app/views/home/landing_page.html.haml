@@ -3,12 +3,12 @@
   $(document).ready(function(){
   $('#signup').validate({
       rules: {
-          name: "required",
+          fname: "required",
           email: "email",
       
       },
       messages: {
-          name: "Your name is required",
+          fname: "Your name is required",
           email: "Your email is required",
       },
       errorContainer: $('#errorContainer'),
@@ -17,27 +17,67 @@
   });
     });
 
-%h3
-  [Lorious Logo]
-  .pull-right Need advice? Talk to an expert today.
-%br 
-%br 
-%br 
-.row
-  .span6
-    How it works
-    %p 1
-    %p 2
-    %p 3
-  .span6
-    .well
-      %form#signup.signup-form{:action => "https://app.getresponse.com/add_contact_webform.html", :method => "POST", :name => "signup"}
-        %input.required.name-entry{:name => "name", :placeholder => "First name", :style => "color: rgb(192, 192, 192);", :type => "text"}/
-        %input.required.email.email-entry{:name => "email", :placeholder => "Email address", :style => "color: rgb(192, 192, 192);", :type => "text"}/
-        %input.expertise.email-entry{:name => "custom_Expertise", :placeholder => "Your expertise", :style => "color: rgb(192, 192, 192);", :type => "text"}/
-        %br
-        %button#send.call-to-action.send{:type => "submit"} Send
-        %input{:name => "webform_id", :type => "hidden", :value => "465766"}/
-      %script{:src => "https://app.getresponse.com/view_webform.js?wid=465766&mg_param1=1", :type => "text/javascript"}
-      %script{:src => "https://app.getresponse.com/view_webform.js?wid=465766&mg_param1=1", :type => "text/javascript"}
+%section.row-fluid.landing-upper-nav
+  .span6.logo
+    %a{href: "/"}
+      =image_tag "https://s3.amazonaws.com/lorious/layout/lorious_white.svg", width: "100px"
+  .span6.nav
+    %ul
+      %li= link_to "FAQ", faq_path
+      %li= mail_to "questions@lorious.com", "Contact Us"
+
+%section.row-fluid.hero.hero-landing-page
+  .span8.offset2
+    %h2 Take your craft to the next level
+    %p Stuck on a DIY project? Trying to master a new technique? Lorious connects you with experienced makers so you can find someone to guide you through challenges and help you find solutions&mdash;anywhere, anytime.
+    %a(href="#help-us-out")
+      %span.button Sign up
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+
+%section.row-fluid.how-it-works
+  .span5.offset1.landing-left
+    %h1 How it works...
+    %p Lorious puts you in touch with expert crafters so you can get face-to-face instruction online, tailored to your quests
+  .span5.landing-right
+    %ul
+      %li
+        .number
+          =image_tag "https://s3.amazonaws.com/lorious/layout/elements/landing_page/1.svg", width: "80px"
+        .copy
+          %h3 Find the perfect expert
+          %p Access our community and find someone to help you with anything from knitting stiches to woodworking techniques to cake decorating
+      %li
+        .number
+          =image_tag "https://s3.amazonaws.com/lorious/layout/elements/landing_page/2.svg", width: "80px"
+        .copy
+          %h3 Get in touch
+          %p Work with someone instantly or schedule a conversation at a convenient time
+      %li
+        .number
+          =image_tag "https://s3.amazonaws.com/lorious/layout/elements/landing_page/3.svg", width: "80px"
+        .copy
+          %h3 Connect and videochat
+          %p Talk for 5 minutes or 5 hours, until you've gotten the help you need
+%section.row-fluid.help-us-out#help-us-out
+  .span5.offset1.landing-left
+    %h1 Help us out!
+    %p Sign up to help us with beta testing. Whether you need advice or can give advice, we want you.
+    %p (Not a crafter? We'll be adding more topics soon. Sign up to be notified when we do, or to tell us what your interests are.)
+  .span6.landing-right
+    = simple_form_for @profile, url: profiles_pre_path, method: :post, html: {id: "signup"} do |f|
+      = f.error_notification
+
+      .form-inputs
+        = f.input :fname, label: false, input_html: {placeholder: "Your first name", id: "fname"}
+        = f.input :email, label: false, input_html: {placeholder: "Your email", id: "email"}
+        = f.input :niche, input_html: {value: @niche}, as: :hidden
+        
+      = f.button :submit, "Find an Expert", class: "button"
+      %span.eitheror -or-
+      = f.button :submit, "Be an Expert", class: "button"
 

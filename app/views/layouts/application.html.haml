@@ -2,25 +2,31 @@
 %html
   %head
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    %meta{:content => "http-equiv='X-UA-Compatible' content='chrome=1'"}
       %title= content_for?(:title) ? yield(:title) : "Lorious"
       %meta{:content => content_for?(:description) ? yield(:description) : "Lorious", :name => "description"}
+        /= javascript_include_tag params[:controller]
+        = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Archivo+Narrow:400,400italic,700|Roboto+Condensed:300|Oswald:400,700"
+        /- if params[:controller] == "chat"
+        /  stylesheet_link_tag params[:controller]
         = stylesheet_link_tag "application", :media => "all"
         = javascript_include_tag "application"
         = csrf_meta_tags
         = yield(:head)
   %body{:class => "#{controller_name} #{action_name}"}
     = google_tag_manager
-    /.navbar.navbar-fixed-top
-    /  %nav.navbar-inner
-    /    .container
-    /      = render 'layouts/navigation'
+    -if current_user.try(:id)
+      -if current_user.has_role? :admin
+        .navbar.navbar-fixed-top
+          %nav.navbar-inner
+            .container
+              = render 'layouts/navigation'
     #main{:role => "main"}
-      .container
-        .content
-          .row
-            .span12
-              = render 'layouts/messages'
-              = yield
-          %footer
+      .container-fluid
+        = render 'layouts/header' unless @disable_header
+        = #render 'layouts/messages'
+        = yield
+        = render 'layouts/nav_footer' unless @disable_footernav
+        = render 'layouts/footer'
       / ! end of .container
     / ! end of #main

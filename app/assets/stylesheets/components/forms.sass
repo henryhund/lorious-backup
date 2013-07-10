@@ -1,0 +1,129 @@
+=landing-placeholder-style
+  font-family: 'Roboto Condensed'
+  color: #77bea7
+  font-size: 16px
+  text-transform: uppercase
+
+=more-name-placeholder-style
+  font-family: 'Roboto Condensed'
+  color: #d7d7d7
+  font-size: 16px
+  text-transform: uppercase
+
+=more-placeholder-style
+  font-family: 'Roboto Condensed'
+  color: #d7d7d7
+  font-size: 16px
+
+
+  // add your defaults here.
+  // if you need more than one style-group you can either create several mixins,
+  // or just name the style-groups and take a single style-group-name argument.
+ 
+=landing-apply-placeholders
+  &::-webkit-input-placeholder
+    +landing-placeholder-style
+  &:-moz-placeholder
+    +landing-placeholder-style
+  &.placeholder 
+    +landing-placeholder-style
+
+=more-name-apply-placeholders
+  &::-webkit-input-placeholder
+    +more-name-placeholder-style
+  &:-moz-placeholder
+    +more-name-placeholder-style
+  &.placeholder 
+    +more-name-placeholder-style
+
+=more-apply-placeholders
+  &::-webkit-input-placeholder
+    +more-placeholder-style
+  &:-moz-placeholder
+    +more-placeholder-style
+  &.placeholder 
+    +more-placeholder-style
+ 
+// Template --------------------------------------------------------------
+// you can create as many templates as you need for your site
+
+// Placeholders --------------------------------------------------------------
+// call the template with @extend when you can
+// or, when fighting the cascade you can call the mixin
+ 
+.help-us-out
+  .landing-right
+    form
+      padding-top: 50px
+      margin: 0
+      input
+        +landing-apply-placeholders
+        width: 75%
+        height: 40px
+        text-indent: 10px
+        font-family: 'Roboto Condensed'
+        color: #77bea7
+        font-size: 16px
+      .button
+        text-indent: 0
+        width: 30%
+        background-color: #77bda7
+        -webkit-appearance: none
+        font-family: 'Roboto Condensed'
+        color: #ffffff
+        text-transform: uppercase
+      .button:hover
+        background-color: rgba(102, 102, 102, .3)
+
+.profile-name-entry
+  input[type='text']
+    width: 100%
+    font-family: 'Roboto Condensed'
+    font-size: 16px
+    +more-name-apply-placeholders
+    margin-top: 55px
+    margin-bottom: 55px
+    height: 40px
+    text-indent: 10px
+    color: #77bea7
+
+.main-form
+  .more-text
+    +more-apply-placeholders
+    text-indent: 10px
+    font-family: 'Roboto Condensed'
+    font-size: 16px
+    margin-left: 10px
+    color: #77bea7
+    height: 40px
+  // .more-dropdown
+  //   width: 240px
+  //   height: 34px
+  //   overflow: hidden
+  //   background: url("https://s3.amazonaws.com/lorious/layout/elements/forms/dropdown-arrow.png") no-repeat right #ddd
+  //   border: 1px solid #ccc
+  select.more-dropdown
+    text-indent: 10px
+    font-family: 'Roboto Condensed'
+    font-size: 16px
+    height: 40px
+    margin-left: 10px
+    color: #77bea7
+    background: transparent
+    -webkit-appearance: none
+    overflow: hidden
+    background: url("https://s3.amazonaws.com/lorious/layout/elements/forms/dropdown-arrow.png") no-repeat right #fff
+
+
+.profile-submit
+  .button
+    width: 75%
+    background-color: #77bda7
+    -webkit-appearance: none
+    font-family: 'Roboto Condensed'
+    color: #ffffff
+    text-transform: uppercase
+    height: 65px
+    font-size: 20px
+  .button:hover
+    background-color: rgba(102, 102, 102, .3)

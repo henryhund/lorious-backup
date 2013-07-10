@@ -1,0 +1,76 @@
+// Place all the styles related to the chat controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  /*overflow: hidden;*/
+}
+
+#myPublisherDiv{
+    z-index: 10;
+    position: absolute;
+    left: 15px !important;
+    bottom: 10px !important;
+    width: 160px !important;
+    height: 120px !important;
+    border: 1px solid white;
+}
+
+#remoteView{
+    z-index: 1;
+    
+    width: 100% !important;
+    height: 100% !important;
+    background-color: gray;
+    margin: auto;
+}
+
+#wrapper {
+  margin: 0 auto;
+  position: relative;
+  width: 800px;
+  height: 600px;
+    
+    border:8px solid #333333;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px; /* future proofing */
+    -khtml-border-radius: 4px; /* for old Konqueror browsers */
+}
+
+
+.wrapper_fullscreen{
+
+    width: 100% !important;
+    height: 100% !important;
+    
+    border: 0 !important;
+    -moz-border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    border-radius: 0 !important; /* future proofing */
+    -khtml-border-radius: 0 !important; /* for old Konqueror browsers */
+    
+}
+
+#video_controls{
+    position: relative;
+    text-align:center;
+    padding: 20px;
+
+}
+
+#video_timer{
+    padding: 20px;
+}
+
+#video_controls button{
+
+    padding: 10px 15px;
+}

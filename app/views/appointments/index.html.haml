@@ -1,0 +1,47 @@
+%h1 Listing appointments
+
+%table.table
+  %tr
+    %th Host
+    %th Attendee
+    %th Time (EST)
+    %th Chat Key
+    %th
+    %th
+
+  - @appointments_outstanding.each do |appointment|
+    %tr
+      %td= appointment.host.profile.name
+      %td= appointment.attendee.profile.name
+      %td= appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
+      %td= appointment.chat_key
+      %td= link_to 'Show', appointment
+      %td= link_to 'Edit', edit_appointment_path(appointment)
+      %td= link_to 'Destroy', appointment, :method => :delete, :data => { :confirm => 'Are you sure?' }
+%br
+
+%h1 Completed Appointments
+
+%table.table
+  %tr
+    %th Host
+    %th Attendee
+    %th Time (EST)
+    %th Length (mins)
+    %th
+    %th
+    %th
+
+  - @appointments_completed.each do |appointment|
+    %tr
+      %td= appointment.host.profile.name
+      %td= appointment.attendee.profile.name
+      %td= appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
+      %td= appointment.length
+      %td= link_to 'Show', appointment
+      %td= link_to 'Edit', edit_appointment_path(appointment)
+      %td= link_to 'Destroy', appointment, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Appointment', new_appointment_path

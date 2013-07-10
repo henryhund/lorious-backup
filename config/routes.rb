@@ -1,4 +1,31 @@
 Lorious::Application.routes.draw do
+  resources :reviews
+
+
+  resources :appointments
+
+  get 'faq' => 'home#faq'
+
+  get 'chat' => "chat#new"
+
+  get "chat/test" => "chat#test"
+
+  get 'chat/go/:user_id/:chat_key' => "chat#chat_prep"
+  get 'chat/go/:user_id/:chat_key/start' => "chat#scheduled_chat"
+  get 'chat/go/:user_id/:chat_key/register' => "users#finish_registration"
+  get 'chat/go/:user_id/:chat_key/error' => "home#error"
+  
+  put 'finish_pre_registration' => "users#edit_incomplete_registration"
+
+  get 'chat/go/:user_id/:chat_key/end' => "chat#chat_end"
+
+  get "chat/index"
+
+  post "profiles/pre" => "profiles#create_before_signup"
+  post "profiles/preup" => "profiles#update_before_signup"
+  resources :profiles
+
+
   resources :requests
 
   # authenticated :user do
@@ -6,10 +33,10 @@ Lorious::Application.routes.draw do
   # end
 
   root :to => "home#landing_page"
-  get 'welcome' => "home#landing_page"
-  post 'welcome' => "requests#new"
+  get 'welcome' => "home#more"
+  # post 'welcome' => "requests#new"
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" } 
   resources :users
 
   devise_scope :user do
@@ -17,6 +44,12 @@ Lorious::Application.routes.draw do
     get 'logout' => "devise/sessions#destroy"
   end
 
-  get 'thanks' => "home#thanks"
+  # get 'thanks' => "home#thanks"
   get 'confirmed' => "home#confirmed"
+
+  get 'message' => "home#message"
+  get '/:niche' => "home#landing_page"
+
+  # get 'chat/:session_id' => "chat#chat"
+
 end
