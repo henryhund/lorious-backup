@@ -20,6 +20,9 @@ Lorious::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  # For use with dalli, memcachier see http://blog.alexmaccaw.com/faster-deploys
+  config.assets.cache_store = :dalli_store
+
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 

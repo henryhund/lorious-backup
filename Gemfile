@@ -38,6 +38,8 @@ group :development, :test do
 end
 group :production do
   gem 'pg'
+  gem 'dalli'
+  gem 'memcachier'
 end
 group :test do
   gem 'capybara'
