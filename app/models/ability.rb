@@ -29,6 +29,7 @@ class Ability
           can :scheduled_chat, :chat
           can :chat_end, :chat
           can :test, :chat
+          # can :show, Profile
         end
     end
     # Define abilities for the passed in user here. For example:

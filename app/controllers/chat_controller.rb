@@ -68,12 +68,14 @@ class ChatController < ApplicationController
       @session_id = @appointment.chat_session_id
 
       @opentok = OpenTok::OpenTokSDK.new ENV["OPENTOK_APIKEY"], ENV["OPENTOK_APISECRET"], :api_url => ENV["OPENTOK_URL"]
-      
       @token = @opentok.generate_token :session_id => @session_id, :role => OpenTok::RoleConstants::PUBLISHER
 
       @after_route =  "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/end"
 
       @user == @appointment.host ? @user_type = "host" : @user_type = "attendee"
+      
+      @host_name = @appointment.host.profile.name
+      @attendee_name = @appointment.attendee.profile.name
 
     else
       @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/register"
