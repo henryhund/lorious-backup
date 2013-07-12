@@ -42,10 +42,11 @@
 
 %section.row-fluid.how-it-works
   .container-fluid
-    .span5.offset1.landing-left
+    .span5.landing-left
       %h1 How it works...
       %p Lorious puts you in touch with expert crafters so you can get face-to-face instruction online, tailored to your quests
-    .span5.landing-right
+    .span1
+    .span6.landing-right
       %ul
         %li
           .number
@@ -68,10 +69,11 @@
 
 %section.row-fluid.help-us-out#help-us-out
   .container-fluid
-    .span5.offset1.landing-left
+    .span5.landing-left
       %h1 Help us out!
       %p Sign up to help us with beta testing. Whether you need advice or can give advice, we want you.
       %p (Not a crafter? We'll be adding more topics soon. Sign up to be notified when we do, or to tell us what your interests are.)
+    .span1
     .span6.landing-right
       = simple_form_for @profile, url: profiles_pre_path, method: :post, html: {id: "signup"} do |f|
         = f.error_notification
