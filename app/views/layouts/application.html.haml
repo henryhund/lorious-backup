@@ -23,11 +23,11 @@
             .container
               = render 'layouts/navigation'
     #main{:role => "main"}
-      .container-fluid
-        = render 'layouts/header' unless @disable_header
-        = #render 'layouts/messages'
-        = yield
-        = render 'layouts/nav_footer' unless @disable_footernav
-        = render 'layouts/footer'
+      /.container-fluid
+      = render 'layouts/header' unless @disable_header
+      = #render 'layouts/messages'
+      = yield
+      = render 'layouts/nav_footer' unless @disable_footernav
+      = render 'layouts/footer'
       / ! end of .container
     / ! end of #main
