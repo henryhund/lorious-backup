@@ -141,7 +141,6 @@ class ProfilesController < ApplicationController
     @user = User.find_by_email(session[:email])
 
     @user.name = @name
-
     @user.save
 
       unless params[:request_exp].try(:[],:expertise) == ""
