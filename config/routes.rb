@@ -21,8 +21,6 @@ Lorious::Application.routes.draw do
 
   post 'chat/report_listener' => "chat#report_listener"
 
-
-
   put 'finish_pre_registration' => "users#edit_incomplete_registration"
 
   post "profiles/pre" => "profiles#create_before_signup"
@@ -38,6 +36,7 @@ Lorious::Application.routes.draw do
 
   root :to => "home#landing_page"
   get 'welcome' => "home#more"
+  get 'blog_home' => "home#blog_home"
   # post 'welcome' => "requests#new"
 
   devise_for :users, :controllers => { :registrations => "registrations" } 
