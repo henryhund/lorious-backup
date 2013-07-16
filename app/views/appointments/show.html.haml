@@ -23,8 +23,11 @@
   %b Completed?:
   = @appointment.completed
 %p
-  %b Length:
+  %b Reported Length (mins):
   = @appointment.length
+%p
+  %b Calculated Length (mins):
+  = @appointment.calculate_length
 
 = link_to 'Edit', edit_appointment_path(@appointment)
 |

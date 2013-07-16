@@ -17,6 +17,7 @@ class Ability
           can :scheduled_chat, :chat
           can :chat_end, :chat
           can :test, :chat
+          can :report_listener, :chat
         else
           #can :manage, :all
           #can :create, Request
@@ -29,6 +30,7 @@ class Ability
           can :scheduled_chat, :chat
           can :chat_end, :chat
           can :test, :chat
+          can :report_listener, :chat
           # can :show, Profile
         end
     end
