@@ -1,11 +1,23 @@
-%h3= @session_id
-%h1= @user_type
+%section.row-fluid.chat-page-header
+  .span10.offset1
+    %h3
+      Host: 
+      = @host_name
+    %h3
+      Attendee:
+      = @attendee_name
 
-#wrapper
-  #remoteView
-#video_controls
-  %button#go_fullscreen View Fullscreen
-  %button#disconnect_button Disconnect
+    %h1= @user_type
+
+%section.row-fluid.chat-window
+  .span12
+
+    #wrapper
+      #remoteView
+%section.row-fluid.chat-controls
+  #video_controls
+    %button#go_fullscreen View Fullscreen
+    %button#disconnect_button Disconnect
 
 
 %script{:src => "https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js", :type => "text/javascript"}
