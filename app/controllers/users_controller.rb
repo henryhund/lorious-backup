@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, except: [:finish_registration, :edit_incomplete_registration]
+  before_filter :authenticate_user!, except: [:show, :finish_registration, :edit_incomplete_registration]
 
   def finish_registration
     authorize! :finish_registration, :users
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    authorize! :index, @user, :message => 'Not authorized as an administrator'
+    # authorize! :show, @user, :message => 'Not authorized as an administrator'
     @user = User.find(params[:id])
   end
   

@@ -25,7 +25,7 @@
       .container-fluid
         = render 'layouts/header' unless @disable_header
         = #render 'layouts/messages'
-        = yield
+        = content_for?(:content) ? yield(:content) : yield
         = render 'layouts/nav_footer' unless @disable_footernav
         = render 'layouts/footer'
       / ! end of .container
