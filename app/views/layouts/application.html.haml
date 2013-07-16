@@ -23,9 +23,9 @@
             .container
               = render 'layouts/navigation'
     #main{:role => "main"}
-        = render 'layouts/header' unless @disable_header
-        = #render 'layouts/messages'
-        = content_for?(:content) ? yield(:content) : yield
-        = render 'layouts/nav_footer' unless @disable_footernav
-        = render 'layouts/footer'
+      = render 'layouts/header' unless @disable_header
+      = #render 'layouts/messages'
+      = content_for?(:content) ? yield(:content) : yield
+      = render 'layouts/nav_footer' unless @disable_footernav
+      = render 'layouts/footer'
 
