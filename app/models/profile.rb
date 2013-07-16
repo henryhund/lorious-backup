@@ -3,9 +3,9 @@ class Profile < ActiveRecord::Base
   validates :email, presence: true
   validates :fname, presence: true
 
-belongs_to :user
+  belongs_to :user
 
-has_many :requests
+  has_many :requests
 
   def long_name
     fname + " " + lname.to_s
