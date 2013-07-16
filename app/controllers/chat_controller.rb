@@ -110,4 +110,47 @@ class ChatController < ApplicationController
     #@review = @appointment.review.new
 
   end
+
+
+  def report_listener
+
+    # data = params[:data]
+    chat_action = params[:chat_action]
+    chat_user_id = params[:chat_user_id]
+    session_id = params[:session_id]
+
+    logger.info(chat_action+" "+chat_user_id +" " + session_id)
+
+    if chat_action == "connect"
+      record = SessionRecord.find_by_chat_session_id(session_id, order: "created_at DESC")
+      
+      if record == nil
+        SessionRecord.create(user_id_1: chat_user_id, chat_session_id: session_id)
+
+      elsif record.try(:disconnected_at) != nil
+        SessionRecord.create(user_id_1: chat_user_id, chat_session_id: session_id)
+
+
+      end
+
+
+    elsif chat_action == "disconnect"
+      record = SessionRecord.find_by_chat_session_id(session_id, order: "created_at DESC")
+
+      if record.try(:disconnected_at) == nil
+        record.user_id_2 = chat_user_id
+        record.disconnected_at = Time.now
+        record.save
+      else
+        # Error!
+        send_mail("Errors @ Lorious", "admin@lorious.com", "Team", "admin@lorious.com", "Lorious ADMIN | Error In Recording Chat Length Reported!!!!", "Error reported\r\n\r\nPage: #{@uri}\r\n\r\nPage: #{@referer}")
+
+        
+      end
+
+
+    end
+    respond_to do |format| format.html { render :nothing => true } end
+  end
+
 end

@@ -27,7 +27,8 @@
     %th Host
     %th Attendee
     %th Time (EST)
-    %th Length (mins)
+    %th Reported Length (mins)
+    %th Calculated Length (mins)
     %th
     %th
     %th
@@ -38,6 +39,7 @@
       %td= appointment.attendee.profile.name
       %td= appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
       %td= appointment.length
+      %td= appointment.calculate_length.round(0)
       %td= link_to 'Show', appointment
       %td= link_to 'Edit', edit_appointment_path(appointment)
       %td= link_to 'Destroy', appointment, :method => :delete, :data => { :confirm => 'Are you sure?' }
