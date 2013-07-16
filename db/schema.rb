@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130706043835) do
+ActiveRecord::Schema.define(:version => 20130716145154) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -82,6 +82,15 @@ ActiveRecord::Schema.define(:version => 20130706043835) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "session_records", :force => true do |t|
+    t.string   "chat_session_id"
+    t.integer  "user_id_1"
+    t.integer  "user_id_2"
+    t.datetime "disconnected_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false

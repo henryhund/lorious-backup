@@ -88,13 +88,13 @@ vid_obj.reportAction = function(the_action){
 
     $.ajax({ 
       type: 'post', 
-    url: '/report_listener', 
-    cache: false,
-    //dataType: 'json',
-    data: {
-      'user_id': 'userX',
+      url: '/chat/report_listener', 
+      cache: false,
+      //dataType: 'json',
+      data: {
+        'chat_user_id': 12,
         'session_id' : vid_obj.session_id,
-        'action': the_action
+        'chat_action': the_action
     }
   });
 };
