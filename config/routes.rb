@@ -52,7 +52,7 @@ Lorious::Application.routes.draw do
 
 
   get 'message' => "home#message"
-  get '/:niche' => "home#audience_home"
+  # get '/:niche' => "home#audience_home"
 
 
 

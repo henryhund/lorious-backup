@@ -49,7 +49,9 @@ class UsersController < ApplicationController
 
   def show
     # authorize! :show, @user, :message => 'Not authorized as an administrator'
-    @user = params[:user].try([:id])
+    @user_id = params[:id]
+
+    @user = User.find(@user_id)
 
     if @user.profile == nil
       @display = "none"
