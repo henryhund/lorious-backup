@@ -1,4 +1,9 @@
 Lorious::Application.routes.draw do
+  
+  get 'expert' => 'home#expert'
+
+
+
   resources :reviews
 
 
