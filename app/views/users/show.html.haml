@@ -1,6 +1,26 @@
 - content_for :main_content do
-  %h3 User
-  %p
-    User: #{@user.name}
-  %p
-    Email: #{@user.email if @user.email}
+  -if @display == "none"
+    %h6.alert This user has not made their profile public.
+  -elsif @display == "all"
+    %h3 User
+    %p
+      User: #{@user.profile.public_name}
+    %p
+      Picture: 
+      =image_tag @user.avatar.url(:square), class: "user-profile-image"
+    %p
+      Tagline: #{@user.profile.tagline}
+    %p
+      Bio: #{@user.profile.bio}
+    %p
+      Reviews:
+      - @user.reviews.each do | review |
+        %br
+        = review.rating
+        = review.content
+        = "from " + review.reviewer.profile.public_name
+      %br
+      Average Score:
+      = @user.get_review_score
+
+      

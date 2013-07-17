@@ -1,5 +1,4 @@
 - content_for :content do
-  %h3 This is the users layout
   .section.main-content
     = content_for?(:main_content) ? yield(:main_content) : yield
 = render template: "layouts/application"

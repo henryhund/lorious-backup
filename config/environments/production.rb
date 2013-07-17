@@ -83,6 +83,14 @@ Lorious::Application.configure do
   }
 
 
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => ENV['AWS_BUCKET'],
+      :access_key_id => ENV['AWS_ACCESSKEYID'],
+      :secret_access_key => ENV['AWS_SECRETACCESSKEY']
+  }
+}
 
 
   # Log the query plan for queries taking more than this (works

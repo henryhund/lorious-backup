@@ -1,11 +1,13 @@
 class Profile < ActiveRecord::Base
-  attr_accessible :user_id, :email, :expertise, :expertise_hourly, :fname, :lname, :niche, :tagline, :bio, :availability, :name_display_type, :privacy
+  attr_accessible :user_id, :email, :expertise, :expertise_hourly, :fname, :lname, :niche, :tagline, :bio, :availability, :name_display_type, :privacy, :interest, :interest_hourly
   validates :email, presence: true
   validates :fname, presence: true
 
-belongs_to :user
+  after_save :do_update_user_name
 
-has_many :requests
+  belongs_to :user
+
+  has_many :requests
 
   def long_name
     fname + " " + lname.to_s
@@ -29,5 +31,12 @@ has_many :requests
 
   def private_name
   end
+
+  private
+    def do_update_user_name
+      user = User.find(user_id)
+      user.name = public_name
+      user.save
+    end
 
 end

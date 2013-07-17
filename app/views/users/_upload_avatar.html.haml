@@ -1,0 +1,9 @@
+= simple_form_for(@user, html: { class: "form-horizontal"}) do |f|
+  = f.error_notification
+  = f.full_error :image_file_size, class: "alert alert-error" 
+  = f.full_error :image_content_type, class: "alert alert-error"
+
+  = f.input :avatar, label: "Upload an image" 
+
+  .form-actions
+    = f.button :submit, class: "btn btn-primary"
