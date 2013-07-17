@@ -1,3 +1,22 @@
+/javascript for validation
+:javascript
+  $(document).ready(function(){
+  $('#signup').validate({
+      rules: {
+          fname: "required",
+          email: "email",
+      
+      },
+      messages: {
+          fname: "Your name is required",
+          email: "Your email is required",
+      },
+      errorContainer: $('#errorContainer'),
+      errorLabelContainer: $('#errorContainer ul'),
+      wrapper: 'li'
+  });
+    });
+
 %section.row-fluid.landing-upper-nav
   .span6.logo
     %a{href: "/"}
