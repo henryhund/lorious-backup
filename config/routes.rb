@@ -1,6 +1,7 @@
 Lorious::Application.routes.draw do
   
   get 'expert' => 'home#blog_home'
+  get 'experts' => 'home#blog_home'
   get 'audience' => 'home#audience_home'
 
   get 'legal' => 'home#legal'
