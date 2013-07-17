@@ -21,13 +21,13 @@
     %ul.benefits-list.clearfix
       %li.benefit
         %h3 A new way to monetize
-        %p You've already proven you're an expert. Help people one-on-one and charge hte rates you want for each conversation.
+        %p You've already proven you're an expert. Help people one-on-one and charge the rates you want for each conversation.
       %li.benefit
         %h3 Talk at your convenience
         %p Set your own schedule, talk only when you have the time.
       %li.benefit
         %h3 Increase your exposure
-        %p We want to help you grow. Not only will you ahve access to your audience, you'll have access to ours too.
+        %p We want to help you grow. Not only will you have access to your audience, you'll have access to ours too.
 
 %section.row-fluid.blog-landing-signup#blog-signup
   .container-fluid
@@ -36,13 +36,14 @@
       %p We're currently in private beta mode.
       %p Sign up to request an invite.
     .span4.landing-right
-      = simple_form_for @profile, url: profiles_pre_path, method: :post, html: {id: "signup"} do |f|
+      = simple_form_for :waiting_list_signup, url: confirmed_path, method: :post, html: {id: "signup"} do |f|
         = f.error_notification
 
         .form-inputs
           = f.input :fname, label: false, input_html: {placeholder: "Your first name", id: "fname"}
           = f.input :email, label: false, input_html: {placeholder: "Your email", id: "email"}
           = f.input :niche, input_html: {value: @niche}, as: :hidden
+          = f.input :user_type, input_html: {value: "expert"}, as: :hidden
           
         = f.button :submit, "Sign Up", class: "button"
 

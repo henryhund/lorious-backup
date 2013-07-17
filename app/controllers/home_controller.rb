@@ -59,8 +59,17 @@ class HomeController < ApplicationController
   # end
 
   def confirmed
-    if session[:new_profile] == true
-      @profile = Profile.find_by_email(session[:email])
+    
+    add_to_list_niche(params[:waiting_list_signup][:fname], params[:waiting_list_signup][:email], params[:waiting_list_signup][:niche], list_id=ENV["MAILCHIMP_LISTID"])
+    
+    if params[:waiting_list_signup][:user_type] == "expert"
+      update_list_subscription(params[:waiting_list_signup][:email], "EXPERT", "true", list_id=ENV["MAILCHIMP_LISTID"])
+    elsif params[:waiting_list_signup][:user_type] == "user"
+      update_list_subscription(params[:waiting_list_signup][:email], "USER", "true", list_id=ENV["MAILCHIMP_LISTID"])
+    end
+
+    # if session[:new_profile] == true
+    #   @profile = Profile.find_by_email(session[:email])
       # send_mail("Henry from Lorious", "henry@lorious.com", 
       #   @profile.name, 
       #   session[:email], 
@@ -72,7 +81,6 @@ class HomeController < ApplicationController
       #   \r\nWe'll get back to you as soon as we possibly can so we can get started with helping you tackle your challenges.
       #   \r\nSincerely,
       #   \r\nHenry, co-founder, http://www.lorious.com")
-    end
 
   end
 

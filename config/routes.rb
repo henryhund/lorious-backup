@@ -57,6 +57,7 @@ Lorious::Application.routes.draw do
 
   # get 'thanks' => "home#thanks"
   get 'confirmed' => "home#confirmed"
+  post 'confirmed' => "home#confirmed"
 
   get 'message' => "home#message"
   get '/:niche' => "home#audience_home"
