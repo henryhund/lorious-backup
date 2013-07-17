@@ -1,12 +1,28 @@
 Lorious::Application.routes.draw do
+  
+  # basic public routes
+  root :to => "home#audience_home"
+  get 'blog_home' => "home#blog_home"
+  get 'expert' => 'home#blog_home'
+  get 'experts' => 'home#blog_home'
+  get 'audience' => 'home#audience_home'
+  get 'faq' => 'home#faq'
+  get 'legal' => 'home#legal'
+
+  get 'confirmed' => "home#confirmed"
+  post 'confirmed' => "home#confirmed"
+
   resources :reviews
-
-
+  resources :profiles
+  resources :requests
   resources :appointments
 
-  get 'faq' => 'home#faq'
-
-  # get 'chat' => "chat#new"
+  devise_for :users #, :controllers => { :registrations => "registrations" } 
+  resources :users
+  devise_scope :user do
+    get 'login' => "devise/sessions#new"
+    get 'logout' => "devise/sessions#destroy"
+  end
 
   # chat routes
   get "chat/test" => "chat#test"
@@ -16,36 +32,35 @@ Lorious::Application.routes.draw do
   get 'chat/go/:user_id/:chat_key/error' => "home#error"
   get 'chat/go/:user_id/:chat_key/end' => "chat#chat_end"
 
-  # get "chat/index"
-
+  # chat listener for determining conversation length
   post 'chat/report_listener' => "chat#report_listener"
 
   # custom signup routes for waiting list signup
-  put 'finish_pre_registration' => "users#edit_incomplete_registration"
-  post "profiles/pre" => "profiles#create_before_signup"
-  post "profiles/preup" => "profiles#update_before_signup"
-  get 'welcome' => "home#more"
-  get 'confirmed' => "home#confirmed"
-
-  devise_for :users #, :controllers => { :registrations => "registrations" } 
-  resources :users
-  devise_scope :user do
-    get 'login' => "devise/sessions#new"
-    get 'logout' => "devise/sessions#destroy"
-  end
-
-  get '/:id/avatar' => "users#upload_avatar"
-
-  resources :profiles
-  resources :requests
-
-  root :to => "home#landing_page"
+  # put 'finish_pre_registration' => "users#edit_incomplete_registration"
+  # post "profiles/pre" => "profiles#create_before_signup"
+  # post "profiles/preup" => "profiles#update_before_signup"
 
   # authenticated :user do
   #  root :to => 'requests#index'
   # end
 
+
+
+
+  get 'message' => "home#message"
+  get '/:niche' => "home#audience_home"
+
+
+
+  # authenticated :user do
+  #  root :to => 'requests#index'
+  # end
+
+  # user/profile show and edit routes
+  get '/:id' => "users#show"  
+  get '/:id/avatar' => "users#upload_avatar"
+
   
-  get '/:id' => "users#show"
+
 
 end

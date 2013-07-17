@@ -23,14 +23,14 @@
       =image_tag "https://s3.amazonaws.com/lorious/layout/lorious_white.svg", width: "100px"
   .span6.nav
     %ul
-      %li= link_to "FAQ", faq_path
+      %li= link_to "Be an Expert", expert_path
       %li= mail_to "questions@lorious.com", "Contact Us"
 
 %section.row-fluid.hero.hero-landing-page
   .container-fluid
     .span12
-      %h2 Take your craft to the next level
-      %p Stuck on a DIY project? Trying to master a new technique? Lorious connects you with experienced makers so you can find someone to guide you through challenges and help you find solutions&mdash;anywhere, anytime.
+      %h2 Learn from the best
+      %p Private lessons and consultations from experienced experts who&#39;ve been through it. Whatever your challenge, we connect you with someone who can teach you what you need to know &#8211; anywhere, anytime.
       %a(href="#help-us-out")
         %span.button Sign up
 
@@ -38,7 +38,7 @@
   .container-fluid
     .span6.landing-left
       %h1 How it works...
-      %p Lorious puts you in touch with expert crafters so you can get face-to-face instruction online, tailored to your&nbsp;questions
+      %p Lorious puts you in touch with experts so you can get face-to-face instruction online, tailored to your&nbsp;questions
     .span6.landing-right
       %ul
         %li
@@ -46,7 +46,7 @@
             =image_tag "https://s3.amazonaws.com/lorious/layout/elements/landing_page/1.svg", width: "80px"
           .copy
             %h3 Find the perfect expert
-            %p Access our community and find someone to help you with anything from knitting stiches to woodworking techniques to cake decorating
+            %p Access our community and find the right person to help you. Fees may vary by expert.
         %li
           .number
             =image_tag "https://s3.amazonaws.com/lorious/layout/elements/landing_page/2.svg", width: "80px"
@@ -58,24 +58,22 @@
             =image_tag "https://s3.amazonaws.com/lorious/layout/elements/landing_page/3.svg", width: "80px"
           .copy
             %h3 Connect and videochat
-            %p Talk for 5 minutes or 5 hours, until you've gotten the help you need
+            %p Talk for 5 minutes or 5 hours, until you&#39;ve gotten the help you need
 
 %section.row-fluid.help-us-out#help-us-out
   .container-fluid
     .span6.landing-left
-      %h1 Help us out!
-      %p Sign up to help us with beta testing. Whether you need advice or can give advice, we want&nbsp;you.
-      %p (Not a crafter? We'll be adding more topics soon. Sign up to be notified when we do, or to tell us what your interests are.)
+      %h1 Request an invitation
+      %p We&#39;re currently in private beta mode. Please sign up for an invite. 
+      
     .span6.landing-right
-      = simple_form_for @profile, url: profiles_pre_path, method: :post, html: {id: "signup"} do |f|
+      = simple_form_for :waiting_list_signup, url: confirmed_path, method: :post, html: {id: "signup"} do |f|
         = f.error_notification
 
         .form-inputs
           = f.input :fname, label: false, input_html: {placeholder: "Your first name", id: "fname"}
           = f.input :email, label: false, input_html: {placeholder: "Your email", id: "email"}
           = f.input :niche, input_html: {value: @niche}, as: :hidden
+          = f.input :user_type, input_html: {value: "user"}, as: :hidden
           
-        = f.button :submit, "Find an Expert", class: "button"
-        %span.eitheror -or-
-        = f.button :submit, "Be an Expert", class: "button"
-
+        = f.button :submit, "Request an Invitation", class: "button"

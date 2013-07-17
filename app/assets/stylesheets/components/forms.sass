@@ -51,29 +51,53 @@
 // call the template with @extend when you can
 // or, when fighting the cascade you can call the mixin
  
-.help-us-out
-  .landing-right
-    form
-      margin: 0
-      input
-        +landing-apply-placeholders
-        width: 75%
-        height: 40px
-        text-indent: 10px
-        font-family: 'Gotham A', 'Gotham B', 'Roboto Condensed'
-        color: #77bea7
-        font-size: 16px
-      .button
-        text-indent: 0
-        width: 30%
-        background-color: #77bda7
-        -webkit-appearance: none
-        font-family: 'Gotham A', 'Gotham B', 'Roboto Condensed'
-        color: #ffffff
-        text-transform: uppercase
-        font-size: 12px
-      .button:hover
-        background-color: rgba(102, 102, 102, .3)
+.landing-right
+  form
+    margin: 0
+    input
+      +landing-apply-placeholders
+      width: 75%
+      height: 40px
+      text-indent: 10px
+      font-family: 'Gotham A', 'Gotham B', 'Roboto Condensed'
+      color: #77bea7
+      font-size: 16px
+    .button
+      text-indent: 0
+      width: 70%
+      background-color: #77bda7
+      -webkit-appearance: none
+      font-family: 'Gotham A', 'Gotham B', 'Roboto Condensed'
+      color: #ffffff
+      text-transform: uppercase
+      font-size: 16px
+    .button:hover
+      background-color: rgba(102, 102, 102, .3)
+
+// .sign-up, .blog-landing-signup
+//   form
+//     margin: 0
+//     input
+//       +landing-apply-placeholders
+//       width: 75%
+//       height: 40px
+//       text-indent: 10px
+//       font-family: 'Gotham A', 'Gotham B', 'Roboto Condensed'
+//       color: #77bea7
+//       font-size: 16px
+//     .button
+//       text-indent: 0
+//       width: 70%
+//       background-color: #77bda7
+//       -webkit-appearance: none
+//       font-family: 'Gotham A', 'Gotham B', 'Roboto Condensed'
+//       color: #ffffff
+//       text-transform: uppercase
+//       font-size: 16px
+//     .button:hover
+//       background-color: rgba(102, 102, 102, .3)
+
+
 
 .profile-name-entry
   input[type='text']

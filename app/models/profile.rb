@@ -2,7 +2,6 @@ class Profile < ActiveRecord::Base
   attr_accessible :user_id, :email, :expertise, :expertise_hourly, :fname, :lname, :niche, :tagline, :bio, :availability, :name_display_type, :privacy, :interest, :interest_hourly
   validates :email, presence: true
   validates :fname, presence: true
-
   after_save :do_update_user_name
 
   belongs_to :user
