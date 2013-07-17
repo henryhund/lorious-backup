@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130717021609) do
+ActiveRecord::Schema.define(:version => 20130717230408) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20130717021609) do
     t.string   "availability"
     t.string   "privacy",                                         :default => "private"
     t.string   "name_display_type",                               :default => "long"
+    t.string   "display_name"
   end
 
   add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id"

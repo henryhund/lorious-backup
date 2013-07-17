@@ -4,6 +4,7 @@ Lorious::Application.routes.draw do
   authenticated :user do
     root :to => 'users#dashboard'
   end
+  get "/users/:id/dashboard" => "users#dashboard", as: "user_dashboard"
   root :to => "home#audience_home"
   get 'blog_home' => "home#blog_home"
   get 'expert' => 'home#blog_home'
@@ -48,13 +49,8 @@ Lorious::Application.routes.draw do
   #  root :to => 'requests#index'
   # end
 
-
-
-
   get 'message' => "home#message"
   # get '/:niche' => "home#audience_home"
-
-
 
   # user/profile show and edit routes
   get '/:id' => "users#show"  
