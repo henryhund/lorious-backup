@@ -6,7 +6,10 @@
     .span3
       %ul
         %li= link_to "Home", root_path
-        %li= link_to "FAQ", faq_path
+        -if @action == "audience_home"
+          %li= link_to "Be an Expert", expert_path
+        -elsif @action == "blog_home"
+          %li= link_to "Not an Expert?", audience_path
         %li= mail_to "questions@lorious.com", "Contact Us"
     .span3.social
       %a{href: "https://www.facebook.com/pages/Lorious/357664217669583", target: "_blank"}

@@ -1,6 +1,9 @@
 Lorious::Application.routes.draw do
   
-  get 'expert' => 'home#expert'
+  get 'expert' => 'home#blog_home'
+  get 'audience' => 'home#audience_home'
+
+  get 'legal' => 'home#legal'
 
 
 
@@ -39,7 +42,7 @@ Lorious::Application.routes.draw do
   #  root :to => 'requests#index'
   # end
 
-  root :to => "home#landing_page"
+  root :to => "home#audience_home"
   get 'welcome' => "home#more"
   get 'blog_home' => "home#blog_home"
   # post 'welcome' => "requests#new"
@@ -56,7 +59,7 @@ Lorious::Application.routes.draw do
   get 'confirmed' => "home#confirmed"
 
   get 'message' => "home#message"
-  get '/:niche' => "home#landing_page"
+  get '/:niche' => "home#audience_home"
 
   # get 'chat/:session_id' => "chat#chat"
 

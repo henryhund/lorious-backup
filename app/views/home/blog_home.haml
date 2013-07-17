@@ -4,7 +4,7 @@
       =image_tag "https://s3.amazonaws.com/lorious/layout/lorious_white.svg", width: "100px"
   .span6.nav
     %ul
-      %li= link_to "FAQ", faq_path
+      %li= link_to "Not an Expert?", root_path
       %li= mail_to "questions@lorious.com", "Contact Us"
 
 %section.row-fluid.hero.hero-landing-page
@@ -44,6 +44,6 @@
           = f.input :email, label: false, input_html: {placeholder: "Your email", id: "email"}
           = f.input :niche, input_html: {value: @niche}, as: :hidden
           
-        = f.button :submit, "Sign Up", class: "btn button"
+        = f.button :submit, "Sign Up", class: "button"
 
 

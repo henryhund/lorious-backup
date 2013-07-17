@@ -3,7 +3,8 @@ class HomeController < ApplicationController
     # @users = User.all
   end
 
-  def landing_page
+  def audience_home
+    @action = params[:action]
     @disable_header = true
     @profile = Profile.new
     @niche = params[:niche] || "crafting"
@@ -19,6 +20,7 @@ class HomeController < ApplicationController
   end
 
   def blog_home
+    @action = params[:action]
     @disable_header = true
     @profile = Profile.new
     @niche = params[:niche] || "blogging"
@@ -94,4 +96,9 @@ class HomeController < ApplicationController
 
     # add_to_list("Hank","henry@lorious.com")
   end
+
+  def legal
+
+  end
+
 end
