@@ -1,0 +1,49 @@
+%section.row-fluid.landing-upper-nav
+  .span6.logo
+    %a{href: "/"}
+      =image_tag "https://s3.amazonaws.com/lorious/layout/lorious_white.svg", width: "100px"
+  .span6.nav
+    %ul
+      %li= link_to "FAQ", faq_path
+      %li= mail_to "questions@lorious.com", "Contact Us"
+
+%section.row-fluid.hero.hero-landing-page
+  .container-fluid
+    .span12
+      %h2 We Want To Help You Get More From Your Audience
+      %p We're building a platform to help content creators like you offer private consultations through videochat. All you have to do is set your rates and tell your audience you're there to help - we'll handle the rest. 
+      %a(href="#blog-signup")
+        %span.button Sign up
+
+%section.row-fluid
+  .container-fluid
+    %h1.benefit-header Benefits for you
+    %ul.benefits-list.clearfix
+      %li.benefit
+        %h3 A new way to monetize
+        %p You've already proven you're an expert. Help people one-on-one and charge hte rates you want for each conversation.
+      %li.benefit
+        %h3 Talk at your convenience
+        %p Set your own schedule, talk only when you have the time.
+      %li.benefit
+        %h3 Increase your exposure
+        %p We want to help you grow. Not only will you ahve access to your audience, you'll have access to ours too.
+
+%section.row-fluid.blog-landing-signup#blog-signup
+  .container-fluid
+    .span6.offset2.landing-left
+      %h1 Request an invitation
+      %p We're currently in private beta mode.
+      %p Sign up to request an invite.
+    .span4.landing-right
+      = simple_form_for @profile, url: profiles_pre_path, method: :post, html: {id: "signup"} do |f|
+        = f.error_notification
+
+        .form-inputs
+          = f.input :fname, label: false, input_html: {placeholder: "Your first name", id: "fname"}
+          = f.input :email, label: false, input_html: {placeholder: "Your email", id: "email"}
+          = f.input :niche, input_html: {value: @niche}, as: :hidden
+          
+        = f.button :submit, "Sign Up", class: "btn button"
+
+

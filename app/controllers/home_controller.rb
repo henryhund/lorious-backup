@@ -18,6 +18,20 @@ class HomeController < ApplicationController
 
   end
 
+  def blog_home
+    @disable_header = true
+    @profile = Profile.new
+    @niche = params[:niche] || "blogging"
+
+
+    case @niche
+    when "blogging"
+      @headline = "Engage your audience through video."
+    else
+      @headline = "Welcome to Lorious!"
+    end
+  end
+
   def faq
 
   end
