@@ -1,6 +1,9 @@
 Lorious::Application.routes.draw do
   
   # basic public routes
+  authenticated :user do
+    root :to => 'users#dashboard'
+  end
   root :to => "home#audience_home"
   get 'blog_home' => "home#blog_home"
   get 'expert' => 'home#blog_home'
@@ -22,6 +25,7 @@ Lorious::Application.routes.draw do
   devise_scope :user do
     get 'login' => "devise/sessions#new"
     get 'logout' => "devise/sessions#destroy"
+    get 'signup' => "devise/registrations#new"
   end
 
   # chat routes
@@ -51,10 +55,6 @@ Lorious::Application.routes.draw do
   get '/:niche' => "home#audience_home"
 
 
-
-  # authenticated :user do
-  #  root :to => 'requests#index'
-  # end
 
   # user/profile show and edit routes
   get '/:id' => "users#show"  

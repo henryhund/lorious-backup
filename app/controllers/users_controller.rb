@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!, except: [:update, :show, :finish_registration, :edit_incomplete_registration]
 
+  def dashboard
+    @user = current_user
+  end
+
   def finish_registration
     authorize! :finish_registration, :users
     @user_id = params[:user_id]
@@ -21,7 +25,9 @@ class UsersController < ApplicationController
 
   def edit_incomplete_registration
     authorize! :edit_incomplete_registration, :users
-    @user_id = params[:user][:id]
+    @user_id = current_user.id
+    @user_id ||= params[:user][:id]
+    
     @chat_key = params[:user][:chat_key]
     @user = User.find_by_id(@user_id)
     
@@ -43,11 +49,15 @@ class UsersController < ApplicationController
 
   def show
     # authorize! :show, @user, :message => 'Not authorized as an administrator'
-    @user = User.find(params[:id])
+    @user = params[:user].try([:id])
 
+    if @user.profile == nil
+      @display = "none"
+    else
     # for now, make @display always = all for dev
 
     @display = "all"
+    end
 
     # if @user.profile.privacy == "private" && current_user != @user.id
     #   @display = "none"
