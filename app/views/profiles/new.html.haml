@@ -1,7 +1,9 @@
-%h1 New profile
-
-= render 'form'
-
-= link_to 'Back', profiles_path
+%section.row-fluid.sign-up
+  .container-fluid
+    .span6.landing-left
+      %h2 Create A Profile
+      .form-inputs
+        = render 'form'
+      = link_to 'Back', profiles_path
 
 

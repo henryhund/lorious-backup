@@ -1,19 +1,17 @@
 = simple_form_for(@profile) do |f|
   = f.error_notification
-
   .form-inputs
     =# f.input :user_id
     =# f.input :fname
     =# f.input :lname
     =# f.input :email
     = f.input :tagline
-    = f.input :bio
+    = f.input :bio, :input_html => { :rows => 5 }
     = f.input :availability
     = f.input :display_name
     = f.input :expertise
     = f.input :interest
-    = f.input :expertise_hourly
-    = f.input :interest_hourly
-
+    = f.input :expertise_hourly, :as => :string
+    = f.input :interest_hourly, :as => :string
   .form-actions
     = f.button :submit
