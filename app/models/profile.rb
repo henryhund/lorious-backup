@@ -30,7 +30,7 @@ class Profile < ActiveRecord::Base
   end
 
   def name
-    long_name
+    public_name
   end
 
   def public_name

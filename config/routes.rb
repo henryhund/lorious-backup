@@ -31,10 +31,10 @@ Lorious::Application.routes.draw do
 
   # chat routes
   get "chat/test" => "chat#test"
-  get 'chat/go/:user_id/:chat_key' => "chat#chat_prep"
-  get 'chat/go/:user_id/:chat_key/start' => "chat#scheduled_chat"
-  get 'chat/go/:user_id/:chat_key/register' => "users#finish_registration"
-  get 'chat/go/:user_id/:chat_key/error' => "home#error"
+  # get 'chat/go/:user_id/:chat_key' => "chat#chat_prep"
+  get 'chat/go/:user_id/:chat_key/' => "chat#scheduled_chat"
+  # get 'chat/go/:user_id/:chat_key/register' => "users#finish_registration"
+  # get 'chat/go/:user_id/:chat_key/error' => "home#error"
   get 'chat/go/:user_id/:chat_key/end' => "chat#chat_end"
 
   # chat listener for determining conversation length
