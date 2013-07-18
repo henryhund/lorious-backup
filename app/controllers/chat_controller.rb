@@ -65,10 +65,10 @@ class ChatController < ApplicationController
       deny_access
     elsif user_signed_in?
 
-      @user_id = params[:user_id]
+      # @user_id = params[:user_id]
       @chat_key = params[:chat_key]
 
-      @user = User.find_by_id(@user_id)
+      # @user = User.find_by_id(@user_id)
 
       @appointment = Appointment.find_by_chat_key(@chat_key)
 
@@ -79,9 +79,9 @@ class ChatController < ApplicationController
         @opentok = OpenTok::OpenTokSDK.new ENV["OPENTOK_APIKEY"], ENV["OPENTOK_APISECRET"], :api_url => ENV["OPENTOK_URL"]
         @token = @opentok.generate_token :session_id => @session_id, :role => OpenTok::RoleConstants::PUBLISHER
 
-        @after_route =  "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/end"
+        @after_route =  "/chat/go/" + @chat_key + "/end"
 
-        @user == @appointment.host ? @user_type = "host" : @user_type = "attendee"
+        current_user == @appointment.host ? @user_type = "host" : @user_type = "attendee"
         
         @host_name = @appointment.host.profile.name
         @attendee_name = @appointment.attendee.profile.name
@@ -97,30 +97,42 @@ class ChatController < ApplicationController
   end
 
   def chat_end
-    @user_id = params[:user_id]
-    @chat_key = params[:chat_key]
+    if !anyone_signed_in?
+      deny_access
+    elsif user_signed_in?
+      @user_id = params[:user_id]
+      @chat_key = params[:chat_key]
 
-    @user = User.find_by_id(@user_id)
+      # @user = User.find_by_id(@user_id)
 
-    @appointment = Appointment.find_by_chat_key(@chat_key)
+      @appointment = Appointment.find_by_chat_key(@chat_key)
 
-    if @user == @appointment.host
-      @user_type = "host"
-    elsif @user == @appointment.attendee
-       @user_type = "attendee"
+      if current_user == @appointment.host || current_user == @appointment.attendee
+
+        if current_user == @appointment.host
+          @user_type = "host"
+        elsif current_user == @appointment.attendee
+           @user_type = "attendee"
+        else
+          @destination = "/chat/go/" + @chat_key + "/error"
+          redirect_to @destination
+        end
+
+        # send_mail("Appointments @ Lorious", "admin@lorious.com", "Team Lorious", "admin@lorious.com", "Lorious ADMIN | Appointment completed", "Appointment completed!\r\n\r\nHost: #{@appointment.host.profile.name}\r\n\r\n Attendee: #{@appointment.attendee.profile.name}\r\n\r\nLogin here: #{ENV["LOCATION"]}/login\r\nView requests here: #{ENV["LOCATION"]}/appointments")    
+
+        @appointment.completed = true
+
+        @appointment.save
+
+      #@review = @appointment.review.new
+
+      else
+        flash[:info] = 'You are not authorized to participate in this video chat'
+        redirect_to root_path
+      end
+
     else
-      @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/error"
-      redirect_to @destination
     end
-
-    send_mail("Appointments @ Lorious", "admin@lorious.com", "Team Lorious", "admin@lorious.com", "Lorious ADMIN | Appointment completed", "Appointment completed!\r\n\r\nHost: #{@appointment.host.profile.name}\r\n\r\n Attendee: #{@appointment.attendee.profile.name}\r\n\r\nLogin here: #{ENV["LOCATION"]}/login\r\nView requests here: #{ENV["LOCATION"]}/appointments")    
-
-    @appointment.completed = true
-
-    @appointment.save
-
-    #@review = @appointment.review.new
-
   end
 
 

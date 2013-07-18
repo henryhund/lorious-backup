@@ -16,8 +16,9 @@
       #remoteView
 %section.row-fluid.chat-controls
   #video_controls
-    %button#go_fullscreen View Fullscreen
-    %button#disconnect_button Disconnect
+    %a#go_fullscreen.button{:href => '#'} Go Fullscreen
+    &nbsp; &nbsp; &nbsp;
+    =link_to "End Chat", @after_route, class: "button"
 
 
 %script{:src => "https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js", :type => "text/javascript"}

@@ -1,7 +1,21 @@
-%h3 confirmed
+%section.row-fluid.chat-page-header
+  .span10.offset1
+    %h3
+      Host: 
+      = @host_name
+    %h3
+      Attendee:
+      = @attendee_name
 
-- if @user_type == "host"
-  %h4 Thanks for being a host!
 
-- elsif @user_type == "attendee"
-  %h4 Thanks for being an attendee!
+    - if @user_type == "host"
+      %h4 Thanks for being a host!
+
+    - elsif @user_type == "attendee"
+      %h4 Thanks for being an attendee!
+%section.row-fluid.chat-feedback
+  - if @user_type == "host"
+    %h4 Thanks for being a host!
+
+  - elsif @user_type == "attendee"
+    %h4 Please leave your feedback for @host_name

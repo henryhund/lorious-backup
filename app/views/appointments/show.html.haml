@@ -4,12 +4,12 @@
   %b Host:
   = @appointment.host.profile.name + " " + @appointment.host.email
   Link: 
-  = ENV["LOCATION"] + "/chat/go/" + @appointment.host.id.to_s + "/" + @appointment.chat_key
+  = ENV["LOCATION"] + "/chat/go" + "/" + @appointment.chat_key
 %p
   %b Attendee:
   = @appointment.attendee.profile.name + " " + @appointment.attendee.email
   Link: 
-  = ENV["LOCATION"] + "/chat/go/" + @appointment.attendee.id.to_s + "/" + @appointment.chat_key
+  = ENV["LOCATION"] + "/chat/go" + "/" + @appointment.chat_key
 %p
   %b Time (EST):
   = @appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
