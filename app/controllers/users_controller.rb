@@ -53,6 +53,7 @@ class UsersController < ApplicationController
     @user_id = params[:id]
 
     @user = User.find(@user_id)
+    @profile = @user.profile
 
     if @user.profile == nil
       @display = "none"

@@ -1,7 +1,8 @@
 class Profile < ActiveRecord::Base
   attr_accessible :user_id, :email, :expertise, :display_name, :expertise_hourly, :fname, :lname, :niche, :tagline, :bio, :availability, :name_display_type, :privacy, :interest, :interest_hourly
   # validates :email, presence: true
-  # validates :fname, presence: true
+  validates :fname, presence: true
+  validates :lname, presence: true
   # after_save :do_update_user_name
 
   belongs_to :user
@@ -26,18 +27,18 @@ class Profile < ActiveRecord::Base
 
   def last_name
     name_array = self.user.name.split
-    name_array[1]
+    name_array[1].to_s
   end
 
   def name
-    long_name
+    public_name
   end
 
   def public_name
     if self.name_display_type == "short"
-      first_name + " " + last_name.to_s[0,1] + "."
+      first_name + " " + lname.to_s[0,1] + "."
     elsif self.name_display_type == "long"
-      first_name + " " + last_name.to_s
+      first_name + " " + lname.to_s
     end
   end
 

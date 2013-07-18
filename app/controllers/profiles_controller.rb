@@ -3,7 +3,7 @@ class ProfilesController < ApplicationController
   # before_filter :check_for_profile, only: [:create]
 
   load_and_authorize_resource
-  skip_authorize_resource only: [:create_before_signup, :update_before_signup]
+  # skip_authorize_resource only: [:create_before_signup, :update_before_signup]
   # GET /profiles
   # GET /profiles.json
   def index
