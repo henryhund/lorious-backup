@@ -5,4 +5,4 @@
 - unless @user.profile
 	= link_to "Create A Profile", new_profile_url
 - else
-	= link_to "Edit Your Profile", edit_profile_url(@user.profile.id)
+	= link_to "View Your Profile", profile_url(@user.profile.id)

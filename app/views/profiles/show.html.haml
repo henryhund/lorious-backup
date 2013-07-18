@@ -1,4 +1,36 @@
 %p#notice= notice
+%ul.profile-nav-band
+  %li.profile-nav-band-link
+    = link_to "User Profile", current_user
+  %li.profile-nav-band-link
+    = link_to "Book An Appointment with #{@profile.user.name}"
+  %li.profile-nav-band-link
+    = link_to "#{@profile.user.name.split.first.pluralize} reviews"
+  %li.profile-nav-band-link
+    = link_to "Ask #{@profile.user.name.split.first} a question"
+
+.profile-hero.clearfix
+  .picture-rating-consultations
+    %img(src="http://dummyimage.com/800x600/4d494d/686a82.gif&text=placeholder+image")
+    %p 
+      This expert's rating:
+      = @profile.user.get_review_score 
+      \/ 5.0
+    %p
+      = @profile.user.appointments.count
+      consultations
+  .name-and-headline
+    %h3
+      = @profile.user.name
+    %p
+      = @profile.tagline
+  .price-and-booking
+    .price-box
+      %p Price/hr.
+      %span= @profile.expertise_hourly
+      %br
+      %button.btn Book Now
+
 
 %p
   %b User:
@@ -25,6 +57,7 @@
   %b Interest hourly:
   = @profile.interest_hourly
 
-= link_to 'Edit', edit_profile_path(@profile)
-\|
-= link_to 'Back', profiles_path
+-if current_user
+  = link_to 'Edit', edit_profile_path(@profile)
+  \|
+  = link_to 'Back', profiles_path
