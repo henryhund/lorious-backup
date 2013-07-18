@@ -9,7 +9,7 @@ class Ability
         if Rails.env.production?
           can :create, Request
           can :create, Profile
-          can :update, Profile
+          can :manage, Profile, :user_id => user.id 
           can :create, User
           can :finish_registration, :users
           can :edit_incomplete_registration, :users
@@ -19,10 +19,11 @@ class Ability
           can :test, :chat
           can :report_listener, :chat
         else
-          can :manage, :all
+          # can :manage, :all
           can :create, Request
           can :create, Profile
-          can :update, Profile
+          can :manage, Profile, :user_id => user.id 
+
           can :create, User
           can :finish_registration, :users
           can :edit_incomplete_registration, :users

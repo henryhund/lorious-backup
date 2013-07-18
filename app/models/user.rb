@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  after_create :assign_default_role
+  after_create :assign_default_role, :create_profile
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :role_ids, :as => :admin
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :appointments, foreign_key: "attendee_id"
 
   has_many :reviews, foreign_key: "reviewee_id"
-  has_many :reviewed_users, foreign_key: "reviewer_id", class_name: "Review"
+  has_many :reviewed_users, foreign_key: "reviewer_id", class_name: "Review", dependent: :destroy
 
   validates_attachment :avatar,
                           content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] },
@@ -51,6 +51,16 @@ class User < ActiveRecord::Base
   def assign_default_role
     # Default Role: User, ID: 2
     add_role(:user)
+  end
+
+  def create_profile
+    profile = Profile.new
+    profile.user = self
+    profile.fname = profile.first_name
+    profile.lname = profile.last_name
+    profile.display_name = profile.public_name
+    profile.save
+
   end
   
 end

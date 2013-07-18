@@ -35,9 +35,9 @@ class Profile < ActiveRecord::Base
 
   def public_name
     if self.name_display_type == "short"
-      short_name
+      first_name + " " + last_name.to_s[0,1] + "."
     elsif self.name_display_type == "long"
-      long_name
+      first_name + " " + last_name.to_s
     end
   end
 
@@ -45,10 +45,10 @@ class Profile < ActiveRecord::Base
   end
 
   private
-    def do_update_user_name
-      user = User.find(user_id)
-      user.name = public_name
-      user.save
-    end
+    # def do_update_user_name
+    #   user = User.find(user_id)
+    #   user.name = public_name
+    #   user.save
+    # end
 
 end
