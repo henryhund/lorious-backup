@@ -55,54 +55,68 @@
     /         %li.profile-nav-band-link
     /           = link_to "Ask #{@profile.user.name.split.first} a question"
     /   %span#notice= notice
-    .profile-hero.clearfix
-      .picture-rating-consultations
-        %img(src="http://dummyimage.com/800x600/4d494d/686a82.gif&text=placeholder+image")
-        %p 
-          This expert's rating:
-          = @profile.user.get_review_score 
-          \/ 5.0
-        %p
-          = @profile.user.appointments.count
-          consultations
-      .name-and-headline
-        %h3
-          = @profile.name
-        %p
-          = @profile.tagline
-      .price-and-booking
-        .price-box
-          %p Price/hr.
-          %span= @profile.expertise_hourly
-          %br
-          %button.btn Book Now
+    .row-fluid
+      .container-fluid#profile
+        .span9
+          .profile-overview-left
+            .picture-rating-consultations
+              .name-and-headline
+                =image_tag @user.avatar.url(:square), class: "user-profile-image"
+                .text
+                  %h2
+                    = @profile.name
+                  %p
+                    = @profile.tagline
 
-    .profile-expert-information
-      %h3 Talk To Me About:
-      %p= @profile.bio
+                  %p
+                    %span.strong 
+                      Experience
+                    %br
+                    - if @profile.user.appointments.count > 0
+                      = @profile.user.appointments.count
+                      %br
+                      Average Rating:
+                      = @profile.user.get_review_score 
+                      \/ 5.0
+                    -else
+                      No Appointments Yet
 
-    .profile-reivews.clearfix
-      %ul.profile-reviews-list
-        - @profile.user.reviews.each do |review| 
-          %li.profile-review
-            %h3
-              // Replace this eventually
-              = User.find_by_id(review.reviewer_id).name
-              says
-            %p= review.content
-            %p
-              = review.rating
-              \/ 5.0
-        %li.profile-review
-          %h3 Roneesh says...
-          %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
-          %p 4.0 / 5.0
-        %li.profile-review
-          %h3 Roneesh says...
-          %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
-          %p 4.0 / 5.0
-        %li.profile-review
-          %h3 Roneesh says...
-          %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
-          %p 4.0 / 5.0
-          
+        .span3.price-and-booking
+          .price-and-booking
+            .price-box
+              %p.strong Price/hour
+              %p= @profile.expertise_hourly || "Email to ask"
+              %br
+              %button.btn Book Now
+    .row-fluid.profile-expert-information
+      .container-fluid#profile
+        .span12
+          %h2 Talk To Me About:
+          %p= @profile.bio || "User has not shared any information yet"
+    .row-fluid
+      .container-fluid#profile.profile-reviews
+        .span12
+          %ul.profile-reviews-list
+            - @profile.user.reviews.each do |review| 
+              %li.profile-review
+                %h3
+                  // Replace this eventually
+                  = review.reviewer.profile.name
+                  says
+                %p= review.content
+                %p.strong
+                  = review.rating
+                  \/ 5.0
+            %li.profile-review
+              %h3 Roneesh says...
+              %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
+              %p.strong 4.0 / 5.0
+            %li.profile-review
+              %h3 Roneesh says...
+              %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
+              %p.strong 4.0 / 5.0
+            %li.profile-review
+              %h3 Roneesh says...
+              %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
+              %p.strong 4.0 / 5.0
+        

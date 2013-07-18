@@ -2,48 +2,49 @@
   height: 20px
   font-size: 16px
 
-.profile-hero
-  width: 95%
-  min-height: 350px
-  border-bottom: 1px solid black
-  padding: 2.5%
+.profile-overview-left
+  // width: 95%
+  // min-height: 350px
+  // border-bottom: 1px solid black
+  // padding: 2.5%
   .picture-rating-consultations
-    float: left
-    width: 25%
-    img
-      margin: 10%
-      border: 1px solid black
-      width: 80%
-    p
-      margin-left: 10%
+    // width: 25%
+  .user-profile-image
+    
   .name-and-headline
-    float: left
-    width: 50%
-    p, h3
-      padding-top: 2%
-      width: 80%
-  .price-and-booking	
-    float: left
-    width: 25%
-    .price-box
-      margin: 10%
-      width: 80%
-      height: 191px
+    img
+      float: left
+      width: 200px
       border: 1px solid black
-      text-align: center
-      p
-        height: 20%
-      span
-        height: 60%
-        font-size: 28px
-      button .btn
-        height: 20%
+      margin-right: 2%
+
+
+.price-and-booking	
+  float: right
+  .price-box
+    width: 200px
+    height: 175px
+    border: 3px solid black
+    text-align: center
+    display: table-cell
+    vertical-align: middle
+
+    button .btn
+      height: 20%
+      bottom: 5px
+@media (max-width: 767px)
+  .price-and-booking
+    float: left
+    padding-top: 10%
+    .price-box
+      border: 1px solid black
 
 .profile-expert-information
-  width: 95%
+  background-color: #fafafa
+  // width: 95%
   min-height: 350px
-  border-bottom: 1px solid black
-  padding: 2.5%
+  // border-bottom: 1px solid black
+  // padding: 2.5%
 
 .profile-reviews
   width: 95%
@@ -55,7 +56,7 @@
   float: left
 .profile-review
   margin: 20px
-  width: 300px
-  height: 300px
+  padding: 20px
+  width: 200px
   border: 1px solid black
   float: left
