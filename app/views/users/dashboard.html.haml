@@ -1,3 +1,8 @@
 %h2 This is the user dashboard!
 =@user.name
 =@user.email
+%br
+- unless @user.profile
+	= link_to "Create A Profile", new_profile_url
+- else
+	= link_to "Edit Your Profile", edit_profile_url(@user.profile.id)

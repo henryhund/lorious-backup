@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
                           size: { less_than: 1.megabytes }
 
 
+
+
   extend FriendlyId
   friendly_id :name, use: [:slugged, :history]
 

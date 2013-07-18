@@ -50,6 +50,8 @@ class ProfilesController < ApplicationController
   def create
     # TO DO: make this for just generic creation.
     @profile = Profile.find_by_email(params[:profile][:email])
+    @profile.user_id = current_user.id
+
     if @profile.nil?
       @profile = Profile.new(params[:profile])
       add_to_list_niche(params[:profile][:fname], params[:profile][:email], params[:profile][:niche], list_id=ENV["MAILCHIMP_LISTID"])
@@ -223,7 +225,7 @@ class ProfilesController < ApplicationController
 
     # end
 
-    redirect_to profiles_path, notice: 'Profile was successfully updated.'
+    redirect_to user_dashboard_url(current_user.id), notice: 'Profile was successfully updated.'
 
   end
 
