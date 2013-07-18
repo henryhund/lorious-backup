@@ -5,13 +5,15 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :authentication_keys => [:login]
 
   after_create :assign_default_role, :create_profile
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :role_ids, :as => :admin
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :fully_registered, :avatar
+  attr_accessible :username, :login, :name, :email, :password, :password_confirmation, :remember_me, :fully_registered, :avatar
+
+  attr_accessor :login
 
   has_one :profile, dependent: :destroy
   
@@ -25,11 +27,11 @@ class User < ActiveRecord::Base
                           content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] },
                           size: { less_than: 1.megabytes }
 
-
+  validates :username, presence: true, uniqueness: true
 
 
   extend FriendlyId
-  friendly_id :name, use: [:slugged, :history]
+  friendly_id :username, use: [:slugged, :history]
 
   has_attached_file :avatar, styles: {
     thumb: '100x100>',
@@ -41,6 +43,20 @@ class User < ActiveRecord::Base
   def get_review_score
     reviews.average('rating').to_f
   end
+
+  
+    def self.find_first_by_auth_conditions(warden_conditions)
+      conditions = warden_conditions.dup
+      if login = conditions.delete(:login)
+        where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      else
+        where(conditions).first
+      end
+    end
+
+  ### This is the correct method you override with the code above
+  ### def self.find_for_database_authentication(warden_conditions)
+  ### end 
 
   protected
   
