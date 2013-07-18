@@ -11,6 +11,7 @@ class Ability
           can :create, Profile
           can :manage, Profile, :user_id => user.id 
           can :create, User
+          can :manage, User, :id => user.id
           can :finish_registration, :users
           can :edit_incomplete_registration, :users
           can :chat_prep, :chat
@@ -23,8 +24,9 @@ class Ability
           can :create, Request
           can :create, Profile
           can :manage, Profile, :user_id => user.id 
-
+          can :read, User
           can :create, User
+          can :manage, User, :id => user.id
           can :finish_registration, :users
           can :edit_incomplete_registration, :users
           can :chat_prep, :chat

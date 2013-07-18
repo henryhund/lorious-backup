@@ -1,49 +1,50 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, except: [:update, :show, :finish_registration, :edit_incomplete_registration]
+  # before_filter :authenticate_user!, except: [:update, :show, :finish_registration, :edit_incomplete_registration]
+  load_and_authorize_resource
 
   def dashboard
     @user = current_user
   end
 
-  def finish_registration
-    authorize! :finish_registration, :users
-    @user_id = params[:user_id]
-    @chat_key = params[:chat_key]
+  # def finish_registration
+  #   #authorize! :finish_registration, :users
+  #   @user_id = params[:user_id]
+  #   @chat_key = params[:chat_key]
 
-    @user = User.find_by_id(@user_id)
+  #   @user = User.find_by_id(@user_id)
 
-    @appointment = Appointment.find_by_chat_key(@chat_key)
+  #   @appointment = Appointment.find_by_chat_key(@chat_key)
 
-    if @user != @appointment.try(:host) && @user != @appointment.try(:attendee)
+  #   if @user != @appointment.try(:host) && @user != @appointment.try(:attendee)
       
-      @destination = "/chat/go/" + @user_id.to_s + @chat_key + "/error"
+  #     @destination = "/chat/go/" + @user_id.to_s + @chat_key + "/error"
 
-      redirect_to @destination
-    end
-  end
+  #     redirect_to @destination
+  #   end
+  # end
 
 
-  def edit_incomplete_registration
-    authorize! :edit_incomplete_registration, :users
-    @user_id = current_user.id
-    @user_id ||= params[:user][:id]
+  # def edit_incomplete_registration
+  #   authorize! :edit_incomplete_registration, :users
+  #   @user_id = current_user.id
+  #   @user_id ||= params[:user][:id]
     
-    @chat_key = params[:user][:chat_key]
-    @user = User.find_by_id(@user_id)
+  #   @chat_key = params[:user][:chat_key]
+  #   @user = User.find_by_id(@user_id)
     
-    @user.password = params[:user][:password]
-    @user.password_confirmation = params[:user][:password_confirmation]
-    @user.fully_registered = true
-    @user.save
+  #   @user.password = params[:user][:password]
+  #   @user.password_confirmation = params[:user][:password_confirmation]
+  #   @user.fully_registered = true
+  #   @user.save
 
-    @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key
+  #   @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key
 
-    redirect_to @destination
+  #   redirect_to @destination
 
-  end
+  # end
 
   def index
-    authorize! :index, @user, :message => 'Not authorized as an administrator.'
+    # authorize! :index, @user, :message => 'Not authorized as an administrator.'
     @users = User.all
   end
 
@@ -70,6 +71,7 @@ class UsersController < ApplicationController
   
   def update
     #authorize! :update, @user, :message => 'Not authorized as an administrator.'
+    
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       redirect_to @user, :notice => "User updated."
