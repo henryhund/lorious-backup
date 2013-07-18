@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     if @user.profile == nil
       @display = "none"
     else
-    # for now, make @display always = all for dev
+    # for now, make @display always = all for dev; later, will allow user to set privacy
 
     @display = "all"
     end
