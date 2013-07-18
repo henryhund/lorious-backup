@@ -1,30 +1,92 @@
 %p#notice= notice
+%ul.profile-nav-band
+  %li.profile-nav-band-link
+    = link_to "User Profile", current_user
+  %li.profile-nav-band-link
+    = link_to "Book An Appointment with #{@profile.user.name}"
+  %li.profile-nav-band-link
+    = link_to "#{@profile.user.name.split.first.pluralize} reviews"
+  %li.profile-nav-band-link
+    = link_to "Ask #{@profile.user.name.split.first} a question"
 
-%p
-  %b User:
-  = @profile.user_id
-%p
-  %b Fname:
-  = @profile.fname
-%p
-  %b Lname:
-  = @profile.lname
-%p
-  %b Email:
-  = @profile.email
-%p
-  %b Expertise:
-  = @profile.expertise
-%p
-  %b Interest:
-  = @profile.interest
-%p
-  %b Expertise hourly:
-  = @profile.expertise_hourly
-%p
-  %b Interest hourly:
-  = @profile.interest_hourly
+.profile-hero.clearfix
+  .picture-rating-consultations
+    %img(src="http://dummyimage.com/800x600/4d494d/686a82.gif&text=placeholder+image")
+    %p 
+      This expert's rating:
+      = @profile.user.get_review_score 
+      \/ 5.0
+    %p
+      = @profile.user.appointments.count
+      consultations
+  .name-and-headline
+    %h3
+      = @profile.user.name
+    %p
+      = @profile.tagline
+  .price-and-booking
+    .price-box
+      %p Price/hr.
+      %span= @profile.expertise_hourly
+      %br
+      %button.btn Book Now
 
-= link_to 'Edit', edit_profile_path(@profile)
-\|
-= link_to 'Back', profiles_path
+.profile-expert-information
+  %h3 Talk To Me About:
+  %p= @profile.bio
+
+.profile-reivews.clearfix
+  %ul.profile-reviews-list
+    - @profile.user.reviews.each do |review| 
+      %li.profile-review
+        %h3
+          // Replace this eventually
+          = User.find_by_id(review.reviewer_id).name
+          says
+        %p= review.content
+        %p
+          = review.rating
+          \/ 5.0
+    %li.profile-review
+      %h3 Roneesh says...
+      %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
+      %p 4.0 / 5.0
+    %li.profile-review
+      %h3 Roneesh says...
+      %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
+      %p 4.0 / 5.0
+    %li.profile-review
+      %h3 Roneesh says...
+      %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
+      %p 4.0 / 5.0
+
+
+/ %p
+/   %b User:
+/   = @profile.user_id
+/ %p
+/   %b Fname:
+/   = @profile.fname
+/ %p
+/   %b Lname:
+/   = @profile.lname
+/ %p
+/   %b Email:
+/   = @profile.email
+/ %p
+/   %b Expertise:
+/   = @profile.expertise
+/ %p
+/   %b Interest:
+/   = @profile.interest
+/ %p
+/   %b Expertise hourly:
+/   = @profile.expertise_hourly
+/ %p
+/   %b Interest hourly:
+/   = @profile.interest_hourly
+
+-if current_user
+  = link_to 'Edit', edit_profile_path(@profile)
+  \|
+  = link_to 'Back', profiles_path
