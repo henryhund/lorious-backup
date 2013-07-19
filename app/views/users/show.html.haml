@@ -1,4 +1,16 @@
+
+
 - content_for :main_content do
+  - if @profile.user.hosted_appointments.count > 0
+    :javascript
+      $(function() {
+        $('#star-average').raty({ readOnly: true, score: #{@profile.user.get_review_score} });
+      });
+  -@profile.user.reviews.each do |review|
+    :javascript
+      $(function() {
+        $('#star#{review.id}').raty({ readOnly: true, score: #{review.rating} });
+      });
   -if @display == "none"
     %h6.alert This user has not made their profile public.
   -elsif @display == "all"
@@ -55,31 +67,41 @@
     /         %li.profile-nav-band-link
     /           = link_to "Ask #{@profile.user.name.split.first} a question"
     /   %span#notice= notice
+
+    / Needed links: edit profile info, edit avatar
+
     .row-fluid
       .container-fluid#profile
         .span9
           .profile-overview-left
             .picture-rating-consultations
               .name-and-headline
-                =image_tag @user.avatar.url(:square), class: "user-profile-image"
+                .img-div
+                  =image_tag @user.avatar.url(:square), class: "user-profile-image"
+                  %br
+                  -if can? :edit, @profile
+                    -if @profile.user.avatar
+                      =link_to "Edit Picture", avatar_page_url(@user.slug)
+                    -else
+                      =link_to "Add Picture", avatar_page_url(@user.slug)
                 .text
                   %h2
                     = @profile.name
                   %p
                     = @profile.tagline
 
-                  %p
-                    %span.strong 
-                      Experience
                     %br
-                    - if @profile.user.appointments.count > 0
-                      = @profile.user.appointments.count
+                    - if @profile.user.hosted_appointments.count > 0
+                      %p
+                        %span.strong 
+                          Experience
+                      = @profile.user.hosted_appointments.count
+                      Hosted Appointments
                       %br
                       Average Rating:
-                      = @profile.user.get_review_score 
-                      \/ 5.0
-                    -else
-                      No Appointments Yet
+                      %br
+                      .star{id: "star-average"}
+                      
 
         .span3.price-and-booking
           .price-and-booking
@@ -96,21 +118,22 @@
     .row-fluid
       .container-fluid#profile.profile-reviews
         .span12
+          -if @profile.user.reviews.count > 0
+            %h2 
+              ="Reviews (" + @profile.user.reviews.count.to_s + ")"
           %ul.profile-reviews-list
             - @profile.user.reviews.each do |review| 
               %li.profile-review
                 %h3
-                  // Replace this eventually
                   = review.reviewer.profile.name
                   says
                 %p= review.content
                 %p.strong
-                  = review.rating
-                  \/ 5.0
+                  .star{id: "star#{review.id}"}
             %li.profile-review
               %h3 Roneesh says...
               %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
-              %p.strong 4.0 / 5.0
+              #star
             %li.profile-review
               %h3 Roneesh says...
               %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.

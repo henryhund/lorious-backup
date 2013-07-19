@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   has_one :profile, dependent: :destroy
   
-  has_many :appointments, foreign_key: "host_id"
+  has_many :hosted_appointments, foreign_key: "host_id", class_name: "Appointment"
   has_many :appointments, foreign_key: "attendee_id"
 
   has_many :reviews, foreign_key: "reviewee_id"

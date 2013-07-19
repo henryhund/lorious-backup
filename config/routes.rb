@@ -53,8 +53,8 @@ Lorious::Application.routes.draw do
   # get '/:niche' => "home#audience_home"
 
   # user/profile show and edit routes
-  get '/:id' => "users#show"  
-  get '/:id/avatar' => "users#upload_avatar"
+  get '/:id' => "users#show", as: "user_page"  
+  get '/:id/avatar' => "users#upload_avatar", as: "avatar_page"
 
   
 
