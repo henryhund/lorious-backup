@@ -1,5 +1,9 @@
+
 %p#notice= notice
 %ul.profile-nav-band
+  -if current_user 
+    %li.profile-nav-band-link
+      = link_to "Edit Profile", edit_profile_url(current_user.id)
   %li.profile-nav-band-link
     = link_to "User Profile", current_user
   %li.profile-nav-band-link
