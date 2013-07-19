@@ -2,10 +2,10 @@
   .span10.offset1
     %h3
       Host: 
-      = @host_name
+      =@host_name
     %h3
       Attendee:
-      = @attendee_name
+      =@attendee_name
 
 
     - if @user_type == "host"
@@ -18,5 +18,7 @@
     %h4 Thanks for being a host!
 
   - elsif @user_type == "attendee"
-    %h4 Please leave your feedback for @host_name
-    =render "reviews/new_after_chat"
+    %h4
+      Please leave your feedback for 
+      =@host_name
+    =render "reviews/form_after_chat"

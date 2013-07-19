@@ -9,8 +9,7 @@ class Appointment < ActiveRecord::Base
 
   validates :chat_key, uniqueness: true
 
-  # change to has_one!
-  has_many :reviews, foreign_key: "appointment_id", class_name: "Review"
+  has_one :review, foreign_key: "appointment_id", class_name: "Review"
   has_many :session_records, primary_key: "chat_session_id", foreign_key: "chat_session_id"
 
   def review_host(rating, content)

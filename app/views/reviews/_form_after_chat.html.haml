@@ -1,0 +1,19 @@
+:javascript
+  $(function() {
+    $('#star').raty({ scoreName: 'review[rating]' });
+  });
+
+
+= simple_form_for(@review) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :appointment_id, as: "hidden"
+    = f.input :reviewer_id, as: "hidden"
+    = f.input :reviewee_id, as: "hidden"
+    #star
+    // = f.input :rating, as: :string, input_html: {id: "review[rating]"}
+    = f.input :content, input_html: {style: "width: 250px; height: 100px;"}
+
+  .form-actions
+    = f.button :submit

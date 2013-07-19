@@ -108,7 +108,8 @@ class ChatController < ApplicationController
       @appointment = Appointment.find_by_chat_key(@chat_key)
 
       if current_user == @appointment.host || current_user == @appointment.attendee
-
+        @host_name = @appointment.host.profile.name
+        @attendee_name = @appointment.attendee.profile.name
         if current_user == @appointment.host
           @user_type = "host"
         elsif current_user == @appointment.attendee
