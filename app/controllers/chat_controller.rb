@@ -114,10 +114,14 @@ class ChatController < ApplicationController
           @user_type = "host"
         elsif current_user == @appointment.attendee
           @user_type = "attendee"
-          @review = Review.new
-          @review.appointment_id = @appointment.id
-          @review.reviewer_id = current_user.id
-          @review.reviewee_id = @appointment.host.id
+          @review = @appointment.review
+          if @review.nil?
+            @review = Review.new
+            @review.appointment_id = @appointment.id
+            @review.reviewer_id = current_user.id
+            @review.reviewee_id = @appointment.host.id
+            @review.rating = 0
+          end
         else
           @destination = "/chat/go/" + @chat_key + "/error"
           redirect_to @destination

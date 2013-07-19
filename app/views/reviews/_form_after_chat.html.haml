@@ -1,6 +1,6 @@
 :javascript
   $(function() {
-    $('#star').raty({ scoreName: 'review[rating]' });
+    $('#star').raty({ score: #{@review.rating}, scoreName: 'review[rating]' });
   });
 
 
@@ -14,6 +14,4 @@
     #star
     // = f.input :rating, as: :string, input_html: {id: "review[rating]"}
     = f.input :content, input_html: {style: "width: 250px; height: 100px;"}
-
-  .form-actions
-    = f.button :submit
+    = f.button :submit, class: "button"
