@@ -112,7 +112,11 @@ class ChatController < ApplicationController
         if current_user == @appointment.host
           @user_type = "host"
         elsif current_user == @appointment.attendee
-           @user_type = "attendee"
+          @user_type = "attendee"
+          @review = Review.new
+          @review.appointment_id = @appointment.id
+          @review.reviewer_id = current_user.id
+          @review.reviewee_id = @appointment.host.id
         else
           @destination = "/chat/go/" + @chat_key + "/error"
           redirect_to @destination
@@ -124,7 +128,6 @@ class ChatController < ApplicationController
 
         @appointment.save
 
-      #@review = @appointment.review.new
 
       else
         flash[:info] = 'You are not authorized to participate in this video chat'
