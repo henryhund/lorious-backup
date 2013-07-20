@@ -4,6 +4,6 @@
       .site-internal-form
         %h3 Edit Your Profile Information
         = render 'form'
-      = link_to 'Show', @profile
+      //= link_to 'Show', user_page_url(current_user)
       %br
-      = link_to 'Back', profiles_path
+      = link_to 'Back', :back

@@ -10,8 +10,8 @@
     = f.input :availability
     = f.input :display_name
     = f.input :expertise
-    = f.input :interest
-    = f.input :expertise_hourly, :as => :string
-    = f.input :interest_hourly, :as => :string
+    =# f.input :interest
+    = f.input :expertise_hourly, collection: 20..100, step: 5
+    =# f.input :interest_hourly, :as => :string
   .form-actions
     = f.button :submit

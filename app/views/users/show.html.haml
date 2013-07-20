@@ -14,19 +14,19 @@
   -if @display == "none"
     %h6.alert This user has not made their profile public.
   -elsif @display == "all"
-    %ul.profile-nav-band
-      -if current_user 
-        %li.profile-nav-band-link
-          = link_to "Edit Profile", edit_profile_url(Profile.find_by_user_id(current_user.id))
-        %li.profile-nav-band-link
-          = link_to "User Profile", current_user
-      -else
-        %li.profile-nav-band-link
-          = link_to "Book An Appointment with #{@profile.user.name}", current_user
-        %li.profile-nav-band-link
-          = link_to "#{@profile.user.name.split.first.pluralize} reviews", current_user
-        %li.profile-nav-band-link
-          = link_to "Ask #{@profile.user.name.split.first} a question", current_user
+    / %ul.profile-nav-band
+    /   -if current_user 
+    /     %li.profile-nav-band-link
+    /       = link_to "Edit Profile", edit_profile_url(Profile.find_by_user_id(current_user.id))
+    /     %li.profile-nav-band-link
+    /       = link_to "User Profile", current_user
+    /   -else
+    /     %li.profile-nav-band-link
+    /       = link_to "Book An Appointment with #{@profile.user.name}", current_user
+    /     %li.profile-nav-band-link
+    /       = link_to "#{@profile.user.name.split.first.pluralize} reviews", current_user
+    /     %li.profile-nav-band-link
+    /       = link_to "Ask #{@profile.user.name.split.first} a question", current_user
     / %h3 User
     / %p
     /   User: #{@user.profile.public_name}
@@ -82,7 +82,11 @@
     /   %span#notice= notice
 
     / Needed links: edit profile info, edit avatar
-
+    -if @user == current_user
+      .row-fluid
+        .span9.offset1
+          %br
+          = link_to "Edit Profile", edit_profile_url(Profile.find_by_user_id(current_user.id))
     .row-fluid
       .container-fluid#profile
         .span9
@@ -120,7 +124,7 @@
           .price-and-booking
             .price-box
               %p.strong Price/hour
-              %p= @profile.expertise_hourly || "Email to ask"
+              %p= number_to_currency(@profile.expertise_hourly, precision: 0) || "Email to ask"
               %br
               %button.btn Book Now
     .row-fluid.profile-expert-information

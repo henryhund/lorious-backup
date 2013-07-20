@@ -2,9 +2,9 @@
 =@user.name
 =@user.email
 %br
-- unless @user.profile
-	= link_to "Create A Profile", new_profile_url
-- else
-	= link_to "View Your Profile", user_page_url(@user.slug)
-- unless @user.fully_registered
+-unless @user.profile
+  = link_to "Create A Profile", new_profile_url
+-else
+  = link_to "View Your Profile", user_page_url(@user.slug)
+-unless @user.fully_registered
   = link_to "Apply to be an expert", current_user
