@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130718141813) do
+ActiveRecord::Schema.define(:version => 20130719145126) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(:version => 20130718141813) do
 
   add_index "reviews", ["appointment_id"], :name => "index_reviews_on_appointment_id"
   add_index "reviews", ["reviewee_id"], :name => "index_reviews_on_reviewee_id"
-  add_index "reviews", ["reviewer_id", "reviewee_id"], :name => "index_reviews_on_reviewer_id_and_reviewee_id", :unique => true
   add_index "reviews", ["reviewer_id"], :name => "index_reviews_on_reviewer_id"
 
   create_table "roles", :force => true do |t|

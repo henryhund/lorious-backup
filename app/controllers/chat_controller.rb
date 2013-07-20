@@ -1,5 +1,7 @@
 class ChatController < ApplicationController
+  # before_filter :require_login, except: [:test]
   authorize_resource :class => false
+
   def test
     @opentok = OpenTok::OpenTokSDK.new ENV["OPENTOK_APIKEY"], ENV["OPENTOK_APISECRET"], :api_url => ENV["OPENTOK_URL"]
     session_properties = {OpenTok::SessionPropertyConstants::P2P_PREFERENCE => "enabled"}    # or disabled
@@ -28,87 +30,117 @@ class ChatController < ApplicationController
     @token = @opentok.generate_token :session_id => @session_id, :role => OpenTok::RoleConstants::PUBLISHER
   end
 
-  def chat_prep
-    @user_id = params[:user_id]
-    @chat_key = params[:chat_key]
+  # def chat_prep
+  #   authorize
 
-    @user = User.find_by_id(@user_id)
 
-    if @user.try(:fully_registered)
-      @status = "start"
-    elsif !@user.try(:fully_registered)
-      @status = "register"
-    else
-      @status = "error"
-    end
+  #   @user_id = params[:user_id]
+  #   @chat_key = params[:chat_key]
 
-    @appointment = Appointment.find_by_chat_key(@chat_key)
+  #   @user = User.find_by_id(@user_id)
 
-    if @user != @appointment.try(:host) && @user != @appointment.try(:attendee)
-      @status = "error"
-    end
+  #   if @user.try(:fully_registered)
+  #     @status = "start"
+  #   elsif !@user.try(:fully_registered)
+  #     @status = "register"
+  #   else
+  #     @status = "error"
+  #   end
 
-    @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/" + @status
+  #   @appointment = Appointment.find_by_chat_key(@chat_key)
 
-    redirect_to @destination
+  #   if @user != @appointment.try(:host) && @user != @appointment.try(:attendee)
+  #     @status = "error"
+  #   end
+
+  #   @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/" + @status
+
+  #   redirect_to @destination
     
 
-  end
+  # end
 
   def scheduled_chat
-    @user_id = params[:user_id]
-    @chat_key = params[:chat_key]
+    if !anyone_signed_in?
+      deny_access
+    elsif user_signed_in?
 
-    @user = User.find_by_id(@user_id)
+      # @user_id = params[:user_id]
+      @chat_key = params[:chat_key]
 
-    if @user.try(:fully_registered)
+      # @user = User.find_by_id(@user_id)
 
       @appointment = Appointment.find_by_chat_key(@chat_key)
 
-      @session_id = @appointment.chat_session_id
+      if current_user == @appointment.host || current_user == @appointment.attendee
 
-      @opentok = OpenTok::OpenTokSDK.new ENV["OPENTOK_APIKEY"], ENV["OPENTOK_APISECRET"], :api_url => ENV["OPENTOK_URL"]
-      @token = @opentok.generate_token :session_id => @session_id, :role => OpenTok::RoleConstants::PUBLISHER
+        @session_id = @appointment.chat_session_id
 
-      @after_route =  "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/end"
+        @opentok = OpenTok::OpenTokSDK.new ENV["OPENTOK_APIKEY"], ENV["OPENTOK_APISECRET"], :api_url => ENV["OPENTOK_URL"]
+        @token = @opentok.generate_token :session_id => @session_id, :role => OpenTok::RoleConstants::PUBLISHER
 
-      @user == @appointment.host ? @user_type = "host" : @user_type = "attendee"
-      
-      @host_name = @appointment.host.profile.name
-      @attendee_name = @appointment.attendee.profile.name
+        @after_route =  "/chat/go/" + @chat_key + "/end"
+
+        current_user == @appointment.host ? @user_type = "host" : @user_type = "attendee"
+        
+        @host_name = @appointment.host.profile.name
+        @attendee_name = @appointment.attendee.profile.name
+      else
+        flash[:info] = 'You are not authorized to participate in this video chat'
+        redirect_to root_path
+      end
 
     else
-      @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/register"
-      redirect_to @destination
     end
+
 
   end
 
   def chat_end
-    @user_id = params[:user_id]
-    @chat_key = params[:chat_key]
+    if !anyone_signed_in?
+      deny_access
+    elsif user_signed_in?
+      @user_id = params[:user_id]
+      @chat_key = params[:chat_key]
 
-    @user = User.find_by_id(@user_id)
+      # @user = User.find_by_id(@user_id)
 
-    @appointment = Appointment.find_by_chat_key(@chat_key)
+      @appointment = Appointment.find_by_chat_key(@chat_key)
 
-    if @user == @appointment.host
-      @user_type = "host"
-    elsif @user == @appointment.attendee
-       @user_type = "attendee"
+      if current_user == @appointment.host || current_user == @appointment.attendee
+        @host_name = @appointment.host.profile.name
+        @attendee_name = @appointment.attendee.profile.name
+        if current_user == @appointment.host
+          @user_type = "host"
+        elsif current_user == @appointment.attendee
+          @user_type = "attendee"
+          @review = @appointment.review
+          if @review.nil?
+            @review = Review.new
+            @review.appointment_id = @appointment.id
+            @review.reviewer_id = current_user.id
+            @review.reviewee_id = @appointment.host.id
+            @review.rating = 0
+          end
+        else
+          @destination = "/chat/go/" + @chat_key + "/error"
+          redirect_to @destination
+        end
+
+        # send_mail("Appointments @ Lorious", "admin@lorious.com", "Team Lorious", "admin@lorious.com", "Lorious ADMIN | Appointment completed", "Appointment completed!\r\n\r\nHost: #{@appointment.host.profile.name}\r\n\r\n Attendee: #{@appointment.attendee.profile.name}\r\n\r\nLogin here: #{ENV["LOCATION"]}/login\r\nView requests here: #{ENV["LOCATION"]}/appointments")    
+
+        @appointment.completed = true
+
+        @appointment.save
+
+
+      else
+        flash[:info] = 'You are not authorized to participate in this video chat'
+        redirect_to root_path
+      end
+
     else
-      @destination = "/chat/go/" + @user_id.to_s + "/" + @chat_key + "/error"
-      redirect_to @destination
     end
-
-    send_mail("Appointments @ Lorious", "admin@lorious.com", "Team Lorious", "admin@lorious.com", "Lorious ADMIN | Appointment completed", "Appointment completed!\r\n\r\nHost: #{@appointment.host.profile.name}\r\n\r\n Attendee: #{@appointment.attendee.profile.name}\r\n\r\nLogin here: #{ENV["LOCATION"]}/login\r\nView requests here: #{ENV["LOCATION"]}/appointments")    
-
-    @appointment.completed = true
-
-    @appointment.save
-
-    #@review = @appointment.review.new
-
   end
 
 
@@ -151,6 +183,14 @@ class ChatController < ApplicationController
 
     end
     respond_to do |format| format.html { render :nothing => true } end
+  end
+
+  private
+
+  def require_login
+    unless current_user
+      redirect_to login_url
+    end
   end
 
 end
