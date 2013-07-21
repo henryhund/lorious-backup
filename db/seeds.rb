@@ -26,9 +26,15 @@
 #   { :name => 'VIP' }
 # ], :without_protection => true)
 puts 'SETTING UP DEFAULT USER LOGIN'
-user = User.create! :name => 'First User', :email => 'user@example.com', :password => 'pleasechangeme', :password_confirmation => 'pleasechangeme'
+user_h = User.create! :name => 'Henry Hund', :username => "henry", :email => 'henryhund@gmail.com', :password => 'pleasechangeme', :password_confirmation => 'pleasechangeme'
+puts 'New user created: ' << user_h.name
+user_hh = User.create! :name => 'Hank Hund', :username => "hank", :email => 'henry@lorious.com', :password => 'pleasechangeme', :password_confirmation => 'pleasechangeme'
+puts 'New user created: ' << user_hh.name
+user = User.create! :name => 'First User',:username => "team", :email => 'user@example.com', :password => 'pleasechangeme', :password_confirmation => 'pleasechangeme'
 puts 'New user created: ' << user.name
-user2 = User.create! :name => 'Second User', :email => 'user2@example.com', :password => 'pleasechangeme', :password_confirmation => 'pleasechangeme'
-puts 'New user created: ' << user2.name
+# user2 = User.create! :name => 'Second User', :email => 'user2@example.com', :password => 'pleasechangeme', :password_confirmation => 'pleasechangeme'
+# puts 'New user created: ' << user2.name
 user.add_role :admin
-user2.add_role :VIP
+user_h.add_role :admin
+user_hh.add_role :admin
+# user2.add_role :VIP
