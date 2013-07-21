@@ -7,6 +7,7 @@
           %th Username
           %th Email
           %th Registered
+          %th Expert
           %th Role
           %th
           %th
@@ -16,6 +17,7 @@
             %td= link_to user.name, user
             %td= user.email
             %td= user.created_at.to_date
+            %td= user.expert # + " " + link_to "(Make Expert)"
             %td= user.roles.first.name.titleize unless user.roles.first.nil?
             %td
               %a.btn.btn-mini{"data-toggle" => "modal", :href => "#role-options-#{user.id}", :type => "button"} Change role

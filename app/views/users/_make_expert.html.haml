@@ -1,0 +1,10 @@
+.row-fluid
+  .container-fluid#profile
+    .span6.offset2.centered
+      %br
+      %br
+      = simple_form_for(@user, html: { class: "form-vertical"}) do |f|
+        = f.error_notification
+        = f.input :expert, label: "User is an Expert?"
+        .form-buttons
+          = f.button :submit, "Change Expert Setting", class: "button"

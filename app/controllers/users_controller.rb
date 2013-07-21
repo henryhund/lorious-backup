@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def dashboard
     @user = current_user
+
   end
 
   # def finish_registration
@@ -55,6 +56,7 @@ class UsersController < ApplicationController
     @user = User.find(@user_id)
     @profile = @user.profile
 
+
     if @user.profile == nil
       @display = "none"
     else
@@ -93,7 +95,11 @@ class UsersController < ApplicationController
   end
 
   def upload_avatar
-    @user = User.find(params[:id])
+    @action = params[:action]
+    render "edit"
+  end
+  def make_expert
+    authorize! :expert, @user, :message => 'Not authorized as an administrator.'
     @action = params[:action]
     render "edit"
   end

@@ -18,7 +18,8 @@
   #video_controls
     %a#go_fullscreen.button{:href => '#'} Go Fullscreen
     &nbsp; &nbsp; &nbsp;
-    =link_to "End Chat", @after_route, class: "button"
+    -if Time.now >= @appointment.time - (60*30)
+      =link_to "End Chat", @after_route, class: "button", confirm: "Are you sure? You will no longer be able to access this appointment."
 
 
 %script{:src => "https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js", :type => "text/javascript"}

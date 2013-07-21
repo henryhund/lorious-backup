@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719145126) do
+ActiveRecord::Schema.define(:version => 20130721161428) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20130719145126) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "username"
+    t.boolean  "expert",                 :default => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

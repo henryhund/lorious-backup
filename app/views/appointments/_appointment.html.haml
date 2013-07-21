@@ -1,0 +1,8 @@
+%tr
+  %td= link_to appointment.host.profile.name, user_page_url(appointment.host)
+  %td= link_to appointment.attendee.profile.name, user_page_url(appointment.attendee)
+  %td= appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
+  %td= link_to(ENV["LOCATION"] + "/chat/go/" + appointment.chat_key, chat_start_url(appointment.chat_key), target: "_blank")
+  -if can? :manage, appointment
+    %td= link_to 'Show', appointment
+    %td= link_to 'Edit', edit_appointment_path(appointment)

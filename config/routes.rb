@@ -32,7 +32,7 @@ Lorious::Application.routes.draw do
   # chat routes
   get "chat/test" => "chat#test"
   # get 'chat/go/:user_id/:chat_key' => "chat#chat_prep"
-  get 'chat/go/:chat_key/' => "chat#scheduled_chat"
+  get 'chat/go/:chat_key/' => "chat#scheduled_chat", as: "chat_start"
   # get 'chat/go/:user_id/:chat_key/register' => "users#finish_registration"
   # get 'chat/go/:chat_key/error' => "home#error"
   get 'chat/go/:chat_key/end' => "chat#chat_end"
@@ -55,6 +55,7 @@ Lorious::Application.routes.draw do
   # user/profile show and edit routes
   get '/:id' => "users#show", as: "user_page"  
   get '/:id/avatar' => "users#upload_avatar", as: "avatar_page"
+  get '/:id/expert' => "users#make_expert", as: "expert_approval"
 
   
 

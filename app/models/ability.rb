@@ -33,6 +33,7 @@ class Ability
           can :read, User
           can :create, User
           can :manage, User, :id => user.id
+          cannot :expert, User
           # cannot :index, User
 
           # can :finish_registration, :users
