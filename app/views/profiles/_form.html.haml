@@ -5,13 +5,13 @@
     =# f.input :fname
     =# f.input :lname
     =# f.input :email
-    = f.input :tagline
+    = f.input :tagline, :input_html => {:maxlength => 250}
     = f.input :bio, :input_html => { :rows => 5 }
     = f.input :availability
     = f.input :display_name
     = f.input :expertise
     =# f.input :interest
-    = f.input :expertise_hourly, collection: (20..100).step(5).map { |d| [ "$#{d.to_s}", d ] }
+    = f.input :expertise_hourly, collection: (20..100).step(5).map { |d| [ "$#{d.to_s}", d.to_s ] }, selected:  @profile.expertise_hourly.to_i, include_blank: true
     =# f.input :expertise_hourly, collection: (20..100).step(5), input_html: {class: "dollars"}
     =# f.input :interest_hourly, :as => :string
   .form-actions

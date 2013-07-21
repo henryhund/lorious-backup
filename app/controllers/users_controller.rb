@@ -5,6 +5,8 @@ class UsersController < ApplicationController
   def dashboard
     @user = current_user
 
+    @appointments = Appointment.find(:all, conditions: ['host_id = ? OR attendee_id = ?', @user.id, @user.id])
+
   end
 
   # def finish_registration

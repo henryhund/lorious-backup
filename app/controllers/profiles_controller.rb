@@ -39,8 +39,13 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
-    @user = current_user
-    @profile = @user.profile
+    
+    if current_user.has_role? :admin
+      @profile = Profile.find(params[:id])
+    else
+      @user = current_user
+      @profile = @user.profile
+    end
   end
 
   # POST /profiles
@@ -193,7 +198,13 @@ class ProfilesController < ApplicationController
   def update
     # @profile = Profile.find(params[:id])
     # update_list_subscription("henryhund@gmail.com", "USER_TYPE", "both")
-    current_user.profile.update_attributes(params[:profile])
+    
+    if current_user.has_role? :admin
+      @profile = Profile.find(params[:id])
+    else
+      @profile = current_user.profile
+    end
+      @profile.update_attributes(params[:profile])
     # @count = 0
     # if session[:email] == @profile.email
     #   unless params[:request_exp].try(:[],:expertise) == ""
@@ -223,7 +234,7 @@ class ProfilesController < ApplicationController
 
     # end
 
-    redirect_to user_dashboard_url(current_user.id), notice: 'Profile was successfully updated.'
+    redirect_to @profile, notice: 'Profile was successfully updated.'
 
   end
 
