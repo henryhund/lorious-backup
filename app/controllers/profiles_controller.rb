@@ -20,17 +20,14 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.json
   def show
     # @profile = Profile.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @profile }
-    end
+    redirect_to user_page_url(@profile.user)
   end
 
   # GET /profiles/new
   # GET /profiles/new.json
   def new
     # @profile = Profile.new
+
 
     
 
