@@ -20,6 +20,8 @@ Lorious::Application.routes.draw do
   resources :profiles
   resources :requests
   resources :appointments
+  resources :charges
+  resources :customers
 
   devise_for :users #, :controllers => { :registrations => "registrations" } 
   resources :users
