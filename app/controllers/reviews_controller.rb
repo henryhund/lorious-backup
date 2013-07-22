@@ -1,6 +1,9 @@
 class ReviewsController < ApplicationController
   # GET /reviews
   # GET /reviews.json
+  
+  load_and_authorize_resource
+
   def index
     @reviews = Review.all
 
@@ -13,7 +16,7 @@ class ReviewsController < ApplicationController
   # GET /reviews/1
   # GET /reviews/1.json
   def show
-    @review = Review.find(params[:id])
+    # @review = Review.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

@@ -82,7 +82,7 @@
     /   %span#notice= notice
 
     / Needed links: edit profile info, edit avatar
-    -if @user == current_user
+    -if can? :edit, @profile
       .row-fluid
         .span9.offset1
           %br
@@ -113,7 +113,8 @@
                         %span.strong 
                           Experience
                       = @profile.user.hosted_appointments.count
-                      Hosted Appointments
+                      Hosted
+                      ="Appointment".pluralize(@profile.user.hosted_appointments.count)
                       %br
                       Average Rating:
                       %br

@@ -7,6 +7,7 @@ class Ability
       can :manage, :all
     else
         if Rails.env.production?
+          # can :manage, :all
           can :create, Request
          
           can :create, Profile
@@ -20,7 +21,10 @@ class Ability
           can :create, User
           can :manage, User, :id => user.id
           cannot :expert, User
-          # cannot :index, User
+          cannot :index, User
+         
+          cannot :index, Request
+          cannot :index, Review
 
           # can :finish_registration, :users
           # can :edit_incomplete_registration, :users
@@ -53,7 +57,10 @@ class Ability
           can :create, User
           can :manage, User, :id => user.id
           cannot :expert, User
-          # cannot :index, User
+          cannot :index, User
+         
+          cannot :index, Request
+          cannot :index, Review
 
           # can :finish_registration, :users
           # can :edit_incomplete_registration, :users
