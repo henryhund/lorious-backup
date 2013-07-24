@@ -7,9 +7,18 @@
       %h1 Sign In!
       .form-inputs
         = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-vertical' }) do |f|
-          = f.input :login, :autofocus => true, placeholder: "Your Username or Email", label: false
-          = f.input :password, placeholder: "Your Password", label: false
+          .input-prepend
+            = f.input :login, :autofocus => true, label: false, wrapper: :append do
+              %span.add-on>
+                %i.icon-user
+              =f.input_field :login, placeholder: "Your Username or Email"
+          .input-prepend
+            = f.input :password, label: false, wrapper: :append do
+              %span.add-on>
+                %i.icon-lock
+              =f.input_field :password, placeholder: "Your Password"
           =# f.input :remember_me, :as => :boolean if devise_mapping.rememberable?
+          %br
           = f.button :submit, "Sign in", :class => 'btn button'
       %p
         %br

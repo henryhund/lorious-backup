@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130722205847) do
+ActiveRecord::Schema.define(:version => 20130723151044) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(:version => 20130722205847) do
     t.string   "chat_key"
     t.string   "chat_session_id"
   end
+
+  create_table "cards", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "stripe_card_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "cards", ["user_id"], :name => "index_cards_on_user_id"
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false

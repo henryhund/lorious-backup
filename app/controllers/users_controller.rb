@@ -9,6 +9,11 @@ class UsersController < ApplicationController
 
   end
 
+  def manage_payments
+    @user = current_user
+
+  end
+
   # def finish_registration
   #   #authorize! :finish_registration, :users
   #   @user_id = params[:user_id]

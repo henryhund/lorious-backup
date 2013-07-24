@@ -1,6 +1,6 @@
 
 
-- content_for :main_content do
+- content_for :head do
   - if @profile.user.hosted_appointments.count > 0
     :javascript
       $(function() {
@@ -11,6 +11,7 @@
       $(function() {
         $('#star#{review.id}').raty({ readOnly: true, score: #{review.rating} });
       });
+- content_for :main_content do
   -if @display == "none"
     %h6.alert This user has not made their profile public.
   -elsif @display == "all"
@@ -94,7 +95,7 @@
             .picture-rating-consultations
               .name-and-headline
                 .img-div
-                  =image_tag @user.avatar.url(:square), class: "user-profile-image"
+                  =image_tag @user.avatar.url(:square), class: "user-profile-image img-polaroid"
                   %br
                   -if can? :edit, @profile
                     -if @profile.user.avatar

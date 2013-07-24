@@ -2,21 +2,23 @@
   .container-fluid
     .span6
       .site-internal-form
-        -unless @customer.nil?
-          .current-card
-            %p= @customer["cards"]["data"][0]["name"]
-            %p= @customer["cards"]["data"][0]["type"]
-            %p= @customer["cards"]["data"][0]["last4"]
-            %p 
-              =@customer["cards"]["data"][0]["exp_month"]
-              \/
-              =@customer["cards"]["data"][0]["exp_year"]
-            %p= link_to "Update Card Info", edit_customer_url
-        %h3 Update a Card
-        = form_tag customers_path do
-          =text_field_tag(:number, nil, placeholder: "**** **** **** " + @customer["cards"]["data"][0]["last4"])
-          =text_field_tag(:exp_month, nil, placeholder: @customer["cards"]["data"][0]["exp_month"].to_s)
-          =text_field_tag(:exp_year, nil, placeholder: @customer["cards"]["data"][0]["exp_year"].to_s)
-          =text_field_tag(:name, nil, placeholder: @customer["cards"]["data"][0]["name"])
-          =text_field_tag(:cvc, nil, placeholder: "CVC")
-          =submit_tag("submit")
+        / -unless @customer["cards"]["count"] == 0
+        /   .current-card
+        /     %p= @customer["cards"]["data"][0]["name"]
+        /     %p= @customer["cards"]["data"][0]["type"]
+        /     %p= @customer["cards"]["data"][0]["last4"]
+        /     %p 
+        /       =@customer["cards"]["data"][0]["exp_month"]
+        /       \/
+        /       =@customer["cards"]["data"][0]["exp_year"]
+        /     %p= link_to "Update Card Info", edit_customer_url
+        / %h3 Update a Card
+        / = form_tag customers_path do
+        /   =text_field_tag(:number, nil, placeholder: "**** **** **** " + @customer["cards"]["data"][0]["last4"])
+        /   =text_field_tag(:exp_month, nil, placeholder: @customer["cards"]["data"][0]["exp_month"].to_s)
+        /   =text_field_tag(:exp_year, nil, placeholder: @customer["cards"]["data"][0]["exp_year"].to_s)
+        /   =text_field_tag(:name, nil, placeholder: @customer["cards"]["data"][0]["name"])
+        /   =text_field_tag(:cvc, nil, placeholder: "CVC")
+        /   =submit_tag("submit")
+
+

@@ -9,3 +9,10 @@
 
 	background-image: none;
 }
+
+[class^="icon-"], [class*=" icon-"] {
+  background-image: url("https://s3.amazonaws.com/lorious/layout/elements/icons/glyphicons-halflings.png");
+}
+[class^="icon-white"], [class*=" icon-white"] {
+  background-image: url("https://s3.amazonaws.com/lorious/layout/elements/icons/glyphicons-halflings-white.png");
+}
