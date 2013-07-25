@@ -23,7 +23,7 @@ class Appointment < ActiveRecord::Base
 
     if records
       records.each do | record |
-        length += record.disconnected_at - record.created_at
+        length += record.disconnected_at - record.created_at unless record.disconnected_at.nil?
       end
     end
 
