@@ -127,12 +127,12 @@
               %p.strong Price/hour
               %p= number_to_currency(@profile.expertise_hourly, precision: 0) || "Email to ask"
               %br
-              %button.btn Book Now
+              / %button.btn Book Now
     .row-fluid.profile-expert-information
       .container-fluid#profile
         .span12
           %h2 Talk To Me About:
-          %p= @profile.bio || "User has not shared any information yet"
+          %p= simple_format(@profile.bio) || "User has not shared any information yet"
     .row-fluid
       .container-fluid#profile.profile-reviews
         .span12
