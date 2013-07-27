@@ -1,21 +1,76 @@
 %section.row-fluid.nav-footer
-  .max-container
-    .span2.offset1
-      %a{href: "/"}
-        =image_tag 'https://s3.amazonaws.com/lorious/layout/lorious_2color.svg', width: '120px', class: "logo"
-    .span3
-      %ul
-        %li= link_to "Home", root_path
-        -if @action == "audience_home"
-          %li= link_to "Be an Expert", expert_path
-        -elsif @action == "blog_home"
-          %li= link_to "Not an Expert?", audience_path
-        %li= mail_to "questions@lorious.com", "Contact Us"
-    .span3.social
-      %a{href: "https://www.facebook.com/pages/Lorious/357664217669583", target: "_blank"}
-        =image_tag "https://s3.amazonaws.com/lorious/layout/elements/social/facebook_green_icon.svg", width: "110px"
-        Facebook
-    .span3.social
-      %a{href: "https://twitter.com/intent/user?screen_name=LoriousTweets", target:"_blank"}
-        =image_tag "https://s3.amazonaws.com/lorious/layout/elements/social/twitter_green_icon.svg", width: "110px"
-        Twitter
+  .container-fluid
+    .row-fluid
+      .span1{:style => "width: .5%;"}
+      .span2{:style => "width: 15%;"}
+        %ul.unstyled{style: "padding-top:0px"}
+          %li 
+            Lorious
+          %hr{style: "height:5px; visibility:hidden; margin: 0px 0px 0px 0px;"}
+          %li
+            %a{:href => "#"} About us
+          %li
+            %a{:href => "#"} Blog
+          %li
+            %a{:href => "#"} Contact us
+          
+      .span2{:style => "width: 15%;"}
+        %ul.unstyled{style: "padding-top:0px"}
+          %li Connect
+          %hr{style: "height:5px; visibility:hidden; margin: 0px 0px 0px 0px;"}
+          %li
+            %a{:href => "https://www.facebook.com/pages/Lorious/357664217669583"} 
+              =image_tag "https://s3.amazonaws.com/lorious/layout/elements/social/facebook_green_icon.svg", width: "20px"
+              Facebook
+          %li
+            %a{:href => "https://twitter.com/intent/user?screen_name=LoriousTweets"} 
+              =image_tag "https://s3.amazonaws.com/lorious/layout/elements/social/twitter_green_icon.svg", width: "20px"
+              Twitter
+      .span7{:style => "width: 60%; text-align: right;"}
+        %ul.unstyled{style: "margin-bottom:0px; padding-top: 0px;"}
+        %li
+          %a{href: "/"}
+            =image_tag 'https://s3.amazonaws.com/lorious/layout/lorious_2color.svg', width: '120px'
+        %hr{style: "height:5px; visibility:hidden; margin: 0px 0px 0px 0px;"}
+
+        %li
+          %p.muted 
+            © 2013 Lorious. All rights reserved.
+          %p.muted
+            =link_to("Terms of Service and Privacy Policy", legal_path)
+  / %hr/
+  / .row-fluid
+  /   .span12
+  /     .span8
+
+  /     .span4
+  /       %a.pull-right{href: "/"}
+  /         =image_tag 'https://s3.amazonaws.com/lorious/layout/lorious_2color.svg', width: '120px'
+  /       %p.muted.pull-right 
+  /         © 2013 Lorious. All rights reserved.
+  /       .by-line
+  /         %a.pull-right{:href => "#"} Terms of Service
+  /         %a.pull-right{:href => "#"} Privacy
+  / %hr/
+
+
+  / .max-container
+  /   .span2.offset1
+  /     %a{href: "/"}
+  /       =image_tag 'https://s3.amazonaws.com/lorious/layout/lorious_2color.svg', width: '120px', class: "logo"
+  /   .span3
+  /     %ul
+  /       %li= link_to "Home", root_path
+  /       -if @action == "audience_home"
+  /         %li= link_to "Be an Expert", expert_path
+  /       -elsif @action == "blog_home"
+  /         %li= link_to "Not an Expert?", audience_path
+  /       %li= mail_to "questions@lorious.com", "Contact Us"
+  /   .span3.social
+  /     %a{href: "https://www.facebook.com/pages/Lorious/357664217669583", target: "_blank"}
+  /       =image_tag "https://s3.amazonaws.com/lorious/layout/elements/social/facebook_green_icon.svg", height: "110px"
+  /       Facebook
+  /   .span3.social
+  /     %a{href: "https://twitter.com/intent/user?screen_name=LoriousTweets", target:"_blank"}
+  /       =image_tag "https://s3.amazonaws.com/lorious/layout/elements/social/twitter_green_icon.svg", height: "110px"
+  /       Twitter

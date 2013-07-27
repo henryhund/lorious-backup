@@ -18,14 +18,12 @@
     = google_tag_manager
     -if current_user.try(:id)
       -if current_user.has_role? :admin
-        .navbar.navbar-fixed-top
-          %nav.navbar-inner
-            .container
-              = render 'layouts/navigation'
+        /= render 'layouts/admin_navigation'
+    = render 'layouts/user_navigation'
     #main{:role => "main"}
-      = render 'layouts/header' unless @disable_header
+      /= render 'layouts/header' unless @disable_header
       = render 'layouts/messages'
       = content_for?(:content) ? yield(:content) : yield
       = render 'layouts/nav_footer' unless @disable_footernav
-      = render 'layouts/footer'
+      / = render 'layouts/footer'
 

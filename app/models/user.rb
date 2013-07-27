@@ -16,9 +16,9 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
-  has_many :services, dependent: :destroy
+  has_many :services, :dependent => :destroy
 
-  has_one :profile, dependent: :destroy
+  has_one :profile, :dependent => :destroy
   
   has_many :hosted_appointments, foreign_key: "host_id", class_name: "Appointment"
   has_many :appointments, foreign_key: "attendee_id"
