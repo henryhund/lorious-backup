@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :authentication_keys => [:login]
+  devise :omniauthable, :omniauth_providers => [:google_oauth2]
 
   after_create :assign_default_role, :create_profile
 
@@ -14,6 +15,8 @@ class User < ActiveRecord::Base
   attr_accessible :username, :login, :name, :email, :password, :password_confirmation, :remember_me, :avatar, :expert
 
   attr_accessor :login
+
+  has_many :services
 
   has_one :profile, dependent: :destroy
   

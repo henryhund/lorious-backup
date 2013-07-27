@@ -15,3 +15,5 @@
           = f.button :submit, 'Join Lorious', :class => 'btn button'
       %p
         = link_to "or, Sign In", new_user_session_url
+      %p
+        = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)

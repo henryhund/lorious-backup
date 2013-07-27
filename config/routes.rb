@@ -1,11 +1,15 @@
 Lorious::Application.routes.draw do
   
+  resources :services
+
+
   # basic public routes
   authenticated :user do
     root :to => 'users#dashboard'
   end
   get "/users/:id/dashboard" => "users#dashboard", as: "user_dashboard"
   root :to => "home#audience_home"
+  
   get 'blog_home' => "home#blog_home"
   get 'expert' => 'home#blog_home'
   get 'experts' => 'home#blog_home'
@@ -22,6 +26,7 @@ Lorious::Application.routes.draw do
   resources :appointments
 
   devise_for :users #, :controllers => { :registrations => "registrations" } 
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   resources :users
   devise_scope :user do
     get 'login' => "devise/sessions#new"
