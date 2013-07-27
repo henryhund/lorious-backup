@@ -8,3 +8,14 @@
     .modal-footer
       = f.submit "Change Role", :class => "btn"
       %a.btn{"data-dismiss" => "modal", :href => "#"} Close
+
+.modal{:id => "expert-options-#{user.id}", :style => "display: none;"}
+  = simple_form_for user, :url => user_path(user), :html => {:method => :put, :class => 'form-horizontal' } do |f|
+    .modal-header
+      %a.close{"data-dismiss" => "modal"} ×
+      %h3 Make User an Expert?
+    .modal-body
+      = f.input :expert, :collection => [true, false], :as => :radio_buttons, :item_wrapper_class => 'inline', checked: user.expert
+    .modal-footer
+      = f.submit "Change Whether Expert", :class => "btn"
+      %a.btn{"data-dismiss" => "modal", :href => "#"} Close

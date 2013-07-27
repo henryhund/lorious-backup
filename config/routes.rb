@@ -25,7 +25,7 @@ Lorious::Application.routes.draw do
   resources :requests
   resources :appointments
 
-  devise_for :users #, :controllers => { :registrations => "registrations" } 
+  # devise_for :users #, :controllers => { :registrations => "registrations" } 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   resources :users
   devise_scope :user do

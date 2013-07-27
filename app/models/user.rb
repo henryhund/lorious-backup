@@ -11,12 +11,12 @@ class User < ActiveRecord::Base
   after_create :assign_default_role, :create_profile
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :role_ids, :as => :admin
-  attr_accessible :username, :login, :name, :email, :password, :password_confirmation, :remember_me, :avatar, :expert
+  attr_accessible :role_ids, :expert, :as => :admin
+  attr_accessible :username, :login, :name, :email, :password, :password_confirmation, :remember_me, :avatar, :expert, :avatar_remote_url
 
   attr_accessor :login
 
-  has_many :services
+  has_many :services, dependent: :destroy
 
   has_one :profile, dependent: :destroy
   
@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
                           size: { less_than: 1.megabytes }
 
   validates :username, presence: true, uniqueness: true
+  validates :name, presence: true
 
 
   extend FriendlyId
@@ -47,19 +48,46 @@ class User < ActiveRecord::Base
     reviews.average('rating').to_f
   end
 
+  def avatar_remote_url=(url_value)
+    self.avatar = URI.parse(url_value)
+    # Assuming url_value is http://example.com/photos/face.png
+    # avatar_file_name == "face.png"
+    # avatar_content_type == "image/png"
+    @avatar_remote_url = url_value
+  end
   
-    def self.find_first_by_auth_conditions(warden_conditions)
-      conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-      else
-        where(conditions).first
-      end
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    else
+      where(conditions).first
     end
+  end
 
   ### This is the correct method you override with the code above
   ### def self.find_for_database_authentication(warden_conditions)
   ### end 
+
+  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    user = User.where(:email => data["email"]).first
+
+    # print access_token.to_yaml
+    # print data
+
+    unless user
+        user = User.create(name: data["name"],
+             username: Devise.friendly_token[0,5],
+             email: data["email"],
+             password: Devise.friendly_token[0,20],
+             avatar_remote_url: access_token["info"]["image"]
+            )
+        # Add Google Service (required)
+        user.services.create(provider: access_token["provider"], uid: access_token["uid"], uname: access_token["info"]["name"], uemail: access_token["info"]["email"])
+    end
+    user
+  end
 
   protected
   

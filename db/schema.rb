@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130727013146) do
+ActiveRecord::Schema.define(:version => 20130727173630) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20130727013146) do
     t.string   "username"
     t.boolean  "expert",                 :default => false
     t.string   "stripe_customer_id"
+    t.string   "avatar_remote_url"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
