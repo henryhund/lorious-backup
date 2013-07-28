@@ -8,7 +8,7 @@
     %span.type= @card_type
     %span.name= @card_name
     %span.number= @card_number
-    %span.expiration= @card_exp
+    %span.expiration= "Exp: " + @card_exp
     %span.options-edit= link_to 'Edit', edit_card_path(@card)
     %span.options-delete= link_to 'Destroy', @card, :method => :delete, :data => { :confirm => 'Are you sure?' }
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130723151044) do
+ActiveRecord::Schema.define(:version => 20130728175050) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(:version => 20130723151044) do
     t.string   "chat_key"
     t.string   "chat_session_id"
   end
+
+  create_table "bank_accounts", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "stripe_bank_account_id"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  add_index "bank_accounts", ["user_id"], :name => "index_bank_accounts_on_user_id"
 
   create_table "cards", :force => true do |t|
     t.integer  "user_id"
@@ -108,6 +117,18 @@ ActiveRecord::Schema.define(:version => 20130723151044) do
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
+  create_table "services", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "uname"
+    t.string   "uemail"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "services", ["user_id"], :name => "index_services_on_user_id"
+
   create_table "session_records", :force => true do |t|
     t.string   "chat_session_id"
     t.integer  "user_id_1"
@@ -144,6 +165,8 @@ ActiveRecord::Schema.define(:version => 20130723151044) do
     t.string   "username"
     t.boolean  "expert",                 :default => false
     t.string   "stripe_customer_id"
+    t.string   "avatar_remote_url"
+    t.string   "stripe_recipient_id"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

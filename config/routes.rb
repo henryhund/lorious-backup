@@ -1,5 +1,8 @@
 Lorious::Application.routes.draw do
   
+  # resources :bank_accounts
+
+
   # basic public routes
   authenticated :user do
     root :to => 'users#dashboard'
@@ -24,6 +27,7 @@ Lorious::Application.routes.draw do
   resources :appointments
   resources :charges
   resources :customers
+  resources :recipients
   resources :cards
 
   devise_for :users #, :controllers => { :registrations => "registrations" } 

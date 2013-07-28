@@ -2,6 +2,7 @@ class CustomersController < ApplicationController
 
   def new
     customer = Stripe::Customer.create(
+     :name => current_user.name,
      :email => current_user.email
     )
 

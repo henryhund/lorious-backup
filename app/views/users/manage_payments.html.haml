@@ -1,42 +1,37 @@
-%section.row-fluid.dashboard-overview
-  .max-container
-    .span8.offset2
-      %h2 Manage Payments
-      %p
-        You are logged in as
-        =@user.name
-        ="(" + @user.email + ")"
-%section.row-fluid.dashboard-options
-  .span8.offset2
-    .max-container
-      %ul
-        %li= link_to "Edit User Information", edit_user_registration_path(current_user)
-        %li
-          -unless @user.profile
-            = link_to "Create A Profile", new_profile_url
-          -else
-            = link_to "View/Edit Your Profile", user_page_url(@user.slug)
-        %li Manage Privacy Settings 
-        %li Manage Upcoming Appointments
-        -if !@user.expert
-          %li 
-            Apply to Be an Expert
-        -elsif @user.expert
-          %li
-            Manage Availability for Appointments
-            /   = link_to "Apply to be an expert", current_user
-        %li Manage Payment Options
+%section.row-fluid.manage-payments-overview
+  %h2 Manage Payment Accounts
+  %p.muted
+    In order to meet with a teacher, you must put a credit card on file. Your card will be charged when you schedule an appointment.
+  %p.muted
+    In order to host an appointment and accept payment, you must put a bank account on file. You will be paid once you have accrued $50 or more in fees.
+%section.row-fluid.manage-payments-details
+  %ul.unstyled
+    -if @card_on_file
+      %li.strong
+        %i.icon-ok
+        = "Card Added! (" + @card_type + ") "
+        =link_to "Manage Card", cards_path
+        %p.muted You're ready to schedule appointments and make payments!
+    -else
+      %li.strong
+        %i.icon-remove
+        No Card on File 
+        = link_to "Add Card", cards_path
+    %br
+    %br
+    -if @bank_account_on_file
+      %li.strong
+        %i.icon-ok
+        = "Bank Account Added! (" + @bank_account_type + ") "
+        =link_to "Manage Bank Account", recipients_path
+        %p.muted You're ready to host appointments and accept payments!
+    -else
+      %li.strong
+        %i.icon-remove
+        No Bank Account on File
+        =link_to "Add Bank Account", recipients_path
 
-%section.row-fluid.dashboard-appointments
-  .span8.offset2
-    .max-container
-      %h3 Listing Appointments
-      %table.table
-        %tr
-          %th Host
-          %th Attendee
-          %th Time (EST)
-          %th URL
-          %th
-          %th
-        =render @appointments unless @appointments.nil?
+    %br
+    %br
+
+    =link_to "Back to Dashboard", user_dashboard_path(current_user)

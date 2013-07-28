@@ -1,4 +1,11 @@
 - content_for :content do
-  .section.main-content
-    = content_for?(:main_content) ? yield(:main_content) : yield
+  .row-fluid
+    .container-fluid#profile
+      .span2
+        Sidebar
+      .span10
+        .section.main-content
+          = content_for?(:main_content) ? yield(:main_content) : yield
+
+ 
 = render template: "layouts/application"
