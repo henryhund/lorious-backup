@@ -49,7 +49,8 @@ class User < ActiveRecord::Base
   end
 
   def avatar_remote_url=(url_value)
-    self.avatar = URI.parse(url_value)
+    url_value.gsub! /https/, 'http' unless url_value.blank?
+    self.avatar = URI.parse(url_value) unless url_value.blank?
     # Assuming url_value is http://example.com/photos/face.png
     # avatar_file_name == "face.png"
     # avatar_content_type == "image/png"
