@@ -1,7 +1,7 @@
 %section.row-fluid.dashboard-overview
   .max-container
     .span8.offset2
-      %h2 This is the user dashboard!
+      %h2 User Dashboard
       %p
         You are logged in as
         =@user.name
@@ -10,11 +10,12 @@
   .span8.offset2
     .max-container
       %ul
+        %li= link_to "Edit User Information", edit_user_registration_path(current_user)
         %li
           -unless @user.profile
             = link_to "Create A Profile", new_profile_url
           -else
-            = link_to "View/Edit Your Profile", user_page_url(@user.slug)
+            = link_to "View/Edit Your Profile", user_page_path(@user.slug)
         %li Manage Privacy Settings 
         %li Manage Upcoming Appointments
         -if !@user.expert
@@ -24,7 +25,7 @@
           %li
             Manage Availability for Appointments
             /   = link_to "Apply to be an expert", current_user
-        %li Manage Payment Options
+        %li= link_to "Manage Payment Options", manage_payments_path
 
 %section.row-fluid.dashboard-appointments
   .span8.offset2

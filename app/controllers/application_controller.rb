@@ -134,4 +134,27 @@ class ApplicationController < ActionController::Base
       # puts sending
   end
 
+  
+  # Stripe customer check
+  def stripe_customer?(user, redirect="new_customer_path")
+    if user.stripe_customer_id && Stripe::Customer.retrieve(user.stripe_customer_id) && Stripe::Customer.retrieve(user.stripe_customer_id)["deleted"] != true
+      return true
+    elsif redirect
+      redirect_to new_customer_path
+    else
+      return false
+    end
+  end
+
+  # Stripe customer check
+  def stripe_recipient?(user, redirect="new_customer_path")
+    if user.stripe_recipient_id && Stripe::Recipient.retrieve(user.stripe_recipient_id) && Stripe::Recipient.retrieve(user.stripe_recipient_id)["deleted"] != true
+      return true
+    elsif redirect
+      redirect_to new_recipient_path
+    else
+      return false
+    end
+  end
+
 end

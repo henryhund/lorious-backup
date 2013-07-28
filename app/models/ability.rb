@@ -26,6 +26,10 @@ class Ability
           cannot :index, Request
           cannot :index, Review
 
+          can :create, Card
+          can :manage, Card, :user_id => user.id
+          can :show, Card
+
           # can :finish_registration, :users
           # can :edit_incomplete_registration, :users
           
@@ -61,6 +65,10 @@ class Ability
          
           cannot :index, Request
           cannot :index, Review
+
+          can :create, Card
+          can :manage, Card, :user_id => user.id
+          can :show, Card
 
           # can :finish_registration, :users
           # can :edit_incomplete_registration, :users

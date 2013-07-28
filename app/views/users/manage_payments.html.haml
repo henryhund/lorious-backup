@@ -1,0 +1,37 @@
+%section.row-fluid.manage-payments-overview
+  %h2 Manage Payment Accounts
+  %p.muted
+    In order to meet with a teacher, you must put a credit card on file. Your card will be charged when you schedule an appointment.
+  %p.muted
+    In order to host an appointment and accept payment, you must put a bank account on file. You will be paid once you have accrued $50 or more in fees.
+%section.row-fluid.manage-payments-details
+  %ul.unstyled
+    -if @card_on_file
+      %li.strong
+        %i.icon-ok
+        = "Card Added! (" + @card_type + ") "
+        =link_to "Manage Card", cards_path
+        %p.muted You're ready to schedule appointments and make payments!
+    -else
+      %li.strong
+        %i.icon-remove
+        No Card on File 
+        = link_to "Add Card", cards_path
+    %br
+    %br
+    -if @bank_account_on_file
+      %li.strong
+        %i.icon-ok
+        = "Bank Account Added! (" + @bank_account_type + ") "
+        =link_to "Manage Bank Account", recipients_path
+        %p.muted You're ready to host appointments and accept payments!
+    -else
+      %li.strong
+        %i.icon-remove
+        No Bank Account on File
+        =link_to "Add Bank Account", recipients_path
+
+    %br
+    %br
+
+    =link_to "Back to Dashboard", user_dashboard_path(current_user)

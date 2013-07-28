@@ -1,0 +1,32 @@
+%p#notice= notice
+
+%h2 Manage Your Credit Card
+
+-if @display != "none"
+  %p.strong Card
+  .card-container
+    %span.type= @card_type
+    %span.name= @card_name
+    %span.number= @card_number
+    %span.expiration= "Exp: " + @card_exp
+    %span.options-edit= link_to 'Edit', edit_card_path(@card)
+    %span.options-delete= link_to 'Destroy', @card, :method => :delete, :data => { :confirm => 'Are you sure?' }
+  
+
+  / %table.table
+  /   %tr
+  /     %th User
+  /     %th Stripe card
+  /     %th
+  /     %th
+
+  /   %tr
+  /     %td= @card.user_id
+  /     %td= @card.stripe_card_id
+  /     %td= link_to 'Edit', edit_card_path(@card)
+  /     %td= link_to 'Destroy', @card, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+-if current_user.card.nil?
+  = link_to 'New Card', new_card_path

@@ -9,6 +9,29 @@ class UsersController < ApplicationController
 
   end
 
+  def manage_payments
+    @user = current_user
+    @card_on_file = false
+    @bank_account_on_file = false
+    
+    if !@user.stripe_customer_id.nil?
+      customer = Stripe::Customer.retrieve(@user.stripe_customer_id)
+      card = customer.cards.retrieve(@user.card.stripe_card_id)
+      @card_type = card["type"]
+      @card_on_file = true
+    end
+
+    if !@user.stripe_recipient_id.nil?
+      recipient = Stripe::Recipient.retrieve(@user.stripe_recipient_id)
+
+      bank_account = recipient.active_account
+
+      @bank_account_type = bank_account.bank_name
+      @bank_account_on_file = true
+    end
+
+  end
+
   # def finish_registration
   #   #authorize! :finish_registration, :users
   #   @user_id = params[:user_id]

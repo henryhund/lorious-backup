@@ -1,0 +1,32 @@
+
+%section.row-fluid.sign-up
+  .container-fluid
+    .span6
+      .site-internal-form
+        We need a new customer
+
+      /   -unless @customer["cards"]["count"] == 0
+      /     .current-card
+      /       %p= @customer["cards"]["data"][0]["name"]
+      /       %p= @customer["cards"]["data"][0]["type"]
+      /       %p= @customer["cards"]["data"][0]["last4"]
+      /       %p 
+      /         =@customer["cards"]["data"][0]["exp_month"]
+      /         \/
+      /         =@customer["cards"]["data"][0]["exp_year"]
+      /       %p= link_to "Update Card Info", edit_customer_path(current_user)
+      /   %h3 Add a Card
+      /   = form_tag customers_path do
+      /     / =text_field_tag(:ccnumber)
+      /     / =text_field_tag(:date)
+      /     / =text_field_tag(:name)
+      /     / =text_field_tag(:cvc)
+      /     / =submit_tag("submit")
+
+      /     %article
+      /       %label.amount
+      /         %span Amount: $5.00
+      /     %script.stripe-button{"data-amount" => "500", "data-description" => "Add a Card", "data-key" => Rails.configuration.stripe[:publishable_key], :src => "https://checkout.stripe.com/v2/checkout.js"}
+      /   / =link_to raw('<i class="icon-trash icon-white"></i>'), "#", confirm: 'Are you sure?', method: :delete, :class => 'btn btn-danger'
+
+      / = link_to 'Back', profiles_path

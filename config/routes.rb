@@ -1,10 +1,15 @@
 Lorious::Application.routes.draw do
   
+  # resources :bank_accounts
+
+
   # basic public routes
   authenticated :user do
     root :to => 'users#dashboard'
   end
   get "/users/:id/dashboard" => "users#dashboard", as: "user_dashboard"
+  get "/accounts" => "users#manage_payments", as: "manage_payments"
+
   root :to => "home#audience_home"
   get 'blog_home' => "home#blog_home"
   get 'expert' => 'home#blog_home'
@@ -20,6 +25,10 @@ Lorious::Application.routes.draw do
   resources :profiles
   resources :requests
   resources :appointments
+  resources :charges
+  resources :customers
+  resources :recipients
+  resources :cards
 
   devise_for :users #, :controllers => { :registrations => "registrations" } 
   resources :users

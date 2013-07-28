@@ -26,6 +26,7 @@ gem 'opentok'
 gem 'friendly_id' # errors with version 5, had to use version 4.09, github: 'FriendlyId/friendly_id', branch: 'master' # Note: You MUST use 5.0.0 or greater for Rails 4.0+
 gem 'aws-sdk'
 gem 'paperclip'
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
 group :development do
   gem 'better_errors'

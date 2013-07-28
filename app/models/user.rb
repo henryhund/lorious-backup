@@ -12,10 +12,13 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :role_ids, :as => :admin
   attr_accessible :username, :login, :name, :email, :password, :password_confirmation, :remember_me, :avatar, :expert
+  attr_accessible :stripe_customer_id, :stripe_recipient_id
 
   attr_accessor :login
 
   has_one :profile, dependent: :destroy
+  has_one :card, dependent: :destroy
+  has_one :bank_account, dependent: :destroy
   
   has_many :hosted_appointments, foreign_key: "host_id", class_name: "Appointment"
   has_many :appointments, foreign_key: "attendee_id"
