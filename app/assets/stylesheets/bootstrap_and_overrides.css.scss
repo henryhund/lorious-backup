@@ -28,3 +28,10 @@
 .dropdown-backdrop {
     position: static;
 }
+
+.rounded-corners-profile-pic {
+   -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+}

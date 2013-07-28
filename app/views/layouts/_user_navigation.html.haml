@@ -24,7 +24,7 @@
               %a{"data-toggle" => "dropdown", :href => "#"}
                 ="Welcome #{current_user.profile.fname}"
                 &nbsp;
-                =image_tag("#{current_user.avatar}", width: "25px")
+                =image_tag("#{current_user.avatar}", width: "25px", class: "rounded-corners-profile-pic")
                 %b.caret
               %ul.dropdown-menu
                 %li
