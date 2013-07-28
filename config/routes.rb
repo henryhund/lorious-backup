@@ -1,8 +1,5 @@
 Lorious::Application.routes.draw do
   
-  # resources :bank_accounts
-
-
   # basic public routes
   authenticated :user do
     root :to => 'users#dashboard'
@@ -11,6 +8,7 @@ Lorious::Application.routes.draw do
   get "/accounts" => "users#manage_payments", as: "manage_payments"
 
   root :to => "home#audience_home"
+  
   get 'blog_home' => "home#blog_home"
   get 'expert' => 'home#blog_home'
   get 'experts' => 'home#blog_home'
@@ -29,8 +27,10 @@ Lorious::Application.routes.draw do
   resources :customers
   resources :recipients
   resources :cards
+  resources :services
 
-  devise_for :users #, :controllers => { :registrations => "registrations" } 
+  # devise_for :users #, :controllers => { :registrations => "registrations" } 
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   resources :users
   devise_scope :user do
     get 'login' => "devise/sessions#new"
@@ -65,6 +65,7 @@ Lorious::Application.routes.draw do
   get '/:id' => "users#show", as: "user_page"  
   get '/:id/avatar' => "users#upload_avatar", as: "avatar_page"
   get '/:id/expert' => "users#make_expert", as: "expert_approval"
+  # put '/avatars' => "users#update_avatar"
 
   
 

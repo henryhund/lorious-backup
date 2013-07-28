@@ -1,5 +1,5 @@
 .row-fluid
-  .container-fluid#profile
+  .container-fluid
     .span6.offset2.centered
       %p.strong Current Picture:
       %br
@@ -14,3 +14,4 @@
         = f.input :avatar, label: false
         .form-buttons
           = f.button :submit, "Update Picture", class: "button"
+        %p.muted Photo must be a JPG, PNG or GIF file and less than 2 megabytes.

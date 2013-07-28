@@ -27,6 +27,8 @@ gem 'friendly_id' # errors with version 5, had to use version 4.09, github: 'Fri
 gem 'aws-sdk'
 gem 'paperclip'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
 
 group :development do
   gem 'better_errors'

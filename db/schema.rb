@@ -11,6 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+
 ActiveRecord::Schema.define(:version => 20130728175050) do
 
   create_table "appointments", :force => true do |t|
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20130728175050) do
   end
 
   add_index "bank_accounts", ["user_id"], :name => "index_bank_accounts_on_user_id"
+
 
   create_table "cards", :force => true do |t|
     t.integer  "user_id"

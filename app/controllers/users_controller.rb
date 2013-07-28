@@ -77,6 +77,7 @@ class UsersController < ApplicationController
   def show
     # authorize! :show, @user, :message => 'Not authorized as an administrator'
     @user_id = params[:id]
+    @user_id ||= current_user.id
 
     @user = User.find(@user_id)
     @profile = @user.profile
@@ -100,11 +101,21 @@ class UsersController < ApplicationController
   def update
     #authorize! :update, @user, :message => 'Not authorized as an administrator.'
     
-    @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
-      redirect_to @user, :notice => "User updated."
+    @user = User.find(params[:id]) || current_user
+    @profile = @user.profile
+    if current_user.has_role? :admin
+      if @user.update_attributes(params[:user], as: :admin)
+        redirect_to users_path, :notice => "User updated."
+      else
+        redirect_to users_path, :alert => "Unable to update user."
+      end
     else
-      redirect_to @user, :alert => "Unable to update user."
+      if @user.update_attributes(params[:user])
+        redirect_to @user, :notice => "User updated."
+      else
+        # flash[:error] = @user.errors.to_a
+        redirect_to @user, :alert => "Unable to update user."
+      end
     end
   end
     
@@ -118,6 +129,28 @@ class UsersController < ApplicationController
       redirect_to users_path, :notice => "Can't delete yourself."
     end
   end
+
+  # def update_avatar
+  #   #authorize! :update, @user, :message => 'Not authorized as an administrator.'
+    
+  #   @user = User.find(params[:id]) unless params[:id].blank?
+  #   @user ||= current_user
+  #   @profile = @user.profile
+  #   if current_user.has_role? :admin
+  #     if @user.update_attributes(params[:user], as: :admin)
+  #       redirect_to users_path, :notice => "User updated."
+  #     else
+  #       redirect_to users_path, :alert => "Unable to update user."
+  #     end
+  #   else
+  #     if @user.update_attributes(params[:user])
+  #       redirect_to @user, :notice => "User updated."
+  #     else
+  #       render action: upload_avatar, :messages => @user.errors.to_a || "Unable to update user."
+  #     end
+  #   end
+  # end
+
 
   def upload_avatar
     @action = params[:action]

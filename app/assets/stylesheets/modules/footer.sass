@@ -3,31 +3,42 @@
   img.logo
     padding-top: 70px
   ul
+    font-family: 'Gotham A', 'Gotham B', 'Roboto Condensed'
+    //text-transform: uppercase
+    font-weight: 700
+    color: #ffffff
+    font-size: 19px
+    line-height: 1.5
     padding-top: 50px
     list-style-type: none
   .social
     padding-top: 30px
 
-
-.by-line
-  background-color: #1c3235
-  text-align: center
-
-  a
-    color: white
-    text-decoration: none
+.logo_legal
+  text-align: right
+  .muted
+    font-size: 14px
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
+    a
+      font-size: 14px
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
+      text-decoration: none
 
   a:hover
     color: white
     text-decoration: underline
 
+@media (max-width: 767px)
+  .logo_legal
+    text-align: left
+
 .nav-footer
   a 
     font-family: 'Gotham A', 'Gotham B', 'Roboto Condensed'
-    text-transform: uppercase
+    //text-transform: uppercase
     font-weight: 700
     color: #77bea7
-    font-size: 19px
+    font-size: 15px
     line-height: 1.5
   a:hover
     text-decoration: none
