@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
     thumb: '100x100>',
     square: '200x200#',
     medium: '300x300>'
-  }, default_url: 'https://s3.amazonaws.com/lorious/layout/elements/placeholders/image_placeholder.svg'
+  }, default_url: 'https://s3.amazonaws.com/lorious/layout/elements/placeholders/image_placeholder.jpg'
 
 
   def get_review_score
