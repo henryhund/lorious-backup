@@ -26,9 +26,16 @@ class User < ActiveRecord::Base
   has_many :reviews, foreign_key: "reviewee_id"
   has_many :reviewed_users, foreign_key: "reviewer_id", class_name: "Review", dependent: :destroy
 
-  validates_attachment :avatar,
-                          content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] },
-                          size: { less_than: 1.megabytes }
+  validate :check_avatar, if: "!avatar.blank?"
+
+  # def check_avatar
+  #   errors.add(:base, "Photo must be a JPG, PNG or GIF file") if !['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].include?(avatar.content_type)
+  #   errors.add(:base, "Photo must be less than 2 megabytes") if avatar.size > 2048
+  # end
+
+  validates_attachment_presence :avatar unless :avatar.nil?
+  validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] unless :avatar.nil?
+  validates_attachment_size :avatar, less_than: 2.megabytes, message: "Please upload a photo that is less than one megabyte." unless :avatar.nil?
 
   validates :username, presence: true, uniqueness: true
   validates :name, presence: true

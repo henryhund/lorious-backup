@@ -5,15 +5,16 @@
     %meta{:content => "http-equiv='X-UA-Compatible' content='chrome=1'"}
       %title= content_for?(:title) ? yield(:title) : "Lorious | Connecting Users to Share Knowledge via Video Chat"
       %meta{:content => content_for?(:description) ? yield(:description) : "Lorious", :name => "Lorious is a community of experts that are here to help you on any problem you have on any topic. Sign up to be an expert or tell us what you need help on. Sign up to become an expert on any topic at Lorious. Everyone is an expert on something. Tell us what problems you’re facing, we’re here to help"}
-        /= javascript_include_tag params[:controller]
-        = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Archivo+Narrow:400,400italic,700|Roboto+Condensed:300|Oswald:400,700"
-        =stylesheet_link_tag "//cloud.typography.com/7516432/790802/css/fonts.css"
-        /- if params[:controller] == "chat"
-        /  stylesheet_link_tag params[:controller]
-        = stylesheet_link_tag "application", :media => "all"
-        = javascript_include_tag "application"
-        = csrf_meta_tags
-        = yield(:head)
+      %link{rel: "apple-touch-icon-precomposed", href: "https://s3.amazonaws.com/lorious/layout/elements/favicons/apple-touch-icon-precomposed.png"}
+      /= javascript_include_tag params[:controller]
+      = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Archivo+Narrow:400,400italic,700|Roboto+Condensed:300|Oswald:400,700"
+      =stylesheet_link_tag "//cloud.typography.com/7516432/790802/css/fonts.css"
+      /- if params[:controller] == "chat"
+      /  stylesheet_link_tag params[:controller]
+      = stylesheet_link_tag "application", :media => "all"
+      = javascript_include_tag "application"
+      = csrf_meta_tags
+      = yield(:head)
   %body{:class => "#{controller_name} #{action_name}"}
     = google_tag_manager
     -if current_user.try(:id)

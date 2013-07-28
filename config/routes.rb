@@ -61,6 +61,7 @@ Lorious::Application.routes.draw do
   get '/:id' => "users#show", as: "user_page"  
   get '/:id/avatar' => "users#upload_avatar", as: "avatar_page"
   get '/:id/expert' => "users#make_expert", as: "expert_approval"
+  # put '/avatars' => "users#update_avatar"
 
   
 
