@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   has_many :reviews, foreign_key: "reviewee_id"
   has_many :reviewed_users, foreign_key: "reviewer_id", class_name: "Review", dependent: :destroy
 
-  validate :check_avatar, if: "!avatar.blank?"
+  # validate :check_avatar, if: "!avatar.blank?"
 
   # def check_avatar
   #   errors.add(:base, "Photo must be a JPG, PNG or GIF file") if !['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].include?(avatar.content_type)

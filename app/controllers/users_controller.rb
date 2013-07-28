@@ -131,7 +131,7 @@ class UsersController < ApplicationController
 
   def upload_avatar
     @action = params[:action]
-    #render "edit"
+    render "edit"
   end
   def make_expert
     authorize! :expert, @user, :message => 'Not authorized as an administrator.'
