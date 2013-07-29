@@ -12,19 +12,15 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :role_ids, :as => :admin
-  attr_accessible :username, :login, :name, :email, :password, :password_confirmation, :remember_me, :avatar, :expert
+  attr_accessible :username, :login, :name, :email, :password, :password_confirmation, :remember_me, :avatar, :expert, :avatar_remote_url
+  attr_accessible :stripe_customer_id, :stripe_recipient_id
 
 
   attr_accessor :login
 
   has_one :profile, dependent: :destroy
   has_one :card, dependent: :destroy
-  has_one :bank_account, dependent: :destroy
-  attr_accessible :role_ids, :expert, :as => :admin
-  attr_accessible :username, :login, :name, :email, :password, :password_confirmation, :remember_me, :avatar, :expert, :avatar_remote_url
-  attr_accessible :stripe_customer_id, :stripe_recipient_id
-
-  attr_accessor :login
+  # has_one :bank_account, dependent: :destroy
 
   has_many :services, :dependent => :destroy
 

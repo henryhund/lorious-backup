@@ -1,13 +1,14 @@
 class CustomersController < ApplicationController
 
   def new
+    user = current_user
     customer = Stripe::Customer.create(
      :email => current_user.email
     )
 
-     current_user.stripe_customer_id = customer.id
-     current_user.card.delete if !current_user.card.nil?
-     if current_user.save
+     user.stripe_customer_id = customer.id
+     user.card.delete if !current_user.card.nil?
+     if user.save
         redirect_to new_card_path
       else
         redirect_to new_card_path, notice: 'Stripe error, please contact customer support.' 

@@ -69,9 +69,9 @@ class RecipientsController < ApplicationController
      :bank_account => token
     )
 
-     current_user.stripe_recipient_id = recipient.id
+     user.stripe_recipient_id = recipient.id
 
-     if current_user.save
+     if user.save
         redirect_to recipient_path(current_user)
       else
         redirect_to new_recipient_path, notice: 'Stripe error, please contact customer support.' 
