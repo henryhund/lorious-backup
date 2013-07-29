@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   #   errors.add(:base, "Photo must be less than 2 megabytes") if avatar.size > 2048
   # end
 
-  validates_attachment_presence :avatar unless :avatar.nil?
+  # validates_attachment_presence :avatar unless :avatar.nil?
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] unless :avatar.nil?
   validates_attachment_size :avatar, less_than: 2.megabytes, message: "Please upload a photo that is less than one megabyte." unless :avatar.nil?
 
