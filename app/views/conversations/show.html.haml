@@ -1,0 +1,16 @@
+- content_for :main_content do
+  %h2= conversation.subject
+  %h5 Message History
+  .well
+    %ul.unstyled
+      = content_tag_for(:li, conversation.receipts_for(current_user)) do |receipt|
+        - message = receipt.message
+        - sender = message.sender
+        -if message.created_at.today?
+          %strong= "Today at " + message.created_at.strftime("%l:%M %p")
+        -else
+          %strong= "On " + message.created_at.strftime("%-m/%-d/%Y") + " at " + message.created_at.strftime("%l:%M %p")
+        %strong= sender == current_user ? "You said..." : sender.name + " said..."
+        %p.muted= message.body
+  = render 'messages/form', conversation: conversation
+  = link_to "Back to Inbox", conversations_path

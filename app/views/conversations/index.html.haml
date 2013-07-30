@@ -1,0 +1,71 @@
+- content_for :main_content do
+  .row-fluid
+    %h2 Conversations
+    .well
+      %table.table.table-condensed.table-hover
+        %thead
+          %tr
+            %th.span1
+              /%input{:type => "checkbox"}/
+            %th.span4
+            %th.span3
+            %th.span2
+            %th.span1
+        %tbody
+          -@conversations.each do |conversation|            
+            %tr{id: "#{conversation.id}", "data-link" => url_for(:action => 'show', :id => conversation.id)}
+              -if conversation.is_unread?(current_user)
+                %td.strong
+                  /%input{:type => "checkbox"}/
+                  /%a{:href => "#"}
+                  /  %i.icon-star-empty
+                %td.strong
+                  =conversation.participants.map(&:name).join(', ')
+                  ="(" + conversation.count_messages.to_s + ")"
+                %td.strong= truncate(conversation.subject, length: 20)
+                %td.strong
+                  -if conversation.last_message.created_at.today?
+                    =conversation.last_message.created_at.strftime("%l:%M %p")
+                  -else
+                    =conversation.last_message.created_at.strftime("%-m/%-d %l:%M %p")
+                %td.strong
+                  =link_to trash_conversation_url(conversation), method: :post do
+                    %i.icon-trash
+              -else
+                %td
+                  /%input{:type => "checkbox"}/
+                  /%a{:href => "#"}
+                  /  %i.icon-star-empty
+                %td
+                  =conversation.participants.map(&:name).join(', ')
+                  ="(" + conversation.count_messages.to_s + ")"
+                %td= truncate(conversation.subject, length: 20, separate: " ")
+                %td
+                  -if conversation.last_message.created_at.today?
+                    =conversation.last_message.created_at.strftime("%l:%M %p")
+                  -else
+                    =conversation.last_message.created_at.strftime("%-m/%-d %l:%M %p")
+                %td
+                  =link_to trash_conversation_url(conversation), method: :post do
+                    %i.icon-trash
+            :javascript
+              $('##{conversation.id}').click(function() {
+                window.location = this.getAttribute("data-link")
+              })
+            :css
+              tbody tr {
+                cursor: pointer;
+                }
+
+  %br
+  %br
+  %br
+  %h1 Conversations
+  %h2 Inbox
+  %ul= render mailbox.inbox
+  %h2 Sentbox
+  %ul= render mailbox.sentbox
+  %h2 Trash
+  %ul= render mailbox.trash
+
+  = link_to 'Start Conversation', :new_conversation

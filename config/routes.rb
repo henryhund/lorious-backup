@@ -38,6 +38,14 @@ Lorious::Application.routes.draw do
     get 'signup' => "devise/registrations#new"
   end
 
+  resources :conversations, only: [:index, :show, :new, :create] do
+    member do
+      post :reply
+      post :trash
+      post :untrash
+    end
+  end
+
   # chat routes
   get "chat/test" => "chat#test"
   # get 'chat/go/:user_id/:chat_key' => "chat#chat_prep"
@@ -58,13 +66,14 @@ Lorious::Application.routes.draw do
   #  root :to => 'requests#index'
   # end
 
-  get 'message' => "home#message"
+  # get 'message' => "home#message"
   # get '/:niche' => "home#audience_home"
 
   # user/profile show and edit routes
   get '/:id' => "users#show", as: "user_page"  
   get '/:id/avatar' => "users#upload_avatar", as: "avatar_page"
   get '/:id/expert' => "users#make_expert", as: "expert_approval"
+  get '/:id/message' => "conversations#message", as: "message_user"
   # put '/avatars' => "users#update_avatar"
 
   

@@ -129,6 +129,8 @@
               %p= number_to_currency(@profile.expertise_hourly, precision: 0) || "Email to ask"
               %br
               / %button.btn Book Now
+              %br
+              =link_to "Contact #{@profile.user.name.split(" ")[0]}", message_user_path(@profile.user.slug)
     .row-fluid.profile-expert-information
       .container-fluid#profile
         .span12

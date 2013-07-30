@@ -48,6 +48,15 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true
   validates :name, presence: true
 
+  acts_as_messageable
+
+  def mailboxer_email(object)
+    #Check if an email should be sent for that object
+    #if true
+    return email
+    #if false
+    #return nil
+  end
 
   extend FriendlyId
   friendly_id :username, use: [:slugged, :history]

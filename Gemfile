@@ -29,6 +29,7 @@ gem 'paperclip'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+gem 'mailboxer'
 
 group :development do
   gem 'better_errors'
