@@ -4,6 +4,7 @@ Lorious::Application.routes.draw do
   authenticated :user do
     root :to => 'users#dashboard'
   end
+  
   get "/users/:id/dashboard" => "users#dashboard", as: "user_dashboard"
   get "/accounts" => "users#manage_payments", as: "manage_payments"
 
