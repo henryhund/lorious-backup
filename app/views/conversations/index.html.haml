@@ -2,61 +2,82 @@
   .row-fluid
     %h2 Conversations
     .well
-      %table.table.table-condensed.table-hover
-        %thead
-          %tr
-            %th.span1
-              /%input{:type => "checkbox"}/
-            %th.span4
-            %th.span3
-            %th.span2
-            %th.span1
-        %tbody
-          -@conversations.each do |conversation|            
-            %tr{id: "#{conversation.id}", "data-link" => url_for(:action => 'show', :id => conversation.id)}
-              -if conversation.is_unread?(current_user)
-                %td.strong
-                  /%input{:type => "checkbox"}/
-                  /%a{:href => "#"}
-                  /  %i.icon-star-empty
-                %td.strong
-                  =conversation.participants.map(&:name).join(', ')
-                  ="(" + conversation.count_messages.to_s + ")"
-                %td.strong= truncate(conversation.subject, length: 20)
-                %td.strong
-                  -if conversation.last_message.created_at.today?
-                    =conversation.last_message.created_at.strftime("%l:%M %p")
-                  -else
-                    =conversation.last_message.created_at.strftime("%-m/%-d %l:%M %p")
-                %td.strong
-                  =link_to trash_conversation_url(conversation), method: :post do
-                    %i.icon-trash
+      %ul.nav.nav-tabs#my_tabs
+        %li.active
+          %a{"data-toggle" => "tab", :href => "#inbox"} Inbox
+        %li
+          %a{"data-toggle" => "tab", :href => "#sent"} Sent
+        %li
+          %a{"data-toggle" => "tab", :href => "#trash"} Trash
+      #myTabContent.tab-content
+        #inbox.tab-pane.active.in
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th.span1 
+                %th.span2 Participants
+                %th.span5 Subject
+                %th.span2 Time
+                %th.span1
+            %tbody
+              -if @conversations.count > 0
+                =render @conversations
               -else
-                %td
-                  /%input{:type => "checkbox"}/
-                  /%a{:href => "#"}
-                  /  %i.icon-star-empty
-                %td
-                  =conversation.participants.map(&:name).join(', ')
-                  ="(" + conversation.count_messages.to_s + ")"
-                %td= truncate(conversation.subject, length: 20, separate: " ")
-                %td
-                  -if conversation.last_message.created_at.today?
-                    =conversation.last_message.created_at.strftime("%l:%M %p")
-                  -else
-                    =conversation.last_message.created_at.strftime("%-m/%-d %l:%M %p")
-                %td
-                  =link_to trash_conversation_url(conversation), method: :post do
-                    %i.icon-trash
-            :javascript
-              $('##{conversation.id}').click(function() {
-                window.location = this.getAttribute("data-link")
-              })
-            :css
-              tbody tr {
-                cursor: pointer;
-                }
+                %tr
+                  %td
+                  %td
+                  %td
+                    Nothing to show here!
 
+          -if params[:sent_page] || params[:trash_page]
+            =paginate @conversations, param_name: "inbox_page", params: { tab: "inbox", sent_page: "", trash_page: ""}
+          -else
+            =paginate @conversations, param_name: "inbox_page", params: { tab: "inbox"}
+        #sent.tab-pane.fade
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th.span1 
+                %th.span2 Participants
+                %th.span5 Subject
+                %th.span2 Time
+                %th.span1
+            %tbody
+              -if @conversations_sent.count > 0
+                =render partial: 'conversation', collection: @conversations_sent
+              -else
+                %tr
+                  %td
+                  %td
+                  %td
+                    Nothing to show here!
+          =paginate @conversations_sent, param_name: "sent_page", params: { tab: "sent"}
+        #trash.tab-pane.fade
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th.span1 
+                %th.span2 Participants
+                %th.span5 Subject
+                %th.span2 Time
+                %th.span1
+            %tbody
+              -if @conversations_trash.count > 0
+                =render partial: 'conversation', collection: @conversations_trash
+              -else
+                %tr
+                  %td
+                  %td
+                  %td
+                    Nothing to show here!
+          =paginate @conversations_trash,param_name: "trash_page",  params: { tab: "trash"}
+
+  - @tab_id = params[:tab] ? "#my_tabs a[href=" + %Q(##{params[:tab]}) + "]" : "#my_tabs a:first"
+
+  :javascript    
+    $(function () {
+        $('#{@tab_id}').tab('show');
+      });
   %br
   %br
   %br

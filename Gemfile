@@ -30,6 +30,7 @@ gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'mailboxer'
+gem 'kaminari'
 
 group :development do
   gem 'better_errors'

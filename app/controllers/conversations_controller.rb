@@ -3,7 +3,10 @@ class ConversationsController < ApplicationController
   helper_method :mailbox, :conversation
 
   def index
-    @conversations = current_user.mailbox.inbox
+    # @tab_id = params[:tab]
+    @conversations = current_user.mailbox.inbox.page(params[:inbox_page]).per(1)
+    @conversations_sent = current_user.mailbox.sentbox.page(params[:sent_page]).per(1)
+    @conversations_trash = current_user.mailbox.trash.page(params[:trash_page]).per(1)
   end
 
   def message

@@ -114,8 +114,14 @@ class User < ActiveRecord::Base
     user
   end
 
+  def first_name
+    name.split[0]
+  end
+
+
   protected
-  
+
+
   # def confirmation_required?
   #   false
   # end
