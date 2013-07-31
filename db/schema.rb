@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130730003155) do
+ActiveRecord::Schema.define(:version => 20130731040237) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(:version => 20130730003155) do
     t.datetime "updated_at",      :null => false
     t.string   "chat_key"
     t.string   "chat_session_id"
+    t.integer  "fee"
+    t.integer  "conversation_id"
+    t.string   "status"
   end
 
   create_table "bank_accounts", :force => true do |t|

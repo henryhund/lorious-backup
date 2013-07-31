@@ -1,5 +1,11 @@
-%h1 New appointment
+- content_for :main_content do
+  .row-fluid
+    .max-container
+      .span6
+        %h2 Request Time with #{@host.first_name}
 
-= render 'form'
+        = render 'form'
 
-= link_to 'Back', appointments_path
+        = link_to 'Back', appointments_path
+      .span4
+        %h2 Test

@@ -22,12 +22,16 @@ Lorious::Application.routes.draw do
   resources :reviews
   resources :profiles
   resources :requests
-  resources :appointments
   resources :charges
   resources :customers
-  resources :recipients
-  resources :cards
+
   resources :services
+
+  scope '/:id' do
+    resources :appointments
+    resources :recipients
+    resources :cards
+  end
 
   # devise_for :users #, :controllers => { :registrations => "registrations" } 
   devise_for :users, :controllers => { :registrations => "registrations", :omniauth_callbacks => "users/omniauth_callbacks" }

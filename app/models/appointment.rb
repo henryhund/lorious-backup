@@ -6,6 +6,7 @@ class Appointment < ActiveRecord::Base
 
   validates :host_id, presence: true
   validates :attendee_id, presence: true
+  validates :time, presence: true
 
   validates :chat_key, uniqueness: true
 

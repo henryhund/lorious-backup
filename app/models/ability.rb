@@ -50,6 +50,9 @@ class Ability
           # can :manage, :all
           can :create, Request
          
+          can :create, Appointment
+          cannot :index, Appointment
+
           can :create, Profile
           can :manage, Profile, :user_id => user.id 
           can :show, Profile

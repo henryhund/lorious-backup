@@ -9,12 +9,13 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
+// Note: removed require screenfull.js require bootstrap-datetimepicker
 //
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require bootstrap
+//= require bootstrap-datetimepicker
 //= require jquery.validate
 //= require jquery.validate.additional-methods
-//= require screenfull.js
 //= require_tree .

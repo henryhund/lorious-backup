@@ -31,6 +31,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'mailboxer'
 gem 'kaminari'
+# gem 'bootstrap-datetimepicker-rails'
 
 group :development do
   gem 'better_errors'

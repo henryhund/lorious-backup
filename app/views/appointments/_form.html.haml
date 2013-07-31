@@ -1,19 +1,57 @@
+%p
+  -if !@host.profile.availability.blank?
+    = @host.first_name
+    is available:
+    %p= @host.profile.availability
 = simple_form_for(@appointment) do |f|
   = f.error_notification
 
   .form-inputs
-    Host/Expert:
+    = f.input :host_id, as: :hidden, input_html: { value: @host.id }
     %br
-    = f.collection_select :host_id, User.all, :id, :username
-    %br
-    Attendee/User:
-    %br
-    = f.collection_select :attendee_id, User.all, :id, :username
-    = f.input :time, :ampm => true, label: "Time (EST)"
-    = f.input :completed
-    = f.input :length, label: "Length (mins)"
-    = f.input :chat_key, as: :hidden, input_html: { value: @hash }
-    = f.input :chat_session_id, as: :hidden, input_html: { value: @session_id }
+    = f.input :attendee_id, as: :hidden, input_html: { value: @attendee.id }
+    .control-group
+      .controls.input-append.date.form_datetime{"data-date" => "", "data-link-field" => "dtp_input1"}
+        = f.input :time, wrapper: :append do
+          =f.input_field :time, required: true, as: :string, readonly: true
+          %span.add-on
+            %i.icon-remove
+          %span.add-on
+            %i.icon-th
+          %input#dtp_input1{:type => "hidden", :value => ""}
+          %p.help-block All times are US/Eastern (EST)
+      :javascript
+          var d = new Date()
+          d.setHours(d.getHours()+ 6 )
+          var e = new Date()
+          e.setMonth(d.getMonth() + 6)
+
+          $('.form_datetime').datetimepicker({
+            startDate: d,
+            endDate: e,
+            format: "MM dd, yyyy - HH:ii p",
+            maxView: 3,
+            minView: 0,
+            startView: 2,
+            initialDate: d, 
+            minuteStep: 15,
+            viewSelect: 0,
+            weekStart: 1,
+            todayBtn:  0,
+            autoclose: 1,
+            todayHighlight: 1,
+            forceParse: 0,
+            showMeridian: 1,
+            pickerPosition: 'bottom-left'
+          });
+      = f.input :length, collection: [["30 minutes", 30], ["1-2 hours", 90], ["2-4 hours", 180], ["4 hours+", 240]], label: "Estimated Length"
+      = f.input :fee, collection: (20...1020).step(10).map { |d| [ "$#{d.to_s}", d.to_s ] }, selected: @fee.to_i, label: "What you will pay (Total, not hourly, in USD)", hint: "The closer the offer is to the posted hourly rate, the more likely it will be that the user will accept your request. Once the request is approved, the user will be billed for this amount. The expert will not be paid until it is confirmed that the user had a successful experience."
+      %p Note/Details (start a conversation)
+
+    = # f.input :completed
+    = # f.input :chat_key, as: :hidden, input_html: { value: @hash }
+    = # f.input :chat_session_id, as: :hidden, input_html: { value: @session_id }
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, "Request"
+
