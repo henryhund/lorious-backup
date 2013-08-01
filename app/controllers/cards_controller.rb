@@ -91,7 +91,7 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       if @card.save
-        format.html { redirect_to @card, notice: 'Card was successfully created.' }
+        format.html { redirect_to credit_packages_path, notice: 'Card was successfully created. To proceed with booking an appointment, please buy some credits.' }
         format.json { render json: @card, status: :created, location: @card }
       else
         format.html { render action: "new" }

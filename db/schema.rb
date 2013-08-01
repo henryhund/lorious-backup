@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130731040237) do
+ActiveRecord::Schema.define(:version => 20130801061604) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(:version => 20130731040237) do
     t.string   "subject",    :default => ""
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "credits", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "number"
+    t.integer  "transaction_id"
+    t.string   "hash_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "friendly_id_slugs", :force => true do |t|
@@ -179,6 +188,18 @@ ActiveRecord::Schema.define(:version => 20130731040237) do
     t.datetime "disconnected_at"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "transactions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "appointment_id"
+    t.integer  "credit_id"
+    t.string   "stripe_charge_id"
+    t.string   "transaction_type"
+    t.string   "status"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.decimal  "amount",           :precision => 8, :scale => 2
   end
 
   create_table "users", :force => true do |t|

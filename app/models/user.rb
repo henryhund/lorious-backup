@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
   # has_one :bank_account, dependent: :destroy
 
   has_many :services, :dependent => :destroy
+  has_many :credits
+  has_many :transactions
 
   has_one :profile, :dependent => :destroy
   has_one :card, dependent: :destroy
@@ -71,6 +73,16 @@ class User < ActiveRecord::Base
   def get_review_score
     reviews.average('rating').to_f
   end
+
+# Credits Model
+  def get_credits_total
+    credits.sum('number').to_i
+  end
+
+
+
+
+
 
   def avatar_remote_url=(url_value)
     url_value.gsub! /https/, 'http' unless url_value.blank?

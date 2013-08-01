@@ -1,0 +1,75 @@
+.row-fluid
+  .span10.offset1
+    %h2 Lorious Credit Packages
+    .span3
+      .well
+        %h2.muted Silver
+        %p
+          %span.label POPULAR
+        %ul
+          %li Buy Credits in bulk!
+
+        %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.
+        %hr/
+        %h3 $25
+        %hr/
+        %p
+        = simple_form_for(@credit, url: credits_pre_path) do |f|
+          = f.error_notification
+
+          .form-inputs
+            = f.input :user_id, as: :hidden, input_html: { value: current_user.id}
+            = f.input :number, as: :hidden, input_html: { value: 25 }
+
+          .form-actions
+            = button_tag(type: 'submit', class: "btn btn-large") do
+              %i.icon-ok 
+              Buy 25 Credits
+    .span3
+      .well
+        %h2.text-warning Bronze
+        %p
+          %span.label.label-success POPULAR
+        %ul
+          %li Buy Credits in bulk!
+
+        %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.
+        %hr/
+        %h3 $100
+        %hr/
+        %p
+        = simple_form_for(@credit, url: credits_pre_path) do |f|
+          = f.error_notification
+
+          .form-inputs
+            = f.input :user_id, as: :hidden, input_html: { value: current_user.id}
+            = f.input :number, as: :hidden, input_html: { value: 100 }
+
+          .form-actions
+            = button_tag(type: 'submit', class: "btn btn-large") do
+              %i.icon-ok 
+              Buy 100 Credits
+
+    .span3
+      .well
+        %h2.text-info Economy
+        %p
+          %span.label.label-info BUDGET
+        %ul
+          %li Buy Credits in bulk!
+        %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.
+        %hr/
+        %h3 $250
+        %hr/
+        %p
+        = simple_form_for(@credit, url: credits_pre_path) do |f|
+          = f.error_notification
+
+          .form-inputs
+            = f.input :user_id, as: :hidden, input_html: { value: current_user.id}
+            = f.input :number, as: :hidden, input_html: { value: 250 }
+
+          .form-actions
+            = button_tag(type: 'submit', class: "btn btn-large") do
+              %i.icon-ok 
+              Buy 250 Credits

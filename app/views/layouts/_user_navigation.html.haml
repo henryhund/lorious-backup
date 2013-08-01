@@ -52,6 +52,11 @@
                 %span.label
                   %i.icon-envelope.icon-white
                   =current_user.mailbox.inbox(:read => false).count(:id, :distinct => true).to_s
+            %li
+              =link_to credit_packages_path do
+                %span.label.label-info
+                  %i.icon-asterisk
+                  =current_user.get_credits_total
           -else
             %li
               = link_to "mailto:questions@lorious.com" do

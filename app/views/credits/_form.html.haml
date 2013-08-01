@@ -1,0 +1,11 @@
+= simple_form_for(@credit) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :user_id
+    = f.input :number
+    = f.input :transaction_id
+    = f.input :hash_id
+
+  .form-actions
+    = f.button :submit

@@ -1,11 +1,22 @@
 Lorious::Application.routes.draw do
   
+
+
+
+  resources :transactions
+
+
   # basic public routes
   authenticated :user do
     root :to => 'users#dashboard'
   end
   get "/users/:id/dashboard" => "users#dashboard", as: "user_dashboard"
   get "/accounts" => "users#manage_payments", as: "manage_payments"
+  get "/packages" => "home#credit_packages", as: "credit_packages"
+
+  post "/packages/cart" => "credits#credits_cart", as: "credits_pre"
+
+  post "/packages/card/buy" => "credits#buy_credits", as: "buy_credits"
 
   root :to => "home#audience_home"
   
@@ -24,6 +35,7 @@ Lorious::Application.routes.draw do
   resources :requests
   resources :charges
   resources :customers
+  resources :credits
 
   resources :services
 

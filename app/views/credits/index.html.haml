@@ -1,0 +1,25 @@
+%h1 Listing credits
+
+%table
+  %tr
+    %th User
+    %th Number
+    %th Transaction
+    %th Hash
+    %th
+    %th
+    %th
+
+  - @credits.each do |credit|
+    %tr
+      %td= credit.user_id
+      %td= credit.number
+      %td= credit.transaction_id
+      %td= credit.hash
+      %td= link_to 'Show', credit
+      %td= link_to 'Edit', edit_credit_path(credit)
+      %td= link_to 'Destroy', credit, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Credit', new_credit_path
