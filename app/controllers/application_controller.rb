@@ -221,11 +221,20 @@ class ApplicationController < ActionController::Base
     #if so, make withdrawal to user's stripe bank account
   end
 
+  def free_credits(appointment)
+    if Credit.find_by_appointment_id(appointment.id)
+      Credit.find_by_appointment_id(appointment.id).delete
+    else
+      return false
+    end
+  end
 
-  def credit_transaction(user, number, transaction)
+  def credit_transaction(user, number, transaction, appointment, status="settled")
     credit = Credit.new
     credit.number = number
-    credit.transaction_id = transaction.id
+    credit.transaction_id = transaction.try(:id)
+    credit.appointment_id = appointment.try(:id)
+    credit.status = status
 
     credit.user_id = user.id
 

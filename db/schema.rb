@@ -11,21 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801061604) do
+ActiveRecord::Schema.define(:version => 20130802033842) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
     t.integer  "attendee_id"
     t.datetime "time"
-    t.boolean  "completed"
+    t.boolean  "completed",          :default => false
     t.integer  "length"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "chat_key"
     t.string   "chat_session_id"
     t.integer  "fee"
     t.integer  "conversation_id"
     t.string   "status"
+    t.boolean  "host_confirmed",     :default => false
+    t.boolean  "attendee_confirmed", :default => false
   end
 
   create_table "bank_accounts", :force => true do |t|
@@ -59,6 +61,8 @@ ActiveRecord::Schema.define(:version => 20130801061604) do
     t.string   "hash_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "status"
+    t.integer  "appointment_id"
   end
 
   create_table "friendly_id_slugs", :force => true do |t|

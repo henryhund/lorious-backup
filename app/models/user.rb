@@ -130,6 +130,14 @@ class User < ActiveRecord::Base
     name.split[0]
   end
 
+  def short_name
+    unless name.split[1][0].nil?
+      name.split[0] + " " + name.split[1][0] + "."
+    else
+      first_name
+    end
+  end
+
 
   protected
 

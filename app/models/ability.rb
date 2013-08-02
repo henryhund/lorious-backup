@@ -51,8 +51,16 @@ class Ability
           can :create, Request
          
           can :create, Appointment
-          cannot :index, Appointment
-
+          can :show, Appointment do |appointment|
+            appointment.try(:host) == user || appointment.try(:attendee) == user
+          end
+          can :index, Appointment
+          can :manage, Appointment do |appointment|
+            appointment.try(:host) == user || appointment.try(:attendee) == user
+          end
+          can :confirm, Appointment do |appointment|
+            appointment.try(:host) == user || appointment.try(:attendee) == user
+          end
           can :create, Profile
           can :manage, Profile, :user_id => user.id 
           can :show, Profile

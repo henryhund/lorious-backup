@@ -35,14 +35,15 @@ Lorious::Application.routes.draw do
   resources :requests
   resources :charges
   resources :customers
-  resources :credits
 
   resources :services
 
-  scope '/:id' do
+  scope '/:user_id' do
     resources :appointments
+    get "/appointments/:id/confirm" => "appointments#confirm", as: "confirm_appointment"
     resources :recipients
     resources :cards
+    resources :credits
   end
 
   # devise_for :users #, :controllers => { :registrations => "registrations" } 

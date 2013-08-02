@@ -2,7 +2,7 @@ class CreditsController < ApplicationController
   # GET /credits
   # GET /credits.json
   def index
-    @credits = Credit.all
+    @credits = current_user.credits.page(params[:page]).per(15)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -68,7 +68,7 @@ class CreditsController < ApplicationController
     user = current_user
     
     transaction = payment(current_user, amount)
-    credits = credit_transaction(current_user, @number, transaction)
+    credits = credit_transaction(current_user, @number, transaction, nil)
 
     respond_to do |format|
       if !transaction.nil? && !credits.nil?

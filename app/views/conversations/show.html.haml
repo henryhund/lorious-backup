@@ -11,7 +11,7 @@
           %strong= "Today at " + message.created_at.strftime("%l:%M %p")
         -else
           %strong= "On " + message.created_at.strftime("%-m/%-d/%Y") + " at " + message.created_at.strftime("%l:%M %p")
-        %strong= sender == current_user ? "You said..." : sender.name + " said..."
+        %strong= sender == current_user ? "You said..." : sender.first_name + " said..."
         %p.muted= message.body
   = render 'messages/form', conversation: conversation
   = link_to "Back to Inbox", conversations_path

@@ -4,7 +4,9 @@ class Transaction < ActiveRecord::Base
   belongs_to :user
   belongs_to :appointment
 
-  validates :stripe_charge_id, presence: true
+  has_one :credit
+
+  # validates :stripe_charge_id, presence: true
 
 
 end
