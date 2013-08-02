@@ -11,8 +11,8 @@
 
   - @appointments_outstanding.each do |appointment|
     %tr
-      %td= appointment.host.profile.name
-      %td= appointment.attendee.profile.name
+      %td= appointment.host.short_name
+      %td= appointment.attendee.short_name
       %td= appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
       %td= appointment.chat_key
       %td= link_to 'Show', appointment_path(user_id: current_user.slug, id: appointment)
@@ -35,8 +35,8 @@
 
   - @appointments_completed.each do |appointment|
     %tr
-      %td= appointment.host.profile.name
-      %td= appointment.attendee.profile.name
+      %td= appointment.host.short_name
+      %td= appointment.attendee.short_name
       %td= appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
       %td= appointment.length
       %td= appointment.calculate_length.round(0)

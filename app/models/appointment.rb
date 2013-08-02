@@ -11,6 +11,7 @@ class Appointment < ActiveRecord::Base
 
   validates :chat_key, uniqueness: true
 
+  has_one :credit
   has_one :review, foreign_key: "appointment_id", class_name: "Review"
   has_many :session_records, primary_key: "chat_session_id", foreign_key: "chat_session_id"
 

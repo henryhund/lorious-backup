@@ -2,7 +2,7 @@ class CreditsController < ApplicationController
   # GET /credits
   # GET /credits.json
   def index
-    @credits = current_user.credits.page(params[:page]).per(15)
+    @credits = current_user.credits.order('credits.created_at DESC').page(params[:page]).per(15)
 
     respond_to do |format|
       format.html # index.html.erb
