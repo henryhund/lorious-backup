@@ -22,7 +22,7 @@
           -if user_signed_in?
             %li.dropdown
               %a{"data-toggle" => "dropdown", :href => "#"}
-                ="Welcome #{current_user.profile.fname}"
+                ="Welcome #{current_user.first_name}"
                 &nbsp;
                 =image_tag("#{current_user.avatar}", width: "25px", class: "rounded-corners-profile-pic")
                 %b.caret
@@ -66,7 +66,7 @@
                 FAQ
             %li.dropdown
               %a{"data-toggle" => "dropdown", :href => "#"}
-                = user_signed_in? ? "Welcome #{current_user.profile.fname}" : "Sign In / Sign Up"
+                = user_signed_in? ? "Welcome #{current_user.first_name}" : "Sign In / Sign Up"
                 %b.caret
               %ul.dropdown-menu
                 %li
