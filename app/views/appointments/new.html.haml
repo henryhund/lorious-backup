@@ -1,5 +1,13 @@
-%h1 New appointment
+- content_for :main_content do
+  .row-fluid#appointment
+    .max-container
+      .span5
+        %h2 Test
 
-= render 'form'
+      .span6.offset1
+        %h2 Request Time with #{@host.first_name}
 
-= link_to 'Back', appointments_path
+        = render 'form'
+
+        %p.muted You will not be charged until the expert agrees to the details of this appointment. If the expert changes any information, you will be given the chance to approve the changes before you are charged.
+

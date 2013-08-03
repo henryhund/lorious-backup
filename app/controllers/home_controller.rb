@@ -34,6 +34,10 @@ class HomeController < ApplicationController
     end
   end
 
+  def credit_packages
+    @credit = Credit.new
+  end
+
   def faq
 
   end

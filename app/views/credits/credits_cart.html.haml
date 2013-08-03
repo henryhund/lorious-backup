@@ -1,0 +1,23 @@
+- content_for :main_content do
+  %p.strong
+    You are buying
+    =@number
+    Credits
+  %br
+  %p.muted
+    Your
+    =@card_type
+    ending in
+    =@last4
+    will be charged
+    ='$' + @amount.to_s + '.00'
+
+    = simple_form_for(@credit, url: buy_credits_path) do |f|
+      = f.error_notification
+
+      .form-inputs
+        = f.input :user_id, as: :hidden
+        = f.input :number, as: :hidden
+
+      .form-actions
+        = f.button :submit, "Buy Credits"

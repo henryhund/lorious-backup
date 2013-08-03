@@ -18,6 +18,10 @@ class ConversationsController < ApplicationController
 
   def show
     conversation.mark_as_read(current_user)
+    if !Appointment.find_by_conversation_id(conversation.id).nil?
+      appointment = Appointment.find_by_conversation_id(conversation.id)
+      redirect_to appointment_path(user_id:current_user.slug, id: appointment.id)
+    end
   end
 
   def create

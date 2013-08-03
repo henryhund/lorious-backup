@@ -11,13 +11,13 @@
 
   - @appointments_outstanding.each do |appointment|
     %tr
-      %td= appointment.host.profile.name
-      %td= appointment.attendee.profile.name
+      %td= appointment.host.short_name
+      %td= appointment.attendee.short_name
       %td= appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
       %td= appointment.chat_key
-      %td= link_to 'Show', appointment
-      %td= link_to 'Edit', edit_appointment_path(appointment)
-      %td= link_to 'Destroy', appointment, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= link_to 'Show', appointment_path(user_id: current_user.slug, id: appointment)
+      %td= link_to 'Edit', edit_appointment_path(user_id: current_user.slug, id: appointment)
+      %td= link_to 'Destroy', appointment_path(user_id: current_user.id, id: appointment), :method => :delete, :data => { :confirm => 'Are you sure?' }
 %br
 
 %h1 Completed Appointments
@@ -35,8 +35,8 @@
 
   - @appointments_completed.each do |appointment|
     %tr
-      %td= appointment.host.profile.name
-      %td= appointment.attendee.profile.name
+      %td= appointment.host.short_name
+      %td= appointment.attendee.short_name
       %td= appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
       %td= appointment.length
       %td= appointment.calculate_length.round(0)

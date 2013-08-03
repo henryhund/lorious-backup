@@ -10,26 +10,26 @@
       %li.strong
         %i.icon-ok
         = "Card Added! (" + @card_type + ") "
-        =link_to "Manage Card", cards_path
+        =link_to "Manage Card", cards_path(id: current_user.id)
         %p.muted You're ready to schedule appointments and make payments!
     -else
       %li.strong
         %i.icon-remove
         No Card on File 
-        = link_to "Add Card", cards_path
+        = link_to "Add Card", cards_path(id: current_user.id)
     %br
     %br
     -if @bank_account_on_file
       %li.strong
         %i.icon-ok
         = "Bank Account Added! (" + @bank_account_type + ") "
-        =link_to "Manage Bank Account", recipients_path
+        =link_to "Manage Bank Account", recipients_path(id: current_user.id)
         %p.muted You're ready to host appointments and accept payments!
     -else
       %li.strong
         %i.icon-remove
         No Bank Account on File
-        =link_to "Add Bank Account", recipients_path
+        =link_to "Add Bank Account", recipients_path(id: current_user.id)
 
     %br
     %br

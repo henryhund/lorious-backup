@@ -11,18 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130730003155) do
+ActiveRecord::Schema.define(:version => 20130802033842) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "host_id"
     t.integer  "attendee_id"
     t.datetime "time"
-    t.boolean  "completed"
+    t.boolean  "completed",          :default => false
     t.integer  "length"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "chat_key"
     t.string   "chat_session_id"
+    t.integer  "fee"
+    t.integer  "conversation_id"
+    t.string   "status"
+    t.boolean  "host_confirmed",     :default => false
+    t.boolean  "attendee_confirmed", :default => false
   end
 
   create_table "bank_accounts", :force => true do |t|
@@ -47,6 +52,17 @@ ActiveRecord::Schema.define(:version => 20130730003155) do
     t.string   "subject",    :default => ""
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "credits", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "number"
+    t.integer  "transaction_id"
+    t.string   "hash_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "status"
+    t.integer  "appointment_id"
   end
 
   create_table "friendly_id_slugs", :force => true do |t|
@@ -176,6 +192,18 @@ ActiveRecord::Schema.define(:version => 20130730003155) do
     t.datetime "disconnected_at"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "transactions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "appointment_id"
+    t.integer  "credit_id"
+    t.string   "stripe_charge_id"
+    t.string   "transaction_type"
+    t.string   "status"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.decimal  "amount",           :precision => 8, :scale => 2
   end
 
   create_table "users", :force => true do |t|

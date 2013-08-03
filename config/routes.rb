@@ -1,5 +1,11 @@
 Lorious::Application.routes.draw do
   
+
+
+
+  resources :transactions
+
+
   # basic public routes
   authenticated :user do
     root :to => 'users#dashboard'
@@ -7,6 +13,11 @@ Lorious::Application.routes.draw do
   
   get "/users/:id/dashboard" => "users#dashboard", as: "user_dashboard"
   get "/accounts" => "users#manage_payments", as: "manage_payments"
+  get "/packages" => "home#credit_packages", as: "credit_packages"
+
+  post "/packages/cart" => "credits#credits_cart", as: "credits_pre"
+
+  post "/packages/card/buy" => "credits#buy_credits", as: "buy_credits"
 
   root :to => "home#audience_home"
   
@@ -23,12 +34,18 @@ Lorious::Application.routes.draw do
   resources :reviews
   resources :profiles
   resources :requests
-  resources :appointments
   resources :charges
   resources :customers
-  resources :recipients
-  resources :cards
+
   resources :services
+
+  scope '/:user_id' do
+    resources :appointments
+    get "/appointments/:id/confirm" => "appointments#confirm", as: "confirm_appointment"
+    resources :recipients
+    resources :cards
+    resources :credits
+  end
 
   # devise_for :users #, :controllers => { :registrations => "registrations" } 
   devise_for :users, :controllers => { :registrations => "registrations", :omniauth_callbacks => "users/omniauth_callbacks" }

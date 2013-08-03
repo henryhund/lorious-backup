@@ -1,0 +1,67 @@
+%h2 Credit History
+
+.well
+  %table.table
+    %thead
+      %tr
+        %th Date
+        %th 
+        %th Number
+        %th Status
+        %th For
+        %th{:style => "width: 36px;"}
+    %tbody
+      -@credits.each do |credit|
+        %tr
+          %td= credit.created_at.strftime("%m/%d/%y")
+          %td
+            -if credit.number < 0
+              %span.label.label-warning
+                %i.icon-minus-sign
+            -else
+              %span.label.label-success
+                %i.icon-plus-sign
+
+          %td
+            -if credit.number < 0
+              %span.label.label-warning
+                %i.icon-asterisk
+                =credit.number
+            -else
+              %span.label.label-success
+                %i.icon-asterisk
+                =credit.number
+          %td= credit.status
+          %td
+            -if credit.number < 0
+              Appointment with
+              =credit.appointment.host.name
+            -else
+              Point Purchase
+          %td
+=paginate @credits
+
+
+/ %table.table
+/   %tr
+/     %th User
+/     %th Number
+/     %th Transaction
+/     %th Hash
+/     %th
+/     %th
+/     %th
+
+/   - @credits.each do |credit|
+/     %tr
+/       %td= credit.user_id
+/       %td= credit.number
+/       %td= credit.transaction_id
+/       %td= credit.hash
+/       / %td= link_to 'Show', credit
+/       / %td= link_to 'Edit', edit_credit_path(credit)
+/       / %td= link_to 'Destroy', credit, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+/ %br
+
+/ = link_to 'New Credit', new_credit_path

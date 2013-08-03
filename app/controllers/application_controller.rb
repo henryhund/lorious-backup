@@ -146,15 +146,102 @@ class ApplicationController < ActionController::Base
     end
   end
 
+
+  # Stripe check if card on file
+  def stripe_card_on_file?(user)
+    stripe_customer?(user)
+    
+    customer = Stripe::Customer.retrieve(user.stripe_customer_id)
+
+    begin
+    card = customer.cards.retrieve(user.card.stripe_card_id)
+
+    rescue => e
+      unless user.card.nil?
+        user.card.delete
+      end
+      return false
+    end
+    return card
+  end
+
+
   # Stripe customer check
-  def stripe_recipient?(user, redirect="new_customer_path")
+  def stripe_recipient?(user)
     if user.stripe_recipient_id && Stripe::Recipient.retrieve(user.stripe_recipient_id) && Stripe::Recipient.retrieve(user.stripe_recipient_id)["deleted"] != true
       return true
-    elsif redirect
+    else
       redirect_to new_recipient_path
+    end
+  end
+
+  # Transactions
+  def payment(user, amount_in_usd)
+  begin
+    if amount_in_usd < 20
+      redirect_to credit_packages_path, notice: "Minimum order is $20"
+    end
+    amount = amount_in_usd * 100 # amount in cents as reqd by stripe
+    customer = Stripe::Customer.retrieve(user.stripe_customer_id)
+
+    card = customer.cards.retrieve(user.card.stripe_card_id)
+
+    charge = Stripe::Charge.create(
+      amount: amount,
+      currency: "usd",
+      customer: customer.id,
+      card: card.id,
+      description: "Buying $#{amount_in_usd} for #{user.email} / #{user.username} / #{user.id}"
+      )
+
+  rescue
+    send_mail("Errors @ Lorious", "admin@lorious.com", "Team", "admin@lorious.com", "Lorious ADMIN | Error In Buying Something Reported!", "Error reported\r\n\r\nIt appears that #{user.email} / #{user.username} / #{user.id} was attempting to pay $#{amount} and an error was reported. The Stripe Charge ID was reported as #{charge.try(:id)}. Please verify this transaction and mark it in the database appropriately.")
+    redirect_to new_card_path(id: user.id), notice: "There is a problem with your card on file. Please update your information before you proceed."
+  end
+
+  if charge.id.nil?
+    redirect_to new_card_path(id: user.id), notice: "There is a problem with your card on file. Please update your information before you proceed."
+  else
+
+    transaction = Transaction.new
+    transaction.user_id = user.id
+    # transaction.credit_id = credit.id
+    transaction.stripe_charge_id = charge.id
+    transaction.transaction_type = "buy credits"
+    transaction.status = "paid"
+    transaction.amount = amount_in_usd
+    transaction.save
+  end
+  
+  return transaction
+  end
+
+  def withdrawal()
+    #check if withdrawal meets min balance
+    #if so, make withdrawal to user's stripe bank account
+  end
+
+  def free_credits(appointment)
+    if Credit.find_by_appointment_id(appointment.id)
+      Credit.find_by_appointment_id(appointment.id).delete
     else
       return false
     end
+  end
+
+  def credit_transaction(user, number, transaction, appointment, status="settled")
+    credit = Credit.new
+    credit.number = number
+    credit.transaction_id = transaction.try(:id)
+    credit.appointment_id = appointment.try(:id)
+    credit.status = status
+
+    credit.user_id = user.id
+
+    o =  [('a'..'z'),('A'..'Z'),(0..9)].map{|i| i.to_a}.flatten
+    credit.hash_id =  (0...15).map{ o[rand(o.length)] }.join
+
+    credit.save
   end
 
 end

@@ -1,19 +1,87 @@
+%p
 = simple_form_for(@appointment) do |f|
   = f.error_notification
-
   .form-inputs
-    Host/Expert:
+    = f.input :host_id, as: :hidden, input_html: { value: @host.id }
     %br
-    = f.collection_select :host_id, User.all, :id, :username
-    %br
-    Attendee/User:
-    %br
-    = f.collection_select :attendee_id, User.all, :id, :username
-    = f.input :time, :ampm => true, label: "Time (EST)"
-    = f.input :completed
-    = f.input :length, label: "Length (mins)"
-    = f.input :chat_key, as: :hidden, input_html: { value: @hash }
-    = f.input :chat_session_id, as: :hidden, input_html: { value: @session_id }
+    = f.input :attendee_id, as: :hidden, input_html: { value: @attendee.id }
+    %p.show-label When:
+    .calendar-div{style: "margin-left:15px;"}
+      .control-group
+        .controls.input-append.date.form_datetime{"data-date" => "#{@time}", "data-date-format"=>"MM dd, yyyy - HH:ii p", "data-link-field" => "dtp_input1"}
+          = f.input :time, label: false, wrapper: :append do
+            =f.input_field :time, required: true, as: :string, readonly: true, value: @time
+            %span.add-on
+              %i.icon-remove
+            %span.add-on
+              %i.icon-th
+            %input#dtp_input1{:type => "hidden", :value => ""}
+            %p.help-block All times are US/Eastern (EST)
+        :javascript
+            var d = new Date()
+            d.setHours(d.getHours()+ 6)
+            var e = new Date()
+            e.setMonth(d.getMonth() + 6)
+
+            $('.form_datetime').datetimepicker({
+              startDate: d,
+              endDate: e,
+              format: "MM dd, yyyy - HH:ii p",
+              maxView: 3,
+              minView: 0,
+              startView: 2,
+              initialDate: d, 
+              minuteStep: 15,
+              viewSelect: 0,
+              weekStart: 1,
+              todayBtn:  0,
+              autoclose: 1,
+              todayHighlight: 1,
+              forceParse: 0,
+              showMeridian: 1,
+              pickerPosition: 'bottom-left'
+            });
+
+    %p.show-label What:
+
+    -if @action == "edit"
+      %p.muted Add New Appointment Details
+      .message-div{style: "margin-left:15px;"}
+        = simple_fields_for :message, url: [:reply, @conversation] do |c|
+          = c.input :subject, as: :hidden, input_html: {value: @conversation.subject}
+          = c.input :body, as: :text, label: false, input_html: { style: "width: 75%; height: 100px"}
+
+
+    -else  
+      %p.muted Appointment Details
+      .message-div{style: "margin-left:15px;"}
+        =simple_fields_for :conversation do |c|
+          = c.input :recipients, as: :hidden, input_html: { value: @host.slug}
+          = c.input :body, as: :text, label: false, input_html: { style: "width: 75%; height: 100px"}
+    %p.show-label Payment:
+    .payment-div{style: "margin-left:15px;"}
+      = f.input :length, wrapper: :append, label: false, input_html: {id: "length", style: "display: inline;"} do
+        %span.label.label-info
+          %i.icon-asterisk
+          = (@fee.round(0)).to_s + " credits"
+        =f.label "&nbsp;(per hour) for ", class: "amount-text", style: "display: inline;"
+        =f.input_field :length, label: false, collection: @length_options, selected: @length, style: "vertical-align: middle;"
+      = f.input :fee, as: :hidden, readonly: true, input_html: { value: @fee }
+    %p.show-label
+      Subtotal:
+    #subtotal.label.label-info{style: "margin-left:15px;"}
+      %i.icon-asterisk
+      = @subtotal
+      credits
+    :javascript
+      $('#appointment_length').change(function(event) {
+        $('#subtotal').html("<i class='icon-asterisk'></i> " + Math.round(#{@fee/60} * $('#appointment_length').val()) + ' credits');
+      }); 
+
+    = # f.input :completed
+    = # f.input :chat_key, as: :hidden, input_html: { value: @hash }
+    = # f.input :chat_session_id, as: :hidden, input_html: { value: @session_id }
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, "Submit"
+

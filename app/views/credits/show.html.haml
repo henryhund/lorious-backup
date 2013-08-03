@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @credit.user_id
+%p
+  %b Number:
+  = @credit.number
+%p
+  %b Transaction:
+  = @credit.transaction_id
+%p
+  %b Hash:
+  = @credit.hash
+
+= link_to 'Edit', edit_credit_path(@credit)
+\|
+= link_to 'Back', credits_path
