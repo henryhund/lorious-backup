@@ -70,7 +70,25 @@ html, body {
     padding: 20px;
 }
 
-#video_controls button{
+#video_controls .button{
 
-    padding: 10px 15px;
+    text-align: center;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #ffffff;
+    background-color : rgba(50, 73, 76, .5);
+    height: 55px;
+    width: 140px;
+
+    border: 3px solid rgba(50, 73, 76, 1);
+    border-radius: 3px;
+    -moz-border-radius: 3px; 
+    -webkit-border-radius: 3px;
 }
+
+#video_controls .button:hover {
+    background-color: rgba(50, 73, 76, .7);
+    text-decoration: none
+  }

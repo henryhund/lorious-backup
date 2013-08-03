@@ -1,0 +1,11 @@
+- content_for :content do
+  .row-fluid
+    .container-fluid
+      .span10.offset1
+        .section.main-content
+          = content_for?(:main_content) ? yield(:main_content) : yield
+        %br
+        %br
+
+ 
+= render template: "layouts/application"

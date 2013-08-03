@@ -1,0 +1,12 @@
+= simple_form_for(@service) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :user_id
+    = f.input :provider
+    = f.input :uid
+    = f.input :uname
+    = f.input :uemail
+
+  .form-actions
+    = f.button :submit

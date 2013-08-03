@@ -1,0 +1,46 @@
+%section.row-fluid.dashboard-overview
+  .max-container
+    .span8.offset2
+      %h2 User Dashboard
+      %p
+        You are logged in as
+        =@user.name
+        ="(" + @user.email + ")"
+%section.row-fluid.dashboard-options
+  .span8.offset2
+    .max-container
+      %ul
+        %li= link_to "Edit User Information", edit_user_registration_path(current_user)
+        %li
+          -unless @user.profile
+            = link_to "Create A Profile", new_profile_url
+          -else
+            = link_to "View/Edit Your Profile", user_page_path(@user.slug)
+        %li Manage Privacy Settings 
+        %li Manage Upcoming Appointments
+        -if !@user.expert
+          %li 
+            Apply to Be an Expert
+        -elsif @user.expert
+          %li
+            Manage Availability for Appointments
+            /   = link_to "Apply to be an expert", current_user
+        %li= link_to "Manage Payment Options", manage_payments_path
+        %li= link_to "Inbox", conversations_path
+        %li
+          = link_to "Buy Credits", credit_packages_path
+
+
+%section.row-fluid.dashboard-appointments
+  .span8.offset2
+    .max-container
+      %h3 Listing Appointments
+      %table.table
+        %tr
+          %th Host
+          %th Attendee
+          %th Time (EST)
+          %th URL
+          %th
+          %th
+        =render @appointments unless @appointments.nil?

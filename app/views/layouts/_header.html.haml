@@ -1,8 +1,13 @@
 %section.row-fluid.nav-header
-  .span6.logo
+  .span2.logo
     %a{href: "/"}
       =image_tag "https://s3.amazonaws.com/lorious/layout/lorious_2color.svg", width: "110px"
-  .span6.nav
+  .span10.nav
     %ul
-      / %li= link_to "FAQ", faq_path
+      /%li= link_to "FAQ", faq_path
+      -if !current_user
+        %li= link_to "Login", login_path
+        %li= link_to "Register", signup_path
+      -elsif current_user
+        %li= link_to "Logout", logout_path
       %li= mail_to "questions@lorious.com", "Contact Us"

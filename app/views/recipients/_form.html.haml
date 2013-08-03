@@ -1,0 +1,90 @@
+-content_for :head do
+  %script{:src => "https://js.stripe.com/v2/", :type => "text/javascript"}
+  %style{:media => "screen", :type => "text/css"}
+    input.invalid {
+    border: 2px solid red;
+    }
+    
+    .validation.failed:after {
+    color: red;
+    content: 'Validation failed';
+    }
+    
+    .validation.passed:after {
+    color: green;
+    content: 'Validation passed';
+    }
+  %script{:type => "text/javascript"}
+    = "Stripe.setPublishableKey('#{ENV['STRIPE_PUBLISHABLEKEY']}');"
+  :javascript
+    $(document).ready(function() {
+      jQuery(function($) {
+
+
+        $('#payment-form').submit(function(event) {
+          var $form = $(this);
+          event.preventDefault();
+          $('input').removeClass('invalid');
+          $('.validation').removeClass('passed failed');
+
+
+          $('#ba-name').toggleClass('invalid', $('#ba-name').val() === "");
+          $('#routing-number').toggleClass('invalid', $('#routing-number').val() === "");
+          $('#routing-number').toggleClass('invalid', !Stripe.bankAccount.
+          validateRoutingNumber($('#routing-number').val()));
+
+          if ( $('input.invalid').length ) {
+            $('.validation').addClass('failed');
+          } else {
+            $('.validation').addClass('passed');
+          }
+
+          Stripe.bankAccount.createToken({
+              country: $('.country').val(),
+              routingNumber: $('.routing-number').val(),
+              accountNumber: $('.account-number').val(),
+          }, stripeResponseHandler);
+
+          // Prevent the form from submitting with the default action
+          return false;
+        });
+      });
+    });
+
+    var stripeResponseHandler = function(status, response) {
+      var $form = $('#payment-form');
+
+      if (response.error) {
+        // Show the errors on the form
+        $form.find('#payment-errors').text(response.error.message);
+        $form.find('#payment-errors').addClass('alert');
+        $form.find('button').prop('disabled', false);
+        } else {
+        // token contains id, last4, and card type
+        var token = response.id;
+        // Insert the token into the form so it gets submitted to the server
+        $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+        // and submit
+        $form.get(0).submit();
+      }
+    };
+
+
+
+= simple_form_for :recipient, url: recipients_path, html: {class: "form-horizontal", autocomplete: "on", id: "payment-form"} do |f|
+  = f.input :user_id, as: :hidden, input_html: {value: current_user.id}
+  = f.input :name, required: true, placeholder: "Full Legal Name", :hint => "First and Last Name. Middle Name/Initial is optional.", label: "Full Legal Name", input_html: {class: "ba-name", id: "ba-name", value: @bank_account_name}  
+
+  =simple_fields_for :ba do |ba|
+    = ba.error_notification
+    #payment-errors
+
+    .form-inputs
+      .control-group
+
+        = ba.input :routing_number, placeholder: "Routing Number", label: "Routing Number", input_html: {"x-autocompletetype" => "routing-number", class: "routing-number", id: "routing-number", name: "", value: @bank_routing_number}
+        = ba.input :country, as: :string, disabled: true, label: "Country", :hint => "We can only pay out to U.S. bank accounts at this time.", input_html: {"x-autocompletetype" => "country", class: "country", id: "country", name: "", value: "US"}
+        = ba.input :account_number, placeholder: "Account Number", label: "Account Number", input_html: {"x-autocompletetype" => "account-number", class: "account-number", id: "account-number", name: "", value: @bank_account_number}
+
+    .form-actions
+      = ba.button :submit, "Save Account", id: "submit-button"

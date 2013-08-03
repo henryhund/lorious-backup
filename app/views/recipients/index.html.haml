@@ -1,0 +1,22 @@
+%h2 Please add a bank account
+
+-if can? :manage, @bank_accounts
+  %table.table
+    %tr
+      %th User
+      %th Stripe Bank Account
+      %th
+      %th
+      %th
+
+    - @bank_accounts.each do |bank_account|
+      %tr
+        %td= bank_account.user_id
+        %td= bank_account.stripe_bank_account_id
+        %td= link_to 'Show', bank_account
+        %td= link_to 'Edit', edit_bank_account_path(bank_account)
+        %td= link_to 'Destroy', bank_account, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Bank account', new_bank_account_path

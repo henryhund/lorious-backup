@@ -1,5 +1,170 @@
-%h3 User
-%p
-  User: #{@user.name}
-%p
-  Email: #{@user.email if @user.email}
+
+
+- content_for :head do
+  - if @profile.user.hosted_appointments.count > 0
+    :javascript
+      $(function() {
+        $('#star-average').raty({ readOnly: true, score: #{@profile.user.get_review_score} });
+      });
+  -@profile.user.reviews.each do |review|
+    :javascript
+      $(function() {
+        $('#star#{review.id}').raty({ readOnly: true, score: #{review.rating} });
+      });
+- content_for :main_content do
+  -if @display == "none"
+    %h6.alert This user has not made their profile public.
+  -elsif @display == "all"
+    / %ul.profile-nav-band
+    /   -if current_user 
+    /     %li.profile-nav-band-link
+    /       = link_to "Edit Profile", edit_profile_url(Profile.find_by_user_id(current_user.id))
+    /     %li.profile-nav-band-link
+    /       = link_to "User Profile", current_user
+    /   -else
+    /     %li.profile-nav-band-link
+    /       = link_to "Book An Appointment with #{@profile.user.name}", current_user
+    /     %li.profile-nav-band-link
+    /       = link_to "#{@profile.user.name.split.first.pluralize} reviews", current_user
+    /     %li.profile-nav-band-link
+    /       = link_to "Ask #{@profile.user.name.split.first} a question", current_user
+    / %h3 User
+    / %p
+    /   User: #{@user.profile.public_name}
+    / %p
+    /   Picture: 
+    /   =image_tag @user.avatar.url(:square), class: "user-profile-image"
+    / %p
+    /   Tagline: #{@user.profile.tagline}
+    / %p
+    /   Bio: #{@user.profile.bio}
+    / %p
+    /   Reviews:
+    /   - @user.reviews.each do | review |
+    /     %br
+    /     = review.rating
+    /     = review.content
+    /     = "from " + review.reviewer.profile.public_name
+    /   %br
+    /   Average Score:
+    /   = @user.get_review_score
+    / .navbar.navbar-inverse
+    /   .navbar-inner
+    /     .container
+
+    /       %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+    /         %span.icon-bar
+    /         %span.icon-bar
+    /         %span.icon-bar
+    /     .nav-collapse.collapse
+    /       %ul.nav
+    /         %li 
+    /           %a{href: "#"} Test
+    /         %li 
+    /           %a{href: "#"} Test 2
+    /         %li 
+    /           %a{href: "#"} Test 3
+
+
+
+
+    / .row-fluid.profile-nav-band
+    /   .span10
+    /     .max-container
+    /       %ul
+    /         %li.profile-nav-band-link
+    /           = link_to "User Profile", current_user
+    /         %li.profile-nav-band-link
+    /           = link_to "Book An Appointment with #{@profile.name}"
+    /         %li.profile-nav-band-link
+    /           = link_to "#{@profile.user.name.split.first.pluralize} reviews"
+    /         %li.profile-nav-band-link
+    /           = link_to "Ask #{@profile.user.name.split.first} a question"
+    /   %span#notice= notice
+
+    / Needed links: edit profile info, edit avatar
+    -if can? :edit, @profile
+      .row-fluid
+        .span9.offset1
+          %br
+          = link_to "Edit Profile", edit_profile_url(Profile.find_by_user_id(current_user.id))
+    .row-fluid
+      .container-fluid#profile
+        .span9
+          .profile-overview-left
+            .picture-rating-consultations
+              .name-and-headline
+                .img-div
+                  =image_tag @user.avatar.url(:square), class: "user-profile-image img-polaroid"
+                  %br
+                  -if can? :edit, @profile
+                    -if @profile.user.avatar
+                      =link_to "Edit Picture", avatar_page_url(@user.slug)
+                    -else
+                      =link_to "Add Picture", avatar_page_url(@user.slug)
+                .text
+                  %h2
+                    = @user.short_name
+                  %p
+                    = @profile.tagline
+
+                    %br
+                    - if @profile.user.hosted_appointments.count > 0
+                      %p
+                        %span.strong 
+                          Experience
+                      = @profile.user.hosted_appointments.count
+                      Hosted
+                      ="Appointment".pluralize(@profile.user.hosted_appointments.count)
+                      %br
+                      Average Rating:
+                      %br
+                      .star{id: "star-average"}
+                      
+
+        -if @user.expert
+          .span3.price-and-booking
+            .price-and-booking
+              .price-box
+                %p.strong Price/hour
+                %p= number_to_currency(@profile.expertise_hourly, precision: 0) || "Email to ask"
+                %br
+                %br
+                = link_to "Request appointment with #{@user.short_name}", new_appointment_path(@user)
+                %br
+                -if @profile.user != current_user
+                  =link_to "Contact #{@user.short_name}", message_user_path(@profile.user.slug)
+
+    .row-fluid.profile-expert-information
+      .container-fluid#profile
+        .span12
+          %h2 Talk To Me About:
+          %p= simple_format(@profile.bio) || "User has not shared any information yet"
+    .row-fluid
+      .container-fluid#profile.profile-reviews
+        .span12
+          -if @profile.user.reviews.count > 0
+            %h2 
+              ="Reviews (" + @profile.user.reviews.count.to_s + ")"
+          %ul.profile-reviews-list
+            - @profile.user.reviews.each do |review| 
+              %li.profile-review
+                %h3
+                  = review.reviewer.short_name
+                  says
+                %p= review.content
+                %p.strong
+                  .star{id: "star#{review.id}"}
+            / %li.profile-review
+            /   %h3 Roneesh says...
+            /   %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
+            /   #star
+            / %li.profile-review
+            /   %h3 Roneesh says...
+            /   %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
+            /   %p.strong 4.0 / 5.0
+            / %li.profile-review
+            /   %h3 Roneesh says...
+            /   %p Jake Welchert is a pretty good designer and I think he gave me a lot of valid information.
+            /   %p.strong 4.0 / 5.0
+        

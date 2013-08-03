@@ -1,0 +1,24 @@
+%h3 Please add a credit card
+
+-if can? :manage, @cards
+  %table.table
+    %tr
+      %th User
+      %th Stripe card
+      %th
+      %th
+      %th
+
+    - @cards.each do |card|
+      %tr
+        %td= card.user_id
+        %td= card.stripe_card_id
+        %td= link_to 'Show', card
+        %td= link_to 'Edit', edit_card_path(card)
+        %td= link_to 'Destroy', card, :method => :delete, :data => { :confirm => 'Are you sure?' }
+  = link_to 'New Card', new_card_path
+
+%br
+
+-if current_user.card.nil?
+  = link_to 'New Card', new_card_path

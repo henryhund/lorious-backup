@@ -3,3 +3,8 @@
 
 en:
   hello: "Hello world"
+
+  mailboxer:
+    message_mailer:
+      subject_reply: "Lorious | New Reply from User: %{subject}"
+      subject_new: "Lorious | New Message from User: %{subject}"

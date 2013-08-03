@@ -23,6 +23,16 @@ gem 'google-tag-manager-rails'
 gem 'mandrill-api'
 gem 'gibbon'
 gem 'opentok'
+gem 'friendly_id' # errors with version 5, had to use version 4.09, github: 'FriendlyId/friendly_id', branch: 'master' # Note: You MUST use 5.0.0 or greater for Rails 4.0+
+gem 'aws-sdk'
+gem 'paperclip'
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'mailboxer'
+gem 'kaminari'
+gem 'font-awesome-sass-rails'
+# gem 'bootstrap-datetimepicker-rails'
 
 group :development do
   gem 'better_errors'

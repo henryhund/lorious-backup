@@ -1,4 +1,5 @@
 @import "bootstrap";
+//@import "bootstrap-datetimepicker";
 //body { padding-top: 60px; }
 @import "bootstrap-responsive";
 
@@ -8,4 +9,41 @@
 .btn {
 
 	background-image: none;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  background-image: url("https://s3.amazonaws.com/lorious/layout/elements/icons/glyphicons-halflings.png");
+}
+[class^="icon-white"], [class*=" icon-white"] {
+  background-image: url("https://s3.amazonaws.com/lorious/layout/elements/icons/glyphicons-halflings-white.png");
+}
+
+p.help-block {
+  font-size: 10px; 
+}
+
+.navbar .navbar-inner {
+
+  background-image: none;
+}
+
+
+.btn-navbar {
+
+  background-image: none;
+}
+
+.caret {
+  border-top: 4px solid white;
+}
+
+.dropdown-backdrop {
+    position: static;
+}
+
+.rounded-corners-profile-pic {
+   -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
 }

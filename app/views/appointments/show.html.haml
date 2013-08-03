@@ -1,34 +1,148 @@
-%p#notice= notice
+- content_for :main_content do
+  .row-fluid#appointment
+    .max-container
+      .span10.offset1{style: "text-align:center;"}
+        %h2
+          = @conversation.subject
+  
+  .row-fluid#appointment
+    .max-container
+      .span5
 
-%p
-  %b Host:
-  = @appointment.host.profile.name + " " + @appointment.host.email
-  Link: 
-  = ENV["LOCATION"] + "/chat/go/" + @appointment.host.id.to_s + "/" + @appointment.chat_key
-%p
-  %b Attendee:
-  = @appointment.attendee.profile.name + " " + @appointment.attendee.email
-  Link: 
-  = ENV["LOCATION"] + "/chat/go/" + @appointment.attendee.id.to_s + "/" + @appointment.chat_key
-%p
-  %b Time (EST):
-  = @appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
-%p
-  %b Key:
-  = @appointment.chat_key
-%p
-  %b Session ID:
-  = @appointment.chat_session_id
-%p
-  %b Completed?:
-  = @appointment.completed
-%p
-  %b Reported Length (mins):
-  = @appointment.length
-%p
-  %b Calculated Length (mins):
-  = @appointment.calculate_length
+        %h5 Message History
+        .well
+          %ul.unstyled
+            = content_tag_for(:li, @conversation.receipts_for(current_user)) do |receipt|
+              - message = receipt.message
+              - sender = message.sender
+              =image_tag("#{sender.avatar}", width: "20px", class: "rounded-corners-profile-pic")
+              -if message.created_at.today?
+                %strong= "Today at " + message.created_at.strftime("%l:%M %p")
+              -else
+                %strong= "On " + message.created_at.strftime("%-m/%-d/%Y") + " at " + message.created_at.strftime("%l:%M %p")
+              %strong= sender == current_user ? "You said..." : sender.first_name + " said..."
+              %p.muted= message.body
+        = render 'messages/form', conversation: @conversation
 
-= link_to 'Edit', edit_appointment_path(@appointment)
-|
-= link_to 'Back', appointments_path
+      .span6.offset1
+        %h5 
+          Request Info
+        %p.show-label
+          Who:
+        %table.sub-text{style: "margin-left:15px;"}
+          %tr
+            %td{style: "width:85px"}
+              %span.sub-text
+                Host: 
+            %td
+              =image_tag("#{@appointment.host.avatar}", width: "20px", class: "rounded-corners-profile-pic")
+              =@appointment.host.short_name
+          %tr
+            %td
+              Attendee:
+            %td
+              =image_tag("#{@appointment.attendee.avatar}", width: "20px", class: "rounded-corners-profile-pic")
+              =@appointment.attendee.short_name
+        %br
+        %p.show-label
+          When:
+        %p.sub-text{style: "margin-left:15px;"}
+          =@appointment.time.strftime("%A %B %d, %Y at %I:%M %p %Z")
+        %p.show-label 
+          Length:
+        %p.sub-text{style: "margin-left:15px;"}
+          =@appointment.length
+          minutes
+        %p.show-label 
+          Subtotal:
+        %p{style: "margin-left:15px;"}
+          %span.label.label-info
+            %i.icon-asterisk
+            = @subtotal
+            credits
+        %br
+        %p.show-label
+          Appointment Confirmation:
+        %table.sub-text{style: "margin-left:15px;"}
+          %tr
+            %td{style: "width:85px"}
+              %span.sub-text
+                Host: 
+            %td{style: "width:100px"}
+              =image_tag("#{@appointment.host.avatar}", width: "20px", class: "rounded-corners-profile-pic")
+              =@appointment.host.short_name
+            %td
+              -if @appointment.host_confirmed
+                %i.icon-check 
+                  Confirmed!
+              -elsif @appointment.host == current_user
+                =link_to confirm_appointment_path(user_id:current_user.slug, id:@appointment.id) do
+                  %i.icon-check-empty
+                  Confirm Now
+              -else
+                %i.icon-check-empty
+                  Unconfirmed
+          %tr
+            %td
+              Attendee:
+            %td
+              =image_tag("#{@appointment.attendee.avatar}", width: "20px", class: "rounded-corners-profile-pic")
+              =@appointment.attendee.short_name
+            %td
+              -if @appointment.attendee_confirmed
+                %i.icon-check 
+                  Confirmed!
+              -elsif @appointment.attendee == current_user
+                =link_to confirm_appointment_path(user_id:current_user.slug, id:@appointment.id) do
+                  %i.icon-check-empty
+                  Confirm Now
+              -else
+                %i.icon-check-empty
+                  Unconfirmed
+        %br
+        %br
+        = link_to 'Edit Appointment', edit_appointment_path(user_id: current_user.slug, id: @appointment), class: "btn btn-info"
+        = link_to 'Cancel Appointment', appointment_path(user_id: current_user.slug, id: @appointment), class: "btn btn-danger", :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %br
+        %br
+        %p.muted The attendee will not be charged until the request is confirmed, when both parties agree to the details of the appointment. The host will only receive payment once it is confirmed that the appointment was completed successfully. Any changes to the details of the appointment will require approval from the other party. You will continue to be able to add detail about the appointment through the messaging system to the left.
+
+/               .span6
+/                 %h2 Appointment Request
+
+
+/         = link_to 'Back', appointments_path
+
+
+
+
+/ %p#notice= notice
+
+/ %p
+/   %b Host:
+/   = @appointment.host.profile.name + " " + @appointment.host.email
+/ %p
+/   %b Attendee:
+/   = @appointment.attendee.profile.name + " " + @appointment.attendee.email
+/ %p
+/   %b Time (EST):
+/   = @appointment.time.strftime("%-m/%-d/%Y %l:%M %p")
+/ %p
+/   %b Key:
+/   = @appointment.chat_key
+/ %p
+/   %b Session ID:
+/   = @appointment.chat_session_id
+/ %p
+/   %b Completed?:
+/   = @appointment.completed
+/ %p
+/   %b Reported Length (mins):
+/   = @appointment.length
+/ %p
+/   %b Calculated Length (mins):
+/   = @appointment.calculate_length
+
+/ = link_to 'Edit', edit_appointment_path(@appointment)
+/ |
+/ = link_to 'Back', appointments_path

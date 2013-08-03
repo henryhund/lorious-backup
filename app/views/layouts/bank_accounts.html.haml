@@ -1,0 +1,15 @@
+- content_for :content do
+  .row-fluid
+    .container-fluid#profile
+      .span10.offset1
+        .section.main-content
+          = content_for?(:main_content) ? yield(:main_content) : yield
+        %small 
+          To ensure your data is safe, we use 
+          = link_to "stripe", "http://stripe.com"
+          to process the payments and store your information.
+          /Your data is sent encrypted using HTTPS.
+          %br/
+          %small Lorious does not directly process or store your banking information at any time.
+ 
+= render template: "layouts/application"

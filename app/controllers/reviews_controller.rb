@@ -1,6 +1,9 @@
 class ReviewsController < ApplicationController
   # GET /reviews
   # GET /reviews.json
+  
+  load_and_authorize_resource
+
   def index
     @reviews = Review.all
 
@@ -13,7 +16,7 @@ class ReviewsController < ApplicationController
   # GET /reviews/1
   # GET /reviews/1.json
   def show
-    @review = Review.find(params[:id])
+    # @review = Review.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +27,15 @@ class ReviewsController < ApplicationController
   # GET /reviews/new
   # GET /reviews/new.json
   def new
-    @review = Review.new
+    @review = @appointment.try(:review)
+      if @review.nil?
+        @review = Review.new
+        @review.appointment_id = @appointment.id
+        @review.reviewer_id = current_user.id
+        @review.reviewee_id = @appointment.host.id
+        @review.rating = 0
+      end
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,10 +55,10 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
-        format.html { redirect_to @review, notice: 'Review was successfully created.' }
+        format.html { redirect_to user_dashboard_url(current_user), notice: 'Review was successfully created.' }
         format.json { render json: @review, status: :created, location: @review }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
     end
@@ -60,7 +71,7 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.update_attributes(params[:review])
-        format.html { redirect_to @review, notice: 'Review was successfully updated.' }
+        format.html { redirect_to user_dashboard_url(current_user), notice: 'Review was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

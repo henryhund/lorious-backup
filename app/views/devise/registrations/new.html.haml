@@ -7,9 +7,13 @@
           = f.error_notification
           = display_base_errors resource
           = f.input :name, :autofocus => true, :placeholder => "Your Name", label: false
+          Username: Your username will be the location of your Lorious Profile Page.
+          = f.input :username, :required => true, :placeholder => "Username", label: false
           = f.input :email, :required => true, :placeholder => "Your Email", label: false
           = f.input :password, :required => true, :placeholder => "Password", label: false
           = f.input :password_confirmation, :required => true, :placeholder => "Password Confirmation", label: false
           = f.button :submit, 'Join Lorious', :class => 'btn button'
       %p
         = link_to "or, Sign In", new_user_session_url
+      %p
+        = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
